@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACCTNG 1 | Changes in the Expanded Accounting Equation</title>
+<style>
+:root{
+  --bg:#f3f7f7; --surface:#fff; --surface2:#f8fbfb; --ink:#203136; --muted:#697c81;
+  --line:#d7e2e3; --accent:#3f6870; --accent-dark:#31535a; --accent-soft:#e8f1f2;
+  --up:#4e775f; --up-soft:#edf5ef; --down:#9a5858; --down-soft:#fbefef;
+  --gold:#87683b; --gold-soft:#f7f1e5; --shadow:0 10px 28px rgba(33,55,60,.075);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:radial-gradient(circle at top left,rgba(63,104,112,.08),transparent 25rem),var(--bg);
+}
+button{font:inherit;cursor:pointer}
+.shell{min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar-inner{max-width:1200px;margin:auto;padding:11px 20px;display:flex;gap:18px;align-items:center;justify-content:space-between}
+.brand-kicker{font-size:.74rem;letter-spacing:.13em;font-weight:900;color:var(--accent)}
+.brand-title{font-size:.92rem;font-weight:760}
+.nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.nav button{border:0;background:transparent;padding:8px 10px;border-radius:10px;color:var(--muted);font-weight:780;font-size:.84rem}
+.nav button:hover,.nav button.active{background:var(--accent-soft);color:var(--accent-dark)}
+.nav a{display:inline-flex;align-items:center;text-decoration:none;padding:8px 12px;border-radius:10px;background:var(--accent-soft);color:var(--accent-dark);font-weight:800;font-size:.8rem}
+.progress{height:4px;background:#e7eeee}.progress>div{height:100%;width:0;background:var(--accent);transition:.3s ease}
+main{max-width:1200px;width:100%;margin:auto;padding:36px 20px 58px}
+.screen{display:none;animation:fade .25s ease}.screen.active{display:block}
+@keyframes fade{from{opacity:.2;transform:translateY(7px)}to{opacity:1;transform:none}}
+.eyebrow,.section-no{font-size:.76rem;text-transform:uppercase;letter-spacing:.13em;font-weight:900;color:var(--accent)}
+h1{font-size:clamp(2.2rem,5vw,4.5rem);line-height:1.02;letter-spacing:-.045em;margin:14px 0 20px}
+h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em;margin:7px 0 10px}
+.lead,.section-head p{max-width:780px;color:#50666c;line-height:1.7}
+.section-head{margin-bottom:24px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.panel+.panel{margin-top:18px}
+.hero{min-height:64vh;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+.hero-eq{display:grid;gap:10px}
+.eq-chip{padding:16px;border:1px solid var(--line);background:var(--surface2);border-radius:14px;text-align:center;font-weight:900;animation:settle .8s ease}
+.eq-symbol{text-align:center;color:var(--muted);font-weight:900;font-size:1.3rem}
+@keyframes settle{0%{transform:translateY(-8px);opacity:.1}70%{transform:translateY(2px)}100%{transform:none;opacity:1}}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.use-notice{
+  margin-top:28px;
+  max-width:760px;
+  padding:14px 16px;
+  border:1px solid var(--line);
+  border-left:4px solid #b8c9cc;
+  border-radius:12px;
+  background:rgba(255,255,255,.62);
+  color:var(--muted);
+  font-size:.82rem;
+  line-height:1.55;
+}
+.use-notice strong{color:var(--ink)}
+.use-notice p{margin:5px 0}
+.use-notice .notice-mark{
+  margin-top:8px;
+  font-weight:850;
+  color:#53686e;
+  letter-spacing:.01em;
+}
+.btn{border:0;border-radius:11px;padding:11px 15px;background:var(--accent);color:#fff;font-weight:850;box-shadow:0 4px 12px rgba(63,104,112,.16)}
+.btn:hover{background:var(--accent-dark)}
+.btn.secondary{background:var(--accent-soft);color:var(--accent-dark);box-shadow:none}
+.btn.ghost{background:#eef3f4;color:#4c6268;box-shadow:none}
+.btn.small{font-size:.86rem;padding:9px 12px}
+.context-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.context-note{font-size:clamp(1.05rem,2vw,1.3rem);line-height:1.65;font-weight:720}
+.context-card{border-radius:16px;padding:18px;background:var(--accent-soft);border:1px solid #d3e3e5}
+.context-card h3{margin:0 0 8px}
+.context-card p{margin:0;color:#526a70;line-height:1.6}
+.callout{margin-top:14px;padding:14px;border-left:4px solid var(--accent);background:#f7fbfb;border-radius:10px;color:#4b6167;line-height:1.6}
+.outcome-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}
+.outcome{border:1px solid var(--line);background:var(--surface);border-radius:15px;padding:16px;min-height:155px}
+.outcome .num{font-size:.76rem;color:var(--accent);font-weight:900}.outcome h3{margin:18px 0 7px}.outcome p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.5}
+.map-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.map-card{border:1px solid var(--line);background:var(--surface);border-radius:15px;padding:17px;text-align:left;min-height:145px;transition:.2s ease}
+.map-card:hover{transform:translateY(-3px);border-color:#b8cbce;box-shadow:var(--shadow)}
+.map-card .n{font-size:.74rem;letter-spacing:.1em;font-weight:900;color:var(--accent)}
+.map-card h3{margin:17px 0 6px}.map-card p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.48}
+.big-equation{display:flex;gap:9px;flex-wrap:wrap;align-items:center;justify-content:center;margin:24px 0;font-weight:900;font-size:clamp(1.12rem,3vw,1.75rem)}
+.big-equation span{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 14px}
+.big-equation .op{border:0;background:transparent;color:var(--muted);padding:0}
+.recall-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.recall{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}
+.recall button{border:0;background:transparent;padding:0;width:100%;text-align:left;color:inherit}
+.recall .detail{display:none;color:var(--muted);line-height:1.5;margin-top:10px}.recall.open{background:var(--accent-soft)}.recall.open .detail{display:block}
+.expanded{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}.expanded.show{display:block;animation:fade .25s ease}
+.expanded-row{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;align-items:center}
+.expanded-row .piece{background:#f7fbfb;border:1px solid var(--line);padding:9px 11px;border-radius:10px;font-weight:850}.expanded-row .op{color:var(--muted);font-weight:900}
+.story-intro{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.story-card{padding:18px;border-radius:16px;border:1px solid var(--line);background:#fff}
+.story-card .tag{font-size:.72rem;font-weight:900;letter-spacing:.09em;color:var(--accent);text-transform:uppercase}
+.story-card p{color:var(--muted);line-height:1.55}
+.journey{display:grid;gap:10px}
+.tx-card{display:grid;grid-template-columns:66px 1fr auto;gap:14px;align-items:center;border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px 15px;text-align:left;width:100%;transition:.2s ease}
+.tx-card:hover{transform:translateY(-2px);border-color:#b8cbce;box-shadow:0 8px 18px rgba(33,55,60,.06)}
+.tx-no{height:44px;width:44px;border-radius:12px;background:var(--accent-soft);color:var(--accent-dark);display:grid;place-items:center;font-weight:900}
+.tx-text{font-weight:760;line-height:1.45}
+.tx-meta{margin-top:4px;color:var(--muted);font-size:.82rem}
+.badge{display:inline-block;border-radius:999px;padding:5px 8px;background:#eef4f4;color:#53696f;font-size:.72rem;font-weight:850;white-space:nowrap}
+.badge.compound{background:var(--gold-soft);color:var(--gold)}
+.tx-card.opened{background:var(--gold-soft);border-color:#ddcfb4}
+.tx-card.complete{background:var(--accent-soft);border-color:#bfd3d6}
+.tx-card.complete .tx-no{background:var(--accent);color:#fff}
+.tx-card.current{box-shadow:0 0 0 2px rgba(63,104,112,.18),0 8px 18px rgba(33,55,60,.06)}
+.status-row{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:0 0 14px}
+.progress-count{font-weight:850;color:var(--accent-dark)}
+.progress-legend{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.82rem}
+.legend-dot{display:inline-flex;gap:6px;align-items:center}
+.legend-dot::before{content:"";width:10px;height:10px;border-radius:50%;background:#fff;border:1px solid var(--line)}
+.legend-dot.opened::before{background:var(--gold-soft);border-color:#ddcfb4}
+.legend-dot.complete::before{background:var(--accent-soft);border-color:#bfd3d6}
+.routine{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.routine-step{border:1px solid var(--line);background:#fff;border-radius:15px;padding:16px}
+.routine-step span{display:inline-block;background:var(--accent-soft);color:var(--accent-dark);border-radius:999px;padding:5px 8px;font-size:.7rem;font-weight:900;letter-spacing:.08em}
+.routine-step h3{margin:13px 0 6px}.routine-step p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.48}
+.analyzer-head{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.transaction{font-size:clamp(1.25rem,2.8vw,1.9rem);font-weight:780;line-height:1.55}
+.keyword{display:inline-block;border-radius:7px;padding:0 .18em;transition:.25s ease}
+.keyword.active{background:var(--gold-soft);color:#6e522a;box-shadow:inset 0 -2px 0 #c8aa78}
+.decode-note{margin-top:13px;padding:14px;border-radius:12px;background:var(--surface2);border:1px solid var(--line);color:#50666c;line-height:1.55;min-height:66px}
+.account-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.identity{border:1px solid var(--line);border-radius:13px;padding:13px;background:#fbfdfd;opacity:.3;transform:translateY(4px);transition:.28s ease}
+.identity.show{opacity:1;transform:none}.identity .type{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:900}.identity .name{font-size:1.05rem;font-weight:900;margin-top:5px}
+.motion-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px}
+.motion-card{border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px}
+.motion-card h3{margin:0 0 10px;font-size:.77rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.track{position:relative;height:230px;border-radius:14px;border:1px dashed #cddadc;overflow:hidden;background:linear-gradient(to bottom,rgba(78,119,95,.07),transparent 38%),linear-gradient(to top,rgba(154,88,88,.07),transparent 38%),#fafcfc}
+.track:after{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px solid #cad7da}
+.track-label{position:absolute;left:10px;font-size:.68rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em}.track-label.top{top:8px;color:var(--up)}.track-label.mid{top:calc(50% - 8px);color:#89999d}.track-label.bottom{bottom:8px;color:var(--down)}
+.motion-object{position:absolute;z-index:2;left:50%;top:50%;width:min(220px,78%);transform:translate(-50%,-50%);background:#fff;border:1px solid #cdd9dc;border-radius:13px;padding:12px;text-align:center;box-shadow:0 7px 16px rgba(33,55,60,.07);transition:top .9s cubic-bezier(.22,.77,.24,1),background .3s ease,border-color .3s ease}
+.motion-object.rise{top:22%;background:var(--up-soft);border-color:#bdd0c2}.motion-object.fall{top:78%;background:var(--down-soft);border-color:#dec3c3}
+.motion-object .name{font-weight:900}.motion-object .small{display:block;margin-top:3px;color:var(--muted);font-size:.76rem}
+.motion-arrow{position:absolute;z-index:3;left:calc(50% + 34%);top:50%;transform:translateY(-50%);font-size:2rem;font-weight:900;opacity:0}.motion-arrow.up{color:var(--up)}.motion-arrow.down{color:var(--down)}
+.motion-arrow.au{animation:au .9s cubic-bezier(.22,.77,.24,1) forwards}.motion-arrow.ad{animation:ad .9s cubic-bezier(.22,.77,.24,1) forwards}
+@keyframes au{0%{top:50%;opacity:0}22%{opacity:1}100%{top:22%;opacity:1}}@keyframes ad{0%{top:50%;opacity:0}22%{opacity:1}100%{top:78%;opacity:1}}
+.result{margin-top:10px;min-height:24px;font-weight:900;font-size:.88rem}.result.up{color:var(--up)}.result.down{color:var(--down)}
+.effect{display:none;margin-top:18px}.effect.show{display:block;animation:fade .28s ease}
+.effect-grid{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:9px;align-items:center}
+.effect-box{border:1px solid var(--line);background:#fff;border-radius:13px;padding:15px;text-align:center;min-height:92px;display:flex;flex-direction:column;justify-content:center}.effect-box.up{background:var(--up-soft);border-color:#c6d8ca}.effect-box.down{background:var(--down-soft);border-color:#e3cccc}.effect-box.neutral{background:#f6f9f9}
+.effect-op{color:var(--muted);font-size:1.2rem;font-weight:900}
+.balance-note{margin-top:14px;border-radius:13px;background:var(--accent-soft);color:var(--accent-dark);padding:14px 16px;font-weight:820;display:flex;gap:9px;align-items:center}.check{width:27px;height:27px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;flex:0 0 27px}
+.explain{margin-top:12px;color:var(--muted);line-height:1.6}
+.bridge-stage{min-height:64vh;display:grid;align-items:center}
+.bridge-hero{max-width:900px;margin:0 auto;text-align:center}
+.bridge-hero h2{font-size:clamp(2rem,5vw,4rem)}
+.bridge-hero p{max-width:760px;margin:0 auto;color:var(--muted);line-height:1.7}
+.bridge-sequence{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:center;margin:30px auto 0;max-width:980px}
+.bridge-box{border:1px solid var(--line);background:#fff;border-radius:16px;padding:20px;min-height:150px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;box-shadow:var(--shadow)}
+.bridge-box strong{font-size:1.1rem}
+.bridge-box span{margin-top:7px;color:var(--muted);font-size:.9rem;line-height:1.45}
+.bridge-arrow{font-size:1.6rem;color:var(--accent);font-weight:900}
+.shift-demo{margin:28px auto 0;max-width:760px;border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+.shift-row{display:grid;grid-template-columns:1fr 70px 1fr;gap:14px;align-items:center}
+.shift-account{border:1px solid var(--line);border-radius:13px;padding:13px;background:var(--surface2);font-weight:850;transition:transform .7s ease,background .4s ease}
+.shift-account.up{transform:translateY(-10px);background:var(--up-soft)}
+.shift-account.down{transform:translateY(10px);background:var(--down-soft)}
+.shift-account.left{transform:translateX(-18px);background:var(--accent-soft)}
+.shift-account.right{transform:translateX(18px);background:var(--accent-soft)}
+.shift-label{text-align:center;color:var(--muted);font-size:.8rem;font-weight:800}
+.next-topic{margin-top:26px;padding:17px;border-radius:14px;background:var(--accent-soft);color:var(--accent-dark);font-weight:820}
+.footer{max-width:1200px;width:100%;margin:auto;padding:15px 20px 24px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.84rem}.sig{font-weight:850}.footer-nav{display:flex;gap:8px}.footer-nav button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 11px;font-weight:800;max-width:360px;white-space:normal;text-align:center;line-height:1.25}.footer-nav button:disabled{opacity:.35;cursor:not-allowed}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.outcome-grid{grid-template-columns:repeat(2,1fr)}.map-grid{grid-template-columns:repeat(2,1fr)}.motion-grid,.account-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.topbar-inner{flex-direction:column;align-items:flex-start}.nav{justify-content:flex-start}.context-grid,.story-intro,.recall-grid,.routine,.motion-grid,.account-grid,.effect-grid,.bridge-sequence{grid-template-columns:1fr}.effect-op,.bridge-arrow{display:none}.outcome-grid,.map-grid{grid-template-columns:1fr}.tx-card{grid-template-columns:52px 1fr}.tx-card .badge{grid-column:2}.shift-row{grid-template-columns:1fr}.footer{flex-direction:column;align-items:flex-start;gap:10px}.footer-nav{width:100%;flex-direction:column}.footer-nav button{width:100%;max-width:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <div class="topbar-inner">
+    <div><div class="brand-kicker">ACCTNG 1</div><div class="brand-title">Changes in the Expanded Accounting Equation</div></div>
+    <nav class="nav">
+      <button data-screen="welcome">Overview</button>
+      <button data-screen="map">Lesson Map</button>
+      <button data-screen="journey">Transaction Flow</button>
+      <button data-screen="analyze">Analyze</button>
+      <button data-screen="bridge">Bridge</button>
+      <a href="modules.html">← Back to Modules</a>
+    </nav>
+  </div>
+  <div class="progress"><div id="progressFill"></div></div>
+</header>
+
+<main>
+<section id="welcome" class="screen active">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">Fundamentals of Accountancy, Business, and Management 1</div>
+      <h1>Changes in the Expanded Accounting Equation</h1>
+      <p class="lead">Every business transaction changes something. The task is to identify what changed, determine whether it increased or decreased, and connect that change to the accounting equation.</p>
+      <div class="actions"><button class="btn" data-go="context">Begin Lesson →</button><button class="btn secondary" data-go="map">View Lesson Map</button></div>
+
+      <div class="use-notice" aria-label="Use notice">
+        <strong>Use Notice</strong>
+        <p>
+          This interactive learning material was developed for ACCTNG 1 instructional use
+          and is intended to support classroom instruction and independent review.
+          Please do not reproduce, modify, repost, or redistribute this material
+          without the author's permission.
+        </p>
+        <div class="notice-mark">ave.guz · 2026</div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="hero-eq">
+        <div class="eq-chip">ASSETS</div><div class="eq-symbol">=</div><div class="eq-chip">LIABILITIES</div><div class="eq-symbol">+</div><div class="eq-chip">OWNER'S EQUITY</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="context" class="screen">
+  <div class="section-head"><div class="section-no">Overview · Context</div><h2>Where these transactions happen</h2><p>Business transactions vary with the nature of the business.</p></div>
+  <div class="context-grid">
+    <div class="panel">
+      <div class="context-note">Service and merchandising businesses share many common transactions, but merchandising businesses also have transactions that relate specifically to buying and selling goods.</div>
+      <div class="callout"><strong>For now, we will focus on service business transactions.</strong> These give us a clear foundation for analyzing changes in the Expanded Accounting Equation. Merchandising transactions will be examined separately in a later lesson.</div>
+    </div>
+    <div class="context-card">
+      <h3>Our focus in this module</h3>
+      <p>Owner investment, purchasing assets, services for cash or on account, collections, payments, borrowing, withdrawals, and a few compound transactions.</p>
+      <p style="margin-top:12px"><strong>Not included yet:</strong> adjusting entries and merchandising-specific transactions.</p>
+    </div>
+  </div>
+  <div class="actions"><button class="btn" data-go="outcomes">Continue →</button></div>
+</section>
+
+<section id="outcomes" class="screen">
+  <div class="section-head"><div class="section-no">OBTL · Student View</div><h2>What you will learn</h2><p>These are the thinking skills you will practice as you move through the lesson.</p></div>
+  <div class="outcome-grid">
+    <div class="outcome"><div class="num">01</div><h3>Explain</h3><p>the relationship among Assets, Liabilities, and Owner's Equity.</p></div>
+    <div class="outcome"><div class="num">02</div><h3>Identify</h3><p>the accounts affected by common service-business transactions.</p></div>
+    <div class="outcome"><div class="num">03</div><h3>Analyze</h3><p>whether each affected account increases or decreases.</p></div>
+    <div class="outcome"><div class="num">04</div><h3>Connect</h3><p>account changes to the Expanded Accounting Equation.</p></div>
+    <div class="outcome"><div class="num">05</div><h3>Check</h3><p>whether the accounting equation remains balanced.</p></div>
+  </div>
+  <div class="actions"><button class="btn" data-go="map">Open Lesson Map →</button></div>
+</section>
+
+<section id="map" class="screen">
+  <div class="section-head"><div class="section-no">Lesson Map</div><h2>Move through the lesson at your own pace</h2><p>Return to an earlier idea whenever you need to review the reasoning.</p></div>
+  <div class="map-grid">
+    <button class="map-card" data-go="recall"><div class="n">01 · RECALL</div><h3>The Equation</h3><p>Refresh the accounting equation and its expanded form.</p></button>
+    <button class="map-card" data-go="journey"><div class="n">02 · CONTEXT</div><h3>Transaction Flow</h3><p>See how the transactions build as a service business operates.</p></button>
+    <button class="map-card" data-go="analyze"><div class="n">03 · DECODE</div><h3>Read the Transaction</h3><p>Use wording clues to understand what happened.</p></button>
+    <button class="map-card" data-go="analyze"><div class="n">04 · IDENTIFY</div><h3>Accounts Affected</h3><p>Translate the transaction into account titles.</p></button>
+    <button class="map-card" data-go="analyze"><div class="n">05 · MOVE</div><h3>Increase or Decrease?</h3><p>Observe rise-and-fall movement for each affected account.</p></button>
+    <button class="map-card" data-go="analyze"><div class="n">06 · CONNECT</div><h3>Equation Effect</h3><p>Connect the accounts to Assets, Liabilities, and Owner's Equity.</p></button>
+    <button class="map-card" onclick="alert('Practice will be expanded after the guided sequence is finalized.')"><div class="n">07 · PRACTICE</div><h3>You Try</h3><p>Analyze before revealing the guided answer.</p></button>
+    <button class="map-card" onclick="alert('The lesson check will follow the practice section.')"><div class="n">08 · CHECK</div><h3>Check Understanding</h3><p>Use short formative checks to confirm the reasoning.</p></button>
+  </div>
+</section>
+
+<section id="recall" class="screen">
+  <div class="section-head"><div class="section-no">01 · Recall</div><h2>The Accounting Equation</h2><p>Click each component for a quick reminder, then expand Owner's Equity.</p></div>
+  <div class="big-equation"><span>ASSETS</span><span class="op">=</span><span>LIABILITIES</span><span class="op">+</span><span>OWNER'S EQUITY</span></div>
+  <div class="recall-grid">
+    <div class="recall"><button onclick="toggleRecall(this)"><h3>Assets</h3><div style="color:var(--muted)">Resources controlled by the business.</div></button><div class="detail">Examples include Cash, Accounts Receivable, Supplies, and Equipment.</div></div>
+    <div class="recall"><button onclick="toggleRecall(this)"><h3>Liabilities</h3><div style="color:var(--muted)">Obligations of the business.</div></button><div class="detail">Examples include Accounts Payable and Notes Payable.</div></div>
+    <div class="recall"><button onclick="toggleRecall(this)"><h3>Owner's Equity</h3><div style="color:var(--muted)">The owner's residual interest.</div></button><div class="detail">It changes through investments, withdrawals, revenues, and expenses.</div></div>
+  </div>
+  <div class="panel" style="margin-top:18px">
+    <strong>Expand Owner's Equity to see the parts we will analyze.</strong>
+    <div class="actions"><button class="btn secondary" onclick="document.getElementById('expanded').classList.toggle('show')">Expand Owner's Equity</button></div>
+    <div id="expanded" class="expanded"><div class="expanded-row"><span class="piece">ASSETS</span><span class="op">=</span><span class="piece">LIABILITIES</span><span class="op">+</span><span class="piece">OWNER'S CAPITAL</span><span class="op">+</span><span class="piece">REVENUE</span><span class="op">−</span><span class="piece">EXPENSES</span><span class="op">−</span><span class="piece">WITHDRAWALS</span></div></div>
+  </div>
+  <div class="actions"><button class="btn" data-go="journey">Continue to Transaction Flow →</button></div>
+</section>
+
+<section id="journey" class="screen">
+  <div class="section-head"><div class="section-no">02 · Transaction Flow</div><h2>Watch the business gradually come to life</h2><p>The sequence starts with simple two-account changes, then gradually introduces collections, payments, and compound transactions.</p></div>
+  <div class="story-intro">
+    <div class="story-card"><div class="tag">Early transactions</div><h3>Build the foundation</h3><p>Start the business, acquire resources, pay an expense, and earn revenue.</p></div>
+    <div class="story-card"><div class="tag">Later transactions</div><h3>Increase the complexity</h3><p>Collect and pay partial balances, split transactions between cash and credit, borrow, and withdraw.</p></div>
+  </div>
+  <div class="status-row">
+    <div id="progressCount" class="progress-count">0 of 15 analyzed</div>
+    <div class="progress-legend">
+      <span class="legend-dot">Not opened</span>
+      <span class="legend-dot opened">Opened</span>
+      <span class="legend-dot complete">Analyzed</span>
+    </div>
+  </div>
+  <div id="journeyList" class="journey"></div>
+  <div class="actions" style="justify-content:space-between">
+    <button class="btn ghost small" onclick="resetModuleProgress()">Reset Learning Progress</button>
+    <button class="btn secondary" data-go="bridge">Preview What Comes Next →</button>
+  </div>
+</section>
+
+<section id="analyze" class="screen">
+  <div class="section-head"><div class="section-no">03–06 · Guided Analysis</div><h2>From transaction wording to equation effect</h2><p>Use the same routine each time. The visual movement supports the reasoning without replacing it.</p></div>
+  <div class="routine">
+    <div class="routine-step"><span>READ</span><h3>What happened?</h3><p>Understand the transaction as a complete idea.</p></div>
+    <div class="routine-step"><span>IDENTIFY</span><h3>Which accounts?</h3><p>Translate the wording into specific account titles.</p></div>
+    <div class="routine-step"><span>CHANGE</span><h3>Increase or decrease?</h3><p>Determine the direction of change for each account.</p></div>
+    <div class="routine-step"><span>CONNECT</span><h3>What happened to the equation?</h3><p>Relate the account changes to the expanded equation.</p></div>
+  </div>
+
+  <div class="panel" style="margin-top:18px">
+    <div class="analyzer-head">
+      <div>
+        <div id="analyzerLabel" class="section-no">Transaction 01</div>
+        <div id="analyzerTx" class="transaction"></div>
+      </div>
+      <button class="btn ghost small" data-go="journey">Choose Another</button>
+    </div>
+    <div id="decodeNote" class="decode-note">Read the whole transaction first. Then use <strong>Decode Transaction</strong> to reveal useful clues one at a time.</div>
+    <div class="actions">
+      <button class="btn" onclick="decodeNext()">Decode Transaction</button>
+      <button class="btn secondary" onclick="identifyAccounts()">Identify Accounts</button>
+      <button class="btn secondary" onclick="showMovement()">Show Movement</button>
+      <button class="btn secondary" onclick="showEffect()">Connect to Equation</button>
+      <button class="btn ghost" onclick="resetAnalysis()">Reset Example</button>
+    </div>
+    <div id="identityGrid" class="account-grid"></div>
+  </div>
+
+  <div id="motionGrid" class="motion-grid"></div>
+
+  <div id="effect" class="effect">
+    <div class="panel">
+      <div class="section-no">Effect on the Accounting Equation</div>
+      <div class="effect-grid" style="margin-top:13px">
+        <div id="assetEffect" class="effect-box"></div><div class="effect-op">=</div>
+        <div id="liabEffect" class="effect-box"></div><div class="effect-op">+</div>
+        <div id="equityEffect" class="effect-box"></div>
+      </div>
+      <div id="effectExplain" class="explain"></div>
+      <div class="balance-note"><div class="check">✓</div><div>The accounting equation remains balanced.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="bridge" class="screen">
+  <div class="bridge-stage">
+    <div class="bridge-hero">
+      <div class="section-no">Transition · What Comes Next</div>
+      <h2>You have been learning to see change.</h2>
+      <p>
+        In this lesson, you described what happened to accounts using <strong>increase</strong> and <strong>decrease</strong>.
+        The next step is learning the accounting language used to record those changes consistently.
+      </p>
+
+      <div class="bridge-sequence">
+        <div class="bridge-box">
+          <strong>1 · Understand the change</strong>
+          <span>Which account changed, and did it increase or decrease?</span>
+        </div>
+        <div class="bridge-arrow">→</div>
+        <div class="bridge-box">
+          <strong>2 · Know the normal side</strong>
+          <span>Accounts have a normal balance based on their classification.</span>
+        </div>
+        <div class="bridge-arrow">→</div>
+        <div class="bridge-box">
+          <strong>3 · Record the change</strong>
+          <span>Debit and Credit give us a consistent left-and-right recording framework.</span>
+        </div>
+      </div>
+
+      <div class="shift-demo">
+        <div class="section-no" style="margin-bottom:14px">A small visual shift</div>
+        <div class="shift-row">
+          <div id="shiftA" class="shift-account up">Cash ↑</div>
+          <div class="shift-label">CHANGE</div>
+          <div id="shiftB" class="shift-account down">Cash ↓</div>
+        </div>
+        <div class="actions" style="justify-content:center">
+          <button class="btn secondary" onclick="shiftToRecording()">Shift from Change to Recording</button>
+          <button class="btn ghost" onclick="resetShift()">Reset</button>
+        </div>
+        <div id="recordingLabels" style="display:none;margin-top:14px;color:var(--muted);line-height:1.6">
+          The rise-and-fall idea has done its job. Next, we will reorganize account changes into a
+          <strong>left-and-right framework</strong> and connect that framework to <strong>Normal Balances, Debit, and Credit</strong>.
+        </div>
+      </div>
+
+      <div class="next-topic">
+        Next topic: <strong>Account Classification, Normal Balances, and the Debit–Credit Framework</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="sig">ave.guz · 2026</div>
+  <div class="footer-nav">
+    <a href="modules.html" class="secondary" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-weight:800;color:var(--accent-dark);background:var(--accent-soft);">← Back to Modules</a>
+    <button id="backBtn">← Back</button><button id="nextBtn">Next →</button>
+  </div>
+</footer>
+</div>
+
+<script>
+const order=["welcome","context","outcomes","map","recall","journey","analyze","bridge"];
+let current="welcome", currentTx=0, decodeStep=0;
+
+const progressKey="acctng1-expanded-equation-progress";
+let learningProgress={opened:[],complete:[]};
+try{
+  const saved=JSON.parse(localStorage.getItem(progressKey));
+  if(saved && Array.isArray(saved.opened) && Array.isArray(saved.complete)) learningProgress=saved;
+}catch(e){}
+
+function saveLearningProgress(){
+  localStorage.setItem(progressKey,JSON.stringify(learningProgress));
+}
+function markOpened(i){
+  if(!learningProgress.opened.includes(i)) learningProgress.opened.push(i);
+  saveLearningProgress();
+  renderJourney();
+}
+function markComplete(i){
+  if(!learningProgress.opened.includes(i)) learningProgress.opened.push(i);
+  if(!learningProgress.complete.includes(i)) learningProgress.complete.push(i);
+  saveLearningProgress();
+  renderJourney();
+}
+function resetModuleProgress(){
+  learningProgress={opened:[],complete:[]};
+  saveLearningProgress();
+  renderJourney();
+}
+
+const txs=[
+{
+ title:"The owner invested ₱80,000 cash in the business.",
+ phase:"Starting the business", badge:"Common transaction",
+ clues:[["invested","Signals an owner investment in the business."],["₱80,000 cash","Cash is the resource received by the business."],["owner","The source of the investment is the owner, so Owner's Capital is affected."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"up",amount:"₱80,000"},
+  {name:"Owner's Capital",type:"Owner's Equity",dir:"up",amount:"₱80,000"}
+ ],
+ effects:{a:["up","Assets","↑ ₱80,000"],l:["neutral","Liabilities","No change"],e:["up","Owner's Equity","↑ ₱80,000"]},
+ explain:"Cash increases because the business receives an asset. Owner's Capital increases because the owner invested in the business."
+},
+{
+ title:"Purchased office equipment for ₱20,000 cash.",
+ phase:"Acquiring resources", badge:"Common transaction",
+ clues:[["office equipment","Identifies the asset acquired."],["cash","Identifies the asset given up."],["Purchased","The business acquired a resource."]],
+ accounts:[
+  {name:"Office Equipment",type:"Asset",dir:"up",amount:"₱20,000"},
+  {name:"Cash",type:"Asset",dir:"down",amount:"₱20,000"}
+ ],
+ effects:{a:["neutral","Assets","No net change"],l:["neutral","Liabilities","No change"],e:["neutral","Owner's Equity","No change"]},
+ explain:"Office Equipment increases while Cash decreases by the same amount. Total Assets do not change."
+},
+{
+ title:"Purchased office supplies for ₱6,000 on account.",
+ phase:"Acquiring resources", badge:"Common transaction",
+ clues:[["office supplies","Identifies the asset acquired."],["on account","Signals that payment will be made later."],["Purchased","The business acquired a resource."]],
+ accounts:[
+  {name:"Office Supplies",type:"Asset",dir:"up",amount:"₱6,000"},
+  {name:"Accounts Payable",type:"Liability",dir:"up",amount:"₱6,000"}
+ ],
+ effects:{a:["up","Assets","↑ ₱6,000"],l:["up","Liabilities","↑ ₱6,000"],e:["neutral","Owner's Equity","No change"]},
+ explain:"Office Supplies increase. Because the amount is not yet paid, Accounts Payable also increases."
+},
+{
+ title:"Paid ₱8,000 cash for office rent.",
+ phase:"Operating the business", badge:"Service business",
+ clues:[["Paid","Signals that value is given up."],["cash","Identifies the asset given up."],["office rent","Identifies Rent Expense."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"down",amount:"₱8,000"},
+  {name:"Rent Expense",type:"Expense",dir:"up",amount:"₱8,000"}
+ ],
+ effects:{a:["down","Assets","↓ ₱8,000"],l:["neutral","Liabilities","No change"],e:["down","Owner's Equity","↓ ₱8,000"]},
+ explain:"Cash decreases. Rent Expense increases, and an increase in Expenses decreases Owner's Equity."
+},
+{
+ title:"Provided services to clients and received ₱15,000 cash.",
+ phase:"Earning revenue", badge:"Service business",
+ clues:[["Provided services","Signals that the business earned revenue."],["received","Signals an inflow to the business."],["₱15,000 cash","Identifies the asset received."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"up",amount:"₱15,000"},
+  {name:"Service Revenue",type:"Revenue",dir:"up",amount:"₱15,000"}
+ ],
+ effects:{a:["up","Assets","↑ ₱15,000"],l:["neutral","Liabilities","No change"],e:["up","Owner's Equity","↑ ₱15,000"]},
+ explain:"Cash increases. Service Revenue increases, and an increase in Revenue increases Owner's Equity."
+},
+{
+ title:"Provided services worth ₱12,000 on account.",
+ phase:"Earning revenue", badge:"Service business",
+ clues:[["Provided services","Signals that revenue was earned."],["₱12,000","States the amount earned."],["on account","The client will pay later, so Accounts Receivable is affected."]],
+ accounts:[
+  {name:"Accounts Receivable",type:"Asset",dir:"up",amount:"₱12,000"},
+  {name:"Service Revenue",type:"Revenue",dir:"up",amount:"₱12,000"}
+ ],
+ effects:{a:["up","Assets","↑ ₱12,000"],l:["neutral","Liabilities","No change"],e:["up","Owner's Equity","↑ ₱12,000"]},
+ explain:"Accounts Receivable increases because the client has not yet paid. Service Revenue increases because the service has already been earned."
+},
+{
+ title:"Collected ₱5,000 from clients who previously received services on account.",
+ phase:"Collecting receivables", badge:"Partial collection",
+ clues:[["Collected","Signals that cash is now being received."],["₱5,000","Only part of the receivable is being collected."],["previously received services on account","The revenue was already recorded earlier."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"up",amount:"₱5,000"},
+  {name:"Accounts Receivable",type:"Asset",dir:"down",amount:"₱5,000"}
+ ],
+ effects:{a:["neutral","Assets","No net change"],l:["neutral","Liabilities","No change"],e:["neutral","Owner's Equity","No change"]},
+ explain:"Cash increases while Accounts Receivable decreases by the same amount. This is a collection, not new revenue."
+},
+{
+ title:"Paid ₱2,500 of the amount owed for office supplies.",
+ phase:"Paying liabilities", badge:"Partial payment",
+ clues:[["Paid","Signals that cash is given up."],["₱2,500","Only part of the liability is being settled."],["amount owed","Points back to Accounts Payable already recorded."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"down",amount:"₱2,500"},
+  {name:"Accounts Payable",type:"Liability",dir:"down",amount:"₱2,500"}
+ ],
+ effects:{a:["down","Assets","↓ ₱2,500"],l:["down","Liabilities","↓ ₱2,500"],e:["neutral","Owner's Equity","No change"]},
+ explain:"Cash decreases and Accounts Payable decreases. Paying an existing payable does not create a new expense."
+},
+{
+ title:"Purchased additional office equipment costing ₱18,000, paying ₱8,000 cash and agreeing to pay the balance later.",
+ phase:"Compound transaction", badge:"Compound",
+ compound:true,
+ clues:[["office equipment costing ₱18,000","Equipment increases by the full cost."],["paying ₱8,000 cash","Cash decreases for the amount paid now."],["balance later","The remaining ₱10,000 becomes Accounts Payable."]],
+ accounts:[
+  {name:"Office Equipment",type:"Asset",dir:"up",amount:"₱18,000"},
+  {name:"Cash",type:"Asset",dir:"down",amount:"₱8,000"},
+  {name:"Accounts Payable",type:"Liability",dir:"up",amount:"₱10,000"}
+ ],
+ effects:{a:["up","Assets","Net ↑ ₱10,000"],l:["up","Liabilities","↑ ₱10,000"],e:["neutral","Owner's Equity","No change"]},
+ explain:"Equipment increases by ₱18,000, Cash decreases by ₱8,000, and Accounts Payable increases by the ₱10,000 unpaid balance. Net Assets increase by ₱10,000."
+},
+{
+ title:"Provided services worth ₱20,000, receiving ₱12,000 cash and billing the client for the balance.",
+ phase:"Compound transaction", badge:"Compound",
+ compound:true,
+ clues:[["services worth ₱20,000","Service Revenue increases by the full amount earned."],["receiving ₱12,000 cash","Cash increases for the amount received immediately."],["billing the client for the balance","The remaining ₱8,000 becomes Accounts Receivable."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"up",amount:"₱12,000"},
+  {name:"Accounts Receivable",type:"Asset",dir:"up",amount:"₱8,000"},
+  {name:"Service Revenue",type:"Revenue",dir:"up",amount:"₱20,000"}
+ ],
+ effects:{a:["up","Assets","↑ ₱20,000"],l:["neutral","Liabilities","No change"],e:["up","Owner's Equity","↑ ₱20,000"]},
+ explain:"Cash and Accounts Receivable together increase Assets by ₱20,000. Service Revenue increases Owner's Equity by the same total amount."
+},
+{
+ title:"Paid ₱2,000 cash for utilities.",
+ phase:"Operating the business", badge:"Service business",
+ clues:[["Paid","Signals that value is given up."],["cash","Identifies the asset given up."],["utilities","Identifies Utilities Expense."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"down",amount:"₱2,000"},
+  {name:"Utilities Expense",type:"Expense",dir:"up",amount:"₱2,000"}
+ ],
+ effects:{a:["down","Assets","↓ ₱2,000"],l:["neutral","Liabilities","No change"],e:["down","Owner's Equity","↓ ₱2,000"]},
+ explain:"Cash decreases. Utilities Expense increases, which decreases Owner's Equity."
+},
+{
+ title:"Collected ₱4,000 from an outstanding account receivable.",
+ phase:"Collecting receivables", badge:"Partial collection",
+ clues:[["Collected","Signals that cash is received."],["₱4,000","Only part of the outstanding balance is collected."],["account receivable","The asset being converted into cash."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"up",amount:"₱4,000"},
+  {name:"Accounts Receivable",type:"Asset",dir:"down",amount:"₱4,000"}
+ ],
+ effects:{a:["neutral","Assets","No net change"],l:["neutral","Liabilities","No change"],e:["neutral","Owner's Equity","No change"]},
+ explain:"One asset increases while another asset decreases. No additional revenue is recorded."
+},
+{
+ title:"Paid an additional ₱5,000 to a supplier on account.",
+ phase:"Paying liabilities", badge:"Partial payment",
+ clues:[["Paid","Signals that cash decreases."],["additional ₱5,000","Only part of the amount owed is paid."],["supplier on account","Accounts Payable is the liability being reduced."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"down",amount:"₱5,000"},
+  {name:"Accounts Payable",type:"Liability",dir:"down",amount:"₱5,000"}
+ ],
+ effects:{a:["down","Assets","↓ ₱5,000"],l:["down","Liabilities","↓ ₱5,000"],e:["neutral","Owner's Equity","No change"]},
+ explain:"Cash decreases and Accounts Payable decreases by the same amount."
+},
+{
+ title:"Borrowed ₱25,000 cash by signing a promissory note.",
+ phase:"Financing the business", badge:"Common transaction",
+ clues:[["Borrowed","Signals that the business received funds that must be repaid."],["₱25,000 cash","Cash increases."],["promissory note","Creates a Notes Payable liability."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"up",amount:"₱25,000"},
+  {name:"Notes Payable",type:"Liability",dir:"up",amount:"₱25,000"}
+ ],
+ effects:{a:["up","Assets","↑ ₱25,000"],l:["up","Liabilities","↑ ₱25,000"],e:["neutral","Owner's Equity","No change"]},
+ explain:"Cash increases and Notes Payable increases because the business has a formal obligation to repay the amount borrowed."
+},
+{
+ title:"The owner withdrew ₱3,000 cash for personal use.",
+ phase:"Owner transaction", badge:"Common transaction",
+ clues:[["withdrew","Signals an owner withdrawal from the business."],["₱3,000 cash","Cash is the asset taken out."],["personal use","Confirms that this is not a business expense."]],
+ accounts:[
+  {name:"Cash",type:"Asset",dir:"down",amount:"₱3,000"},
+  {name:"Owner's Withdrawals",type:"Withdrawal",dir:"up",amount:"₱3,000"}
+ ],
+ effects:{a:["down","Assets","↓ ₱3,000"],l:["neutral","Liabilities","No change"],e:["down","Owner's Equity","↓ ₱3,000"]},
+ explain:"Cash decreases. Owner's Withdrawals increases, and withdrawals decrease Owner's Equity. This is not a business expense."
+}
+];
+
+function showScreen(id){
+ if(id==="journey") renderJourney();
+ document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+ document.getElementById(id).classList.add("active"); current=id;
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.screen===id));
+ let i=order.indexOf(id); document.getElementById("progressFill").style.width=(i/(order.length-1)*100)+"%";
+ updateFooterNav();
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.go)));
+document.querySelectorAll("[data-screen]").forEach(b=>b.addEventListener("click",()=>showScreen(b.dataset.screen)));
+function shortTxLabel(i){
+  if(i < 0 || i >= txs.length) return "";
+  const raw = txs[i].title.replace(/\.$/,"");
+  const max = 42;
+  return raw.length > max ? raw.slice(0,max-1) + "…" : raw;
+}
+
+function updateFooterNav(){
+  const back=document.getElementById("backBtn");
+  const next=document.getElementById("nextBtn");
+
+  if(current==="analyze"){
+    if(currentTx>0){
+      back.disabled=false;
+      back.textContent=`← ${String(currentTx).padStart(2,"0")} · ${shortTxLabel(currentTx-1)}`;
+    }else{
+      back.disabled=false;
+      back.textContent="← Transaction Flow";
+    }
+
+    if(currentTx < txs.length-1){
+      next.disabled=false;
+      next.textContent=`${String(currentTx+2).padStart(2,"0")} · ${shortTxLabel(currentTx+1)} →`;
+    }else{
+      next.disabled=false;
+      next.textContent="Bridge to Next Topic →";
+    }
+    return;
+  }
+
+  const i=order.indexOf(current);
+  back.disabled=i===0;
+  next.disabled=i===order.length-1;
+
+  back.textContent=i>0 ? `← ${screenLabel(order[i-1])}` : "← Back";
+  next.textContent=i<order.length-1 ? `${screenLabel(order[i+1])} →` : "Next →";
+}
+
+function screenLabel(id){
+  const labels={
+    welcome:"Overview",
+    context:"Context",
+    outcomes:"Learning Outcomes",
+    map:"Lesson Map",
+    recall:"Recall",
+    journey:"Transaction Flow",
+    analyze:"Analyze",
+    bridge:"Bridge"
+  };
+  return labels[id] || id;
+}
+
+document.getElementById("backBtn").onclick=()=>{
+  if(current==="analyze"){
+    if(currentTx>0){
+      loadTx(currentTx-1);
+    }else{
+      showScreen("journey");
+    }
+    return;
+  }
+  let i=order.indexOf(current);
+  if(i>0) showScreen(order[i-1]);
+};
+
+document.getElementById("nextBtn").onclick=()=>{
+  if(current==="analyze"){
+    if(currentTx < txs.length-1){
+      loadTx(currentTx+1);
+    }else{
+      showScreen("bridge");
+    }
+    return;
+  }
+  let i=order.indexOf(current);
+  if(i<order.length-1) showScreen(order[i+1]);
+};
+function toggleRecall(b){b.closest(".recall").classList.toggle("open")}
+
+function renderJourney(){
+ const list=document.getElementById("journeyList");
+ if(!list) return;
+ const completeCount=learningProgress.complete.length;
+ document.getElementById("progressCount").textContent=`${completeCount} of ${txs.length} analyzed`;
+ list.innerHTML=txs.map((t,i)=>{
+   const isComplete=learningProgress.complete.includes(i);
+   const isOpened=learningProgress.opened.includes(i);
+   const stateClass=isComplete?"complete":(isOpened?"opened":"");
+   const currentClass=(current==="analyze" && currentTx===i)?" current":"";
+   const status=isComplete?" ✓":"";
+   return `
+   <button class="tx-card ${stateClass}${currentClass}" onclick="loadTx(${i})">
+     <div class="tx-no">${String(i+1).padStart(2,"0")}</div>
+     <div><div class="tx-text">${t.title}${status}</div><div class="tx-meta">${t.phase}</div></div>
+     <span class="badge ${t.compound?'compound':''}">${t.badge}</span>
+   </button>`;
+ }).join("");
+}
+
+function highlightSentence(t, activeCount=0){
+ let html=t.title;
+ t.clues.forEach((c,i)=>{
+   const phrase=c[0];
+   html=html.replace(phrase,`<span class="keyword ${i<activeCount?'active':''}" data-clue="${i}">${phrase}</span>`);
+ });
+ return html;
+}
+
+function loadTx(i){
+ currentTx=i; decodeStep=0; markOpened(i); resetAnalysis(false); renderAnalysis(); showScreen("analyze"); updateFooterNav();
+}
+function renderAnalysis(){
+ const t=txs[currentTx];
+ document.getElementById("analyzerLabel").textContent=`Transaction ${String(currentTx+1).padStart(2,"0")} · ${t.phase}`;
+ document.getElementById("analyzerTx").innerHTML=highlightSentence(t,decodeStep);
+ document.getElementById("identityGrid").innerHTML=t.accounts.map((a,i)=>`
+   <div class="identity" id="ident${i}"><div class="type">${a.type}</div><div class="name">${a.name}</div></div>`).join("");
+ document.getElementById("motionGrid").innerHTML=t.accounts.map((a,i)=>`
+   <div class="motion-card">
+     <h3>${a.type}</h3>
+     <div class="track">
+       <div class="track-label top">Increase</div><div class="track-label mid">Start</div><div class="track-label bottom">Decrease</div>
+       <div class="motion-object" id="obj${i}"><div class="name">${a.name}</div><span class="small">${a.type}</span></div>
+       <div class="motion-arrow ${a.dir==='up'?'up':'down'}" id="arr${i}">${a.dir==='up'?'↑':'↓'}</div>
+     </div>
+     <div class="result" id="res${i}"></div>
+   </div>`).join("");
+ setEffectBox("assetEffect",t.effects.a); setEffectBox("liabEffect",t.effects.l); setEffectBox("equityEffect",t.effects.e);
+ document.getElementById("effectExplain").textContent=t.explain;
+}
+function decodeNext(){
+ const t=txs[currentTx];
+ if(decodeStep<t.clues.length) decodeStep++;
+ document.getElementById("analyzerTx").innerHTML=highlightSentence(t,decodeStep);
+ if(decodeStep===0) return;
+ const c=t.clues[decodeStep-1];
+ document.getElementById("decodeNote").innerHTML=`<strong>${c[0]}</strong> — ${c[1]}`;
+}
+function identifyAccounts(){
+ txs[currentTx].accounts.forEach((a,i)=>document.getElementById("ident"+i).classList.add("show"));
+}
+function reanimate(el,cls){el.classList.remove("au","ad");void el.offsetWidth;el.classList.add(cls)}
+function showMovement(){
+ identifyAccounts();
+ txs[currentTx].accounts.forEach((a,i)=>{
+   const o=document.getElementById("obj"+i), ar=document.getElementById("arr"+i), r=document.getElementById("res"+i);
+   o.classList.remove("rise","fall"); o.classList.add(a.dir==="up"?"rise":"fall");
+   reanimate(ar,a.dir==="up"?"au":"ad");
+   r.textContent=`${a.name} ${a.dir==="up"?"INCREASES ↑":"DECREASES ↓"} ${a.amount}`;
+   r.className="result "+(a.dir==="up"?"up":"down");
+ });
+}
+function setEffectBox(id,data){
+ const el=document.getElementById(id); el.className="effect-box "+data[0]; el.innerHTML=`<strong>${data[1]}</strong><span>${data[2]}</span>`;
+}
+function showEffect(){
+  showMovement();
+  document.getElementById("effect").classList.add("show");
+  markComplete(currentTx);
+  setTimeout(()=>document.getElementById("effect").scrollIntoView({behavior:"smooth",block:"start"}),100);
+}
+function resetAnalysis(rerender=true){
+ decodeStep=0;
+ document.getElementById("decodeNote").innerHTML='Read the whole transaction first. Then use <strong>Decode Transaction</strong> to reveal useful clues one at a time.';
+ document.getElementById("effect").classList.remove("show");
+ if(rerender) renderAnalysis();
+}
+
+function shiftToRecording(){
+  const a=document.getElementById("shiftA");
+  const b=document.getElementById("shiftB");
+  a.classList.remove("up"); b.classList.remove("down");
+  a.classList.add("left"); b.classList.add("right");
+  a.textContent="LEFT SIDE";
+  b.textContent="RIGHT SIDE";
+  document.getElementById("recordingLabels").style.display="block";
+}
+function resetShift(){
+  const a=document.getElementById("shiftA");
+  const b=document.getElementById("shiftB");
+  a.className="shift-account up";
+  b.className="shift-account down";
+  a.textContent="Cash ↑";
+  b.textContent="Cash ↓";
+  document.getElementById("recordingLabels").style.display="none";
+}
+
+renderJourney(); renderAnalysis(); showScreen("welcome");
+</script>
+</body>
+</html>

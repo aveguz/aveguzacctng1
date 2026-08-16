@@ -1,0 +1,2127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ACCTNG 1 | Normal Balance: Left or Right?</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --bg: #f4f3ee;
+      --surface: #ffffff;
+      --surface-soft: #fafaf7;
+      --text: #252a28;
+      --muted: #66706c;
+      --accent: #345f58;
+      --accent-dark: #274b45;
+      --blue: #456b8a;
+      --blue-soft: #edf4f8;
+      --gold: #9a762f;
+      --gold-soft: #fbf5e7;
+      --violet: #725f89;
+      --violet-soft: #f3eff8;
+      --green-soft: #edf6f0;
+      --border: #d8ddd9;
+      --correct-bg: #edf4ef;
+      --correct-border: #66806f;
+      --incorrect-bg: #f7efec;
+      --incorrect-border: #a97c6c;
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(20, 30, 25, 0.05);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { cursor: default; }
+    .hidden { display: none !important; }
+
+    .app-shell {
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .center-screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 40px 0;
+    }
+
+    .card {
+      width: min(820px, 100%);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 44px;
+    }
+
+    .brand {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      font-size: clamp(38px, 7vw, 68px);
+      letter-spacing: -.04em;
+      margin-bottom: 18px;
+    }
+    h2 {
+      font-size: clamp(28px, 5vw, 36px);
+      letter-spacing: -.02em;
+      margin-bottom: 12px;
+    }
+    h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .muted {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .notice {
+      margin-top: 26px;
+      color: #7d8481;
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.55;
+    }
+
+    .signature {
+      display: inline-block;
+      margin-top: 4px;
+      color: #56645f;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+
+    .primary,
+    .secondary {
+      min-height: 48px;
+      padding: 13px 20px;
+      border-radius: 10px;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+
+    .primary {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .primary:hover:not(:disabled) {
+      background: var(--accent-dark);
+      border-color: var(--accent-dark);
+    }
+
+    .secondary {
+      background: white;
+      color: #33423d;
+      border-color: #cbd1cd;
+    }
+
+    .secondary:hover:not(:disabled) {
+      background: #f4f6f4;
+    }
+
+    .primary:disabled,
+    .secondary:disabled {
+      opacity: .45;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"] {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      border: 1px solid #cfd5d1;
+      border-radius: 10px;
+      background: white;
+      color: var(--text);
+    }
+
+    input:focus {
+      outline: 3px solid rgba(63, 95, 84, .14);
+      border-color: var(--accent);
+    }
+
+    .validation {
+      color: #8a4d3f;
+      font-size: 13px;
+      margin-top: 14px;
+    }
+
+    .challenge-panel {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border: 1px solid #d8dfdc;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f4f8f6 0%, #f6f3fa 100%);
+    }
+
+    .challenge-panel strong {
+      display: block;
+      color: var(--accent-dark);
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .challenge-panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 13px;
+    }
+
+    .device-status {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .status-chip {
+      padding: 13px 14px;
+      border-radius: 12px;
+      background: white;
+      border: 1px solid #d7dedb;
+    }
+
+    .status-chip small {
+      display: block;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      font-size: 10px;
+      margin-bottom: 4px;
+    }
+
+    .status-chip strong {
+      margin: 0;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .balance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 28px 0 20px;
+    }
+
+    .balance-card {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .balance-card h3 {
+      color: var(--accent);
+      font-size: 14px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .balance-card p {
+      padding: 8px 0;
+      margin: 0;
+      border-bottom: 1px solid #e8ebe8;
+    }
+
+    .balance-card p:last-child { border-bottom: 0; }
+
+    .rule-line {
+      margin-top: 18px;
+      background: #f3f6f4;
+      border-radius: 12px;
+      padding: 18px 20px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .rule-line strong { color: var(--accent); }
+
+    .assessment-note {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-left: 3px solid #7b8f87;
+      background: #f7f8f6;
+      color: #505955;
+      line-height: 1.55;
+    }
+
+    .assessment-screen {
+      padding: 34px 0 60px;
+      min-height: 100vh;
+    }
+
+    .assessment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .assessment-header p { margin-bottom: 0; }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .progress-track {
+      height: 6px;
+      background: #dfe3e0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: var(--accent);
+      transition: width .2s ease;
+    }
+
+    .question-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 38px;
+    }
+
+    .transaction {
+      background: #f5f7f5;
+      border-left: 3px solid #70857d;
+      border-radius: 0 10px 10px 0;
+      padding: 17px 18px;
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+
+    .prompt-title {
+      font-size: clamp(28px, 5vw, 46px);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 8px;
+    }
+
+    .question-text {
+      font-size: 20px;
+      line-height: 1.45;
+      margin: 24px 0 18px;
+    }
+
+    .meta-chip {
+      display: inline-block;
+      padding: 7px 11px;
+      background: #f0f3f1;
+      color: #56605c;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    .answer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .answer-button {
+      min-height: 76px;
+      border: 1px solid #cfd4d1;
+      border-radius: 12px;
+      background: var(--surface-soft);
+      color: var(--text);
+      font-weight: 700;
+      padding: 16px;
+    }
+
+    .answer-button:hover:not(:disabled) {
+      background: #f2f5f3;
+      border-color: #667b73;
+    }
+
+    .answer-button strong {
+      display: block;
+      font-size: 20px;
+    }
+
+    .answer-button small {
+      display: block;
+      color: #7a817e;
+      margin-top: 5px;
+      letter-spacing: .08em;
+    }
+
+    .answer-button.correct {
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+    }
+
+    .answer-button.incorrect {
+      background: var(--incorrect-bg);
+      border-color: var(--incorrect-border);
+    }
+
+    .check-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .check-choice {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 62px;
+      padding: 14px 16px;
+      border: 1px solid #cfd4d1;
+      border-radius: 12px;
+      background: var(--surface-soft);
+    }
+
+    .check-choice input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+    }
+
+    .check-choice.correct {
+      background: var(--correct-bg);
+      border-color: var(--correct-border);
+    }
+
+    .check-choice.incorrect {
+      background: var(--incorrect-bg);
+      border-color: var(--incorrect-border);
+    }
+
+    .feedback {
+      margin-top: 26px;
+      padding-top: 24px;
+      border-top: 1px solid #e2e5e2;
+    }
+
+    .feedback-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .feedback-title.good { color: var(--accent); }
+
+    .reasoning {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: 18px 0;
+    }
+
+    .reasoning span {
+      background: #f8f8f6;
+      border: 1px solid #d4d9d6;
+      border-radius: 8px;
+      padding: 8px 11px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .reasoning b {
+      color: #818985;
+      font-weight: 500;
+    }
+
+    .streak-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translate(-50%, 22px) scale(.98);
+      z-index: 200;
+      width: min(540px, calc(100% - 28px));
+      padding: 16px 18px;
+      border: 1px solid #cad7d2;
+      border-left: 5px solid var(--accent);
+      border-radius: 14px;
+      background: rgba(244,249,247,.98);
+      box-shadow: 0 16px 38px rgba(30, 40, 35, .16);
+      color: #30463f;
+      text-align: left;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .22s ease;
+    }
+
+    .streak-toast strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 3px;
+    }
+
+    .streak-toast span {
+      display: block;
+      line-height: 1.45;
+    }
+
+    .streak-toast.tone-blue {
+      background: rgba(237,244,248,.98);
+      border-color: #cbd9e4;
+      border-left-color: var(--blue);
+      color: #36566f;
+    }
+
+    .streak-toast.tone-violet {
+      background: rgba(243,239,248,.98);
+      border-color: #ddd2e8;
+      border-left-color: var(--violet);
+      color: #58496b;
+    }
+
+    .streak-toast.tone-gold {
+      background: rgba(251,245,231,.98);
+      border-color: #ead9ad;
+      border-left-color: var(--gold);
+      color: #6f5724;
+    }
+
+    .streak-toast.tone-green {
+      background: rgba(237,246,240,.98);
+      border-color: #cfe1d5;
+      border-left-color: #4f7c60;
+      color: #365b44;
+    }
+
+    .streak-toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    .result-card {
+      width: min(860px, 100%);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 42px;
+    }
+
+    .result-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e1e4e1;
+    }
+
+    .score-badge {
+      width: 150px;
+      height: 150px;
+      border: 8px solid #e2e7e3;
+      border-radius: 50%;
+      display: grid;
+      place-content: center;
+      text-align: center;
+    }
+
+    .score-badge strong {
+      font-size: 40px;
+      line-height: 1;
+    }
+
+    .score-badge span {
+      color: var(--muted);
+      margin-top: 7px;
+      font-size: 14px;
+    }
+
+    .student-summary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 24px;
+      padding: 24px 0;
+      border-bottom: 1px solid #e1e4e1;
+    }
+
+    .summary-item small {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .summary-item strong {
+      font-size: 15px;
+    }
+
+    .breakdown {
+      margin-top: 26px;
+    }
+
+    .breakdown-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #eceeec;
+    }
+
+    .breakdown-row:last-child { border-bottom: 0; }
+
+    .breakdown-row p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .breakdown-score {
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .encouragement {
+      margin-top: 24px;
+      padding: 18px 20px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--blue-soft), var(--green-soft));
+      border: 1px solid #d3e0dc;
+    }
+
+    .encouragement strong {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 6px;
+      color: var(--accent-dark);
+    }
+
+    .encouragement p {
+      margin: 0;
+      color: #50605a;
+      line-height: 1.55;
+    }
+
+    .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .footer-note {
+      color: #7d8481;
+      font-size: 12px;
+      text-align: center;
+      margin-top: 22px;
+    }
+
+    .hub-return-link {
+      position: fixed;
+      top: 14px;
+      left: 16px;
+      z-index: 300;
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 8px 11px;
+      border: 1px solid #d7dedb;
+      border-radius: 10px;
+      background: rgba(255,255,255,.94);
+      color: var(--accent-dark);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: 0 5px 16px rgba(20,30,25,.06);
+    }
+    .hub-return-link:hover { background: #f4f7f5; }
+
+    @media (max-width: 700px) {
+      .app-shell { width: min(100% - 24px, 980px); }
+      .center-screen { padding: 22px 0; }
+      .card, .question-card, .result-card { padding: 26px 20px; }
+      .form-grid, .balance-grid, .answer-grid, .check-grid,
+      .student-summary, .result-top, .device-status {
+        grid-template-columns: 1fr;
+      }
+      .field.full { grid-column: auto; }
+      .assessment-header { display: block; }
+      .assessment-header .secondary { margin-top: 14px; }
+      .score-badge { width: 130px; height: 130px; }
+      .result-top { justify-items: start; }
+      .button-row, .result-actions { flex-direction: column; }
+      .button-row button, .result-actions button { width: 100%; }
+      .hub-return-link { position: static; margin: 12px 0 0 12px; }
+    }
+
+    @media print {
+      body { background: white; }
+      #infoScreen,
+      #reviewScreen,
+      #assessmentScreen,
+      #streakToast,
+      .no-print,
+      .hub-return-link {
+        display: none !important;
+      }
+      #resultsScreen {
+        display: block !important;
+        min-height: auto;
+        padding: 0;
+      }
+      .app-shell { width: 100%; }
+      .result-card {
+        width: 100%;
+        box-shadow: none;
+        border: 0;
+        padding: 0;
+      }
+      .result-actions { display: none !important; }
+      .footer-note { margin-top: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="hub-return-link no-print" href="challenges.html">← Back to Challenges</a>
+  <div class="app-shell">
+    <section id="infoScreen" class="center-screen">
+      <div class="card">
+        <div class="brand">ACCTNG 1 · Fundamentals of Accountancy, Business, and Management 1</div>
+        <div class="eyebrow">Normal Balance Practice</div>
+        <h1>LEFT or RIGHT?</h1>
+        <p class="muted">
+          Enter your information before beginning. Your score and assessment details will appear only after you complete the 20-item session.
+        </p>
+
+        <div class="form-grid">
+          <div class="field full">
+            <label for="studentName">Student Name</label>
+            <input id="studentName" type="text" autocomplete="name" placeholder="Last Name, First Name">
+          </div>
+
+          <div class="field full">
+            <label for="studentEmail">Institutional Email</label>
+            <input id="studentEmail" type="email" autocomplete="email" placeholder="name@institution.edu">
+          </div>
+
+          <div class="field">
+            <label for="studentSection">Section</label>
+            <input id="studentSection" type="text" placeholder="e.g., BSBA-1A">
+          </div>
+
+          <div class="field">
+            <label for="assessmentDate">Date</label>
+            <input id="assessmentDate" type="date">
+          </div>
+        </div>
+
+        <div id="infoValidation" class="validation hidden">
+          Please complete your name, institutional email, section, and date.
+        </div>
+
+        <div class="challenge-panel">
+          <strong>24-Hour Mastery Challenge</strong>
+          <p>Take the challenge more than once if needed and submit only your best completed result. Accuracy is the priority; completion time is recorded only for reference and tie-breaking.</p>
+          <div class="device-status">
+            <div class="status-chip">
+              <small>Completed Attempts</small>
+              <strong id="deviceAttemptCount">0</strong>
+            </div>
+            <div class="status-chip">
+              <small>Best Score</small>
+              <strong id="deviceBestScore">No completed attempt yet</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button id="continueToReview" class="primary" type="button">CONTINUE</button>
+        </div>
+
+        <div class="notice">
+          For authorized class use only. Unauthorized copying or distribution is prohibited.<br><span class="signature">ave.guz · 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviewScreen" class="center-screen hidden">
+      <div class="card">
+        <div class="eyebrow">Quick Review</div>
+        <div class="brand" style="margin-bottom:14px;">ACCTNG 1 · Fundamentals of Accountancy, Business, and Management 1</div>
+        <h2>Use the normal balance rule.</h2>
+        <p class="muted">
+          The session contains 20 items selected from a larger question bank. Each stage becomes slightly less guided.
+        </p>
+
+        <div class="balance-grid">
+          <div class="balance-card">
+            <h3>← Debit / Left</h3>
+            <p>Assets</p>
+            <p>Expenses</p>
+            <p>Drawing</p>
+          </div>
+
+          <div class="balance-card">
+            <h3>Credit / Right →</h3>
+            <p>Liabilities</p>
+            <p>Owner's Capital</p>
+            <p>Revenue</p>
+          </div>
+        </div>
+
+        <div class="rule-line">
+          <div><strong>Increase</strong> → use the account's normal balance side.</div>
+          <div><strong>Decrease</strong> → use the opposite side.</div>
+        </div>
+
+        <div class="assessment-note">
+          Your time will be recorded silently and shown only on the assessment summary. Each completed attempt receives its own Attempt Code.
+        </div>
+
+        <div class="button-row">
+          <button id="backToInfo" class="secondary" type="button">BACK</button>
+          <button id="beginAssessment" class="primary" type="button">BEGIN ASSESSMENT</button>
+        </div>
+
+        <div class="notice">
+          For authorized class use only. Unauthorized copying or distribution is prohibited.<br><span class="signature">ave.guz · 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="assessmentScreen" class="assessment-screen hidden">
+      <div class="assessment-header">
+        <div>
+          <div class="brand" style="margin-bottom:10px;">ACCTNG 1 · Fundamentals of Accountancy, Business, and Management 1</div>
+          <div id="stageNumber" class="eyebrow"></div>
+          <h2 id="stageTitle"></h2>
+          <p id="stageSubtitle" class="muted"></p>
+        </div>
+      </div>
+
+      <div class="progress-meta">
+        <span id="overallProgress">Item 1 of 20</span>
+        <span id="stageProgress">1 of 4 in this stage</span>
+      </div>
+
+      <div class="progress-track">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+
+      <article class="question-card">
+        <div id="transactionBox" class="transaction hidden"></div>
+        <div id="promptTitle" class="prompt-title"></div>
+        <div id="metaChip" class="meta-chip hidden"></div>
+        <div id="questionText" class="question-text"></div>
+        <div id="interactionArea"></div>
+
+        <div id="feedback" class="feedback hidden" aria-live="polite">
+          <div id="feedbackTitle" class="feedback-title"></div>
+          <p id="feedbackExplanation" class="muted"></p>
+          <div id="reasoning" class="reasoning"></div>
+          <button id="nextButton" class="primary" type="button">CONTINUE</button>
+        </div>
+      </article>
+
+      <div class="footer-note">
+        For authorized class use only. Unauthorized copying or distribution is prohibited.<br><span class="signature">ave.guz · 2026</span>
+      </div>
+    </section>
+
+    <section id="resultsScreen" class="center-screen hidden">
+      <div class="result-card">
+        <div class="result-top">
+          <div>
+            <div class="eyebrow">Assessment Summary</div>
+            <div class="brand" style="margin:6px 0 12px;">ACCTNG 1 · Fundamentals of Accountancy, Business, and Management 1</div>
+            <h2 id="resultLevel">Completed</h2>
+            <p class="muted">This summary records your performance for this attempt.</p>
+          </div>
+
+          <div class="score-badge">
+            <strong id="resultPercentage">0%</strong>
+            <span id="resultScore">0 / 20</span>
+          </div>
+        </div>
+
+        <div class="student-summary">
+          <div class="summary-item">
+            <small>Student</small>
+            <strong id="resultName"></strong>
+          </div>
+
+          <div class="summary-item">
+            <small>Institutional Email</small>
+            <strong id="resultEmail"></strong>
+          </div>
+
+          <div class="summary-item">
+            <small>Section</small>
+            <strong id="resultSection"></strong>
+          </div>
+
+          <div class="summary-item">
+            <small>Date</small>
+            <strong id="resultDate"></strong>
+          </div>
+
+          <div class="summary-item">
+            <small>Attempt No.</small>
+            <strong id="resultAttemptNumber"></strong>
+          </div>
+
+          <div class="summary-item">
+            <small>Attempt Code</small>
+            <strong id="resultAttemptCode"></strong>
+          </div>
+
+          <div class="summary-item">
+            <small>Best Score</small>
+            <strong id="resultBestScore"></strong>
+          </div>
+
+          <div class="summary-item">
+            <small>Time Spent</small>
+            <strong id="resultTime"></strong>
+          </div>
+
+          <div class="summary-item">
+            <small>Completed</small>
+            <strong id="resultCompleted"></strong>
+          </div>
+        </div>
+
+        <div class="breakdown">
+          <div class="eyebrow">Competency Breakdown</div>
+          <div id="breakdownRows"></div>
+        </div>
+
+        <div class="encouragement">
+          <strong id="encouragementTitle">Keep going.</strong>
+          <p id="encouragementMessage"></p>
+          <p style="margin-top:8px;font-size:13px;"><strong style="display:inline;font-size:13px;">Keep practicing until the reasoning becomes automatic, not just memorized.</strong></p>
+        </div>
+
+        <div class="result-actions no-print">
+          <button id="printResult" class="primary" type="button">PRINT / SAVE RESULT</button>
+          <button id="newAttempt" class="secondary" type="button">NEW ATTEMPT</button>
+        </div>
+
+        <div class="footer-note">
+          For authorized class use only. Unauthorized copying or distribution is prohibited.<br><span class="signature">ave.guz · 2026</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="streakToast" class="streak-toast" aria-live="polite"></div>
+
+  <script>
+    "use strict";
+
+    const STORAGE_KEY = "normalBalance24HourMasteryPilotV2";
+
+    const ACCOUNT_BANK = [
+      { name: "Cash", classification: "Asset", difficulty: "foundation" },
+      { name: "Accounts Receivable", classification: "Asset", difficulty: "foundation" },
+      { name: "Supplies", classification: "Asset", difficulty: "foundation" },
+      { name: "Prepaid Insurance", classification: "Asset", difficulty: "standard" },
+      { name: "Equipment", classification: "Asset", difficulty: "standard" },
+      { name: "Furniture", classification: "Asset", difficulty: "standard" },
+      { name: "Accounts Payable", classification: "Liability", difficulty: "foundation" },
+      { name: "Notes Payable", classification: "Liability", difficulty: "standard" },
+      { name: "Prepaid Rent", classification: "Asset", difficulty: "challenge" },
+      { name: "Unearned Service Revenue", classification: "Liability", difficulty: "challenge" },
+      { name: "Owner's Capital", classification: "Capital", difficulty: "foundation" },
+      { name: "Owner's Drawing", classification: "Drawing", difficulty: "foundation" },
+      { name: "Service Revenue", classification: "Revenue", difficulty: "foundation" },
+      { name: "Fees Earned", classification: "Revenue", difficulty: "standard" },
+      { name: "Salaries Expense", classification: "Expense", difficulty: "foundation" },
+      { name: "Rent Expense", classification: "Expense", difficulty: "foundation" },
+      { name: "Utilities Expense", classification: "Expense", difficulty: "standard" },
+      { name: "Supplies Expense", classification: "Expense", difficulty: "standard" },
+      { name: "Repairs and Maintenance Expense", classification: "Expense", difficulty: "challenge" },
+      { name: "Advertising Expense", classification: "Expense", difficulty: "standard" }
+    ];
+
+    const DEBIT_NORMAL = new Set(["Asset", "Expense", "Drawing"]);
+
+    function normalBalance(classification) {
+      return DEBIT_NORMAL.has(classification) ? "Debit" : "Credit";
+    }
+
+    function opposite(side) {
+      return side === "Debit" ? "Credit" : "Debit";
+    }
+
+    function familyOf(classification) {
+      return classification;
+    }
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function unique(array) {
+      return [...new Set(array)];
+    }
+
+    function sameMembers(a, b) {
+      return a.length === b.length && [...a].sort().every((value, index) => value === [...b].sort()[index]);
+    }
+
+    function formatDateLong(dateString) {
+      const [year, month, day] = dateString.split("-").map(Number);
+      const date = new Date(year, month - 1, day);
+      return date.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+    }
+
+    function formatElapsed(milliseconds) {
+      const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${minutes} minute${minutes === 1 ? "" : "s"} ${String(seconds).padStart(2, "0")} seconds`;
+    }
+
+    function hashString(text) {
+      let hash = 2166136261;
+      for (let i = 0; i < text.length; i++) {
+        hash ^= text.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+      return (hash >>> 0).toString(36).toUpperCase();
+    }
+
+    function createAttemptCode(items) {
+      const itemHash = hashString(items.map(item => item.id).join("|")).slice(0, 5);
+      const suffix = Math.floor(100 + Math.random() * 900);
+      return `NB-${itemHash}-${suffix}`;
+    }
+
+    function pickDifficultyMix(pool, validator = () => true) {
+      const groups = {
+        foundation: pool.filter(item => item.difficulty === "foundation"),
+        standard: pool.filter(item => item.difficulty === "standard"),
+        challenge: pool.filter(item => item.difficulty === "challenge")
+      };
+
+      for (let attempt = 0; attempt < 300; attempt++) {
+        const selection = [
+          ...shuffle(groups.foundation).slice(0, 1),
+          ...shuffle(groups.standard).slice(0, 2),
+          ...shuffle(groups.challenge).slice(0, 1)
+        ];
+
+        if (selection.length === 4 && validator(selection)) {
+          return shuffle(selection);
+        }
+      }
+
+      return shuffle(pool).slice(0, 4);
+    }
+
+    const STAGE1_POOL = ACCOUNT_BANK.map((account, index) => ({
+      id: `S1-${String(index + 1).padStart(2, "0")}`,
+      type: "single",
+      difficulty: account.difficulty,
+      family: familyOf(account.classification),
+      prompt: account.name,
+      question: `What is the normal balance of ${account.name}?`,
+      options: ["Debit", "Credit"],
+      answer: normalBalance(account.classification),
+      explanation: `${account.name} is a ${account.classification} account. Its normal balance is ${normalBalance(account.classification)}.`,
+      reasoning: [account.classification, normalBalance(account.classification)]
+    }));
+
+    const STAGE2_ACCOUNTS = [
+      ACCOUNT_BANK[0], ACCOUNT_BANK[1], ACCOUNT_BANK[2], ACCOUNT_BANK[6], ACCOUNT_BANK[7], ACCOUNT_BANK[9],
+      ACCOUNT_BANK[10], ACCOUNT_BANK[11], ACCOUNT_BANK[12], ACCOUNT_BANK[14], ACCOUNT_BANK[16], ACCOUNT_BANK[18]
+    ];
+
+    const STAGE2_POOL = STAGE2_ACCOUNTS.flatMap((account, accountIndex) =>
+      ["Increase", "Decrease"].map((change, changeIndex) => {
+        let difficulty = "standard";
+
+        if (change === "Increase" && account.difficulty === "foundation") difficulty = "foundation";
+        if (change === "Decrease" && ["Liability", "Capital", "Revenue"].includes(account.classification)) difficulty = "challenge";
+        if (account.difficulty === "challenge" && change === "Decrease") difficulty = "challenge";
+
+        return {
+          id: `S2-${String(accountIndex * 2 + changeIndex + 1).padStart(2, "0")}`,
+          type: "single",
+          difficulty,
+          family: familyOf(account.classification),
+          change,
+          prompt: account.name,
+          meta: `${account.classification} • ${change}`,
+          question: `Should this ${change.toLowerCase()} be recorded on the normal side or the opposite side?`,
+          options: ["Normal Side", "Opposite Side"],
+          answer: change === "Increase" ? "Normal Side" : "Opposite Side",
+          explanation: change === "Increase"
+            ? `${account.name} increased, so the change is recorded on its normal balance side.`
+            : `${account.name} decreased, so the change is recorded on the side opposite its normal balance.`,
+          reasoning: [account.classification, normalBalance(account.classification), change, change === "Increase" ? "Normal Side" : "Opposite Side"]
+        };
+      })
+    );
+
+    const STAGE3_ACCOUNTS = [
+      ACCOUNT_BANK[0], ACCOUNT_BANK[1], ACCOUNT_BANK[2], ACCOUNT_BANK[3], ACCOUNT_BANK[5], ACCOUNT_BANK[6],
+      ACCOUNT_BANK[7], ACCOUNT_BANK[8], ACCOUNT_BANK[9], ACCOUNT_BANK[10], ACCOUNT_BANK[11], ACCOUNT_BANK[12],
+      ACCOUNT_BANK[14], ACCOUNT_BANK[16], ACCOUNT_BANK[19]
+    ];
+
+    const STAGE3_POOL = STAGE3_ACCOUNTS.flatMap((account, accountIndex) =>
+      ["Increase", "Decrease"].map((change, changeIndex) => {
+        const normal = normalBalance(account.classification);
+        const answer = change === "Increase" ? normal : opposite(normal);
+
+        let difficulty = "standard";
+        if (change === "Increase" && ["Asset", "Liability", "Revenue", "Expense"].includes(account.classification) && account.difficulty === "foundation") difficulty = "foundation";
+        if (change === "Decrease" && ["Liability", "Capital", "Revenue"].includes(account.classification)) difficulty = "challenge";
+        if (account.difficulty === "challenge" && change === "Decrease") difficulty = "challenge";
+
+        return {
+          id: `S3-${String(accountIndex * 2 + changeIndex + 1).padStart(2, "0")}`,
+          type: "single",
+          difficulty,
+          family: familyOf(account.classification),
+          change,
+          prompt: account.name,
+          meta: `${account.classification} • ${change}`,
+          question: `Which side records the ${change.toLowerCase()}?`,
+          options: ["Debit", "Credit"],
+          answer,
+          explanation: `${account.name} normally has a ${normal} balance. Since it ${change.toLowerCase()}s, record the change on the ${answer} side.`,
+          reasoning: [account.classification, normal, change, answer]
+        };
+      })
+    );
+
+    const STAGE4_POOL = [{
+      id: "S4-01", difficulty: "foundation", family: "Asset", change: "Increase",
+      transaction: "Preti Salon received ₱8,000 cash for services provided.",
+      prompt: "Cash", question: "What happened to Cash?", answer: "Increase",
+      explanation: "Cash was received by the business, so Cash increased.",
+      reasoning: ["Cash", "Asset", "Increase"]
+    },
+    {
+      id: "S4-02", difficulty: "foundation", family: "Revenue", change: "Increase",
+      transaction: "Preti Salon received ₱8,000 cash for services provided.",
+      prompt: "Service Revenue", question: "What happened to Service Revenue?", answer: "Increase",
+      explanation: "The business earned revenue by providing services, so Service Revenue increased.",
+      reasoning: ["Service Revenue", "Revenue", "Increase"]
+    },
+    {
+      id: "S4-03", difficulty: "foundation", family: "Asset", change: "Decrease",
+      transaction: "Preti Salon paid ₱3,000 cash for employee salaries.",
+      prompt: "Cash", question: "What happened to Cash?", answer: "Decrease",
+      explanation: "Cash was paid out, so Cash decreased.",
+      reasoning: ["Cash", "Asset", "Decrease"]
+    },
+    {
+      id: "S4-04", difficulty: "foundation", family: "Expense", change: "Increase",
+      transaction: "Preti Salon paid ₱3,000 cash for employee salaries.",
+      prompt: "Salaries Expense", question: "What happened to Salaries Expense?", answer: "Increase",
+      explanation: "The salary cost was incurred, so Salaries Expense increased.",
+      reasoning: ["Salaries Expense", "Expense", "Increase"]
+    },
+    {
+      id: "S4-05", difficulty: "foundation", family: "Asset", change: "Increase",
+      transaction: "The owner invested ₱50,000 cash in Preti Salon.",
+      prompt: "Cash", question: "What happened to Cash?", answer: "Increase",
+      explanation: "The business received cash from the owner, so Cash increased.",
+      reasoning: ["Cash", "Asset", "Increase"]
+    },
+    {
+      id: "S4-06", difficulty: "foundation", family: "Capital", change: "Increase",
+      transaction: "The owner invested ₱50,000 cash in Preti Salon.",
+      prompt: "Owner's Capital", question: "What happened to Owner's Capital?", answer: "Increase",
+      explanation: "The owner's investment increased the owner's capital.",
+      reasoning: ["Owner's Capital", "Capital", "Increase"]
+    },
+    {
+      id: "S4-07", difficulty: "foundation", family: "Asset", change: "Increase",
+      transaction: "Preti Salon purchased ₱2,500 of supplies for cash.",
+      prompt: "Supplies", question: "What happened to Supplies?", answer: "Increase",
+      explanation: "The business acquired supplies, so Supplies increased.",
+      reasoning: ["Supplies", "Asset", "Increase"]
+    },
+    {
+      id: "S4-08", difficulty: "standard", family: "Asset", change: "Decrease",
+      transaction: "Preti Salon purchased ₱2,500 of supplies for cash.",
+      prompt: "Cash", question: "What happened to Cash?", answer: "Decrease",
+      explanation: "Cash was used to purchase supplies, so Cash decreased.",
+      reasoning: ["Cash", "Asset", "Decrease"]
+    },
+    {
+      id: "S4-09", difficulty: "standard", family: "Asset", change: "Increase",
+      transaction: "Preti Salon purchased equipment on account for ₱18,000.",
+      prompt: "Equipment", question: "What happened to Equipment?", answer: "Increase",
+      explanation: "The business acquired equipment, so Equipment increased.",
+      reasoning: ["Equipment", "Asset", "Increase"]
+    },
+    {
+      id: "S4-10", difficulty: "standard", family: "Liability", change: "Increase",
+      transaction: "Preti Salon purchased equipment on account for ₱18,000.",
+      prompt: "Accounts Payable", question: "What happened to Accounts Payable?", answer: "Increase",
+      explanation: "The purchase created an amount owed to a supplier, so Accounts Payable increased.",
+      reasoning: ["Accounts Payable", "Liability", "Increase"]
+    },
+    {
+      id: "S4-11", difficulty: "standard", family: "Asset", change: "Increase",
+      transaction: "Preti Salon provided ₱6,000 of services to a customer on account.",
+      prompt: "Accounts Receivable", question: "What happened to Accounts Receivable?", answer: "Increase",
+      explanation: "The customer now owes the business, so Accounts Receivable increased.",
+      reasoning: ["Accounts Receivable", "Asset", "Increase"]
+    },
+    {
+      id: "S4-12", difficulty: "standard", family: "Revenue", change: "Increase",
+      transaction: "Preti Salon provided ₱6,000 of services to a customer on account.",
+      prompt: "Service Revenue", question: "What happened to Service Revenue?", answer: "Increase",
+      explanation: "The business earned revenue, so Service Revenue increased.",
+      reasoning: ["Service Revenue", "Revenue", "Increase"]
+    },
+    {
+      id: "S4-13", difficulty: "standard", family: "Asset", change: "Increase",
+      transaction: "Preti Salon collected ₱4,500 from a customer who previously owed the business.",
+      prompt: "Cash", question: "What happened to Cash?", answer: "Increase",
+      explanation: "Cash was collected from the customer, so Cash increased.",
+      reasoning: ["Cash", "Asset", "Increase"]
+    },
+    {
+      id: "S4-14", difficulty: "challenge", family: "Asset", change: "Decrease",
+      transaction: "Preti Salon collected ₱4,500 from a customer who previously owed the business.",
+      prompt: "Accounts Receivable", question: "What happened to Accounts Receivable?", answer: "Decrease",
+      explanation: "The customer's outstanding balance was collected, so Accounts Receivable decreased.",
+      reasoning: ["Accounts Receivable", "Asset", "Decrease"]
+    },
+    {
+      id: "S4-15", difficulty: "standard", family: "Liability", change: "Decrease",
+      transaction: "Preti Salon paid ₱7,000 toward an amount owed to a supplier.",
+      prompt: "Accounts Payable", question: "What happened to Accounts Payable?", answer: "Decrease",
+      explanation: "Part of the obligation to the supplier was paid, so Accounts Payable decreased.",
+      reasoning: ["Accounts Payable", "Liability", "Decrease"]
+    },
+    {
+      id: "S4-16", difficulty: "foundation", family: "Asset", change: "Decrease",
+      transaction: "Preti Salon paid ₱7,000 toward an amount owed to a supplier.",
+      prompt: "Cash", question: "What happened to Cash?", answer: "Decrease",
+      explanation: "Cash was paid to the supplier, so Cash decreased.",
+      reasoning: ["Cash", "Asset", "Decrease"]
+    },
+    {
+      id: "S4-17", difficulty: "challenge", family: "Liability", change: "Increase",
+      transaction: "Preti Salon received ₱10,000 cash from a client for services to be performed next month.",
+      prompt: "Unearned Service Revenue", question: "What happened to Unearned Service Revenue?", answer: "Increase",
+      explanation: "The business received cash before earning the revenue, creating an obligation to provide services.",
+      reasoning: ["Unearned Service Revenue", "Liability", "Increase"]
+    },
+    {
+      id: "S4-18", difficulty: "standard", family: "Asset", change: "Increase",
+      transaction: "Preti Salon received ₱10,000 cash from a client for services to be performed next month.",
+      prompt: "Cash", question: "What happened to Cash?", answer: "Increase",
+      explanation: "Cash was received in advance, so Cash increased.",
+      reasoning: ["Cash", "Asset", "Increase"]
+    },
+    {
+      id: "S4-19", difficulty: "challenge", family: "Liability", change: "Decrease",
+      transaction: "Preti Salon completed ₱4,000 of services that had been paid for by the client in advance.",
+      prompt: "Unearned Service Revenue", question: "What happened to Unearned Service Revenue?", answer: "Decrease",
+      explanation: "Part of the obligation to the client was fulfilled, so Unearned Service Revenue decreased.",
+      reasoning: ["Unearned Service Revenue", "Liability", "Decrease"]
+    },
+    {
+      id: "S4-20", difficulty: "challenge", family: "Revenue", change: "Increase",
+      transaction: "Preti Salon completed ₱4,000 of services that had been paid for by the client in advance.",
+      prompt: "Service Revenue", question: "What happened to Service Revenue?", answer: "Increase",
+      explanation: "The service has now been earned, so Service Revenue increased.",
+      reasoning: ["Service Revenue", "Revenue", "Increase"]
+    },
+    {
+      id: "S4-21", difficulty: "standard", family: "Drawing", change: "Increase",
+      transaction: "The owner withdrew ₱2,000 cash from the business for personal use.",
+      prompt: "Owner's Drawing", question: "What happened to Owner's Drawing?", answer: "Increase",
+      explanation: "A personal withdrawal by the owner increases Owner's Drawing.",
+      reasoning: ["Owner's Drawing", "Drawing", "Increase"]
+    },
+    {
+      id: "S4-22", difficulty: "foundation", family: "Asset", change: "Decrease",
+      transaction: "The owner withdrew ₱2,000 cash from the business for personal use.",
+      prompt: "Cash", question: "What happened to Cash?", answer: "Decrease",
+      explanation: "Cash left the business, so Cash decreased.",
+      reasoning: ["Cash", "Asset", "Decrease"]
+    },
+    {
+      id: "S4-23", difficulty: "standard", family: "Expense", change: "Increase",
+      transaction: "Preti Salon paid ₱4,000 for monthly rent.",
+      prompt: "Rent Expense", question: "What happened to Rent Expense?", answer: "Increase",
+      explanation: "Rent cost was incurred, so Rent Expense increased.",
+      reasoning: ["Rent Expense", "Expense", "Increase"]
+    },
+    {
+      id: "S4-24", difficulty: "standard", family: "Expense", change: "Increase",
+      transaction: "Preti Salon paid ₱1,800 for the month's electricity and water.",
+      prompt: "Utilities Expense", question: "What happened to Utilities Expense?", answer: "Increase",
+      explanation: "Utility costs were incurred, so Utilities Expense increased.",
+      reasoning: ["Utilities Expense", "Expense", "Increase"]
+    },
+    {
+      id: "S4-25", difficulty: "challenge", family: "Asset", change: "Increase",
+      transaction: "Preti Salon paid ₱12,000 for a one-year insurance policy.",
+      prompt: "Prepaid Insurance", question: "What happened to Prepaid Insurance?", answer: "Increase",
+      explanation: "The payment created a future economic benefit, so Prepaid Insurance increased.",
+      reasoning: ["Prepaid Insurance", "Asset", "Increase"]
+    },
+    {
+      id: "S4-26", difficulty: "challenge", family: "Liability", change: "Increase",
+      transaction: "Preti Salon borrowed ₱40,000 from a bank and signed a promissory note.",
+      prompt: "Notes Payable", question: "What happened to Notes Payable?", answer: "Increase",
+      explanation: "The signed promissory note created a liability, so Notes Payable increased.",
+      reasoning: ["Notes Payable", "Liability", "Increase"]
+    },
+    {
+      id: "S4-27", difficulty: "standard", family: "Asset", change: "Increase",
+      transaction: "Preti Salon borrowed ₱40,000 from a bank and signed a promissory note.",
+      prompt: "Cash", question: "What happened to Cash?", answer: "Increase",
+      explanation: "The business received cash from the loan, so Cash increased.",
+      reasoning: ["Cash", "Asset", "Increase"]
+    },
+    {
+      id: "S4-28", difficulty: "challenge", family: "Liability", change: "Decrease",
+      transaction: "Preti Salon paid ₱5,000 on the principal of a note payable.",
+      prompt: "Notes Payable", question: "What happened to Notes Payable?", answer: "Decrease",
+      explanation: "Part of the note principal was repaid, so Notes Payable decreased.",
+      reasoning: ["Notes Payable", "Liability", "Decrease"]
+    },
+    {
+      id: "S4-29", difficulty: "standard", family: "Expense", change: "Increase",
+      transaction: "Preti Salon paid ₱2,200 cash for advertising used this month.",
+      prompt: "Advertising Expense", question: "What happened to Advertising Expense?", answer: "Increase",
+      explanation: "The advertising cost was incurred, so Advertising Expense increased.",
+      reasoning: ["Advertising Expense", "Expense", "Increase"]
+    },
+    {
+      id: "S4-30", difficulty: "challenge", family: "Asset", change: "Decrease",
+      transaction: "Preti Salon paid ₱2,200 cash for advertising used this month.",
+      prompt: "Cash", question: "What happened to Cash?", answer: "Decrease",
+      explanation: "Cash was paid for advertising, so Cash decreased.",
+      reasoning: ["Cash", "Asset", "Decrease"]
+    }].map(item => ({ ...item, type: "single", options: ["Increase", "Decrease"] }));
+
+    const STAGE5_POOL = [{
+      id: "S5-01", difficulty: "foundation", family: "cash-service",
+      transaction: "Preti Salon received ₱8,000 cash for services provided.",
+      correctAccounts: ["Cash", "Service Revenue"],
+      distractors: ["Accounts Receivable", "Accounts Payable"],
+      explanation: "Cash increases and Service Revenue increases."
+    },
+    {
+      id: "S5-02", difficulty: "foundation", family: "expense-cash",
+      transaction: "Preti Salon paid ₱3,000 cash for employee salaries.",
+      correctAccounts: ["Salaries Expense", "Cash"],
+      distractors: ["Accounts Payable", "Service Revenue"],
+      explanation: "Salaries Expense increases and Cash decreases."
+    },
+    {
+      id: "S5-03", difficulty: "foundation", family: "owner-investment",
+      transaction: "The owner invested ₱50,000 cash in Preti Salon.",
+      correctAccounts: ["Cash", "Owner's Capital"],
+      distractors: ["Service Revenue", "Owner's Drawing"],
+      explanation: "Cash increases and Owner's Capital increases."
+    },
+    {
+      id: "S5-04", difficulty: "foundation", family: "asset-cash",
+      transaction: "Preti Salon purchased ₱2,500 of supplies for cash.",
+      correctAccounts: ["Supplies", "Cash"],
+      distractors: ["Supplies Expense", "Accounts Payable"],
+      explanation: "Supplies increases and Cash decreases."
+    },
+    {
+      id: "S5-05", difficulty: "foundation", family: "expense-cash",
+      transaction: "Preti Salon paid ₱4,000 for monthly rent.",
+      correctAccounts: ["Rent Expense", "Cash"],
+      distractors: ["Accounts Payable", "Prepaid Insurance"],
+      explanation: "Rent Expense increases and Cash decreases."
+    },
+    {
+      id: "S5-06", difficulty: "foundation", family: "drawing",
+      transaction: "The owner withdrew ₱2,000 cash for personal use.",
+      correctAccounts: ["Owner's Drawing", "Cash"],
+      distractors: ["Owner's Capital", "Salaries Expense"],
+      explanation: "Owner's Drawing increases and Cash decreases."
+    },
+    {
+      id: "S5-07", difficulty: "standard", family: "asset-payable",
+      transaction: "Preti Salon purchased equipment on account for ₱18,000.",
+      correctAccounts: ["Equipment", "Accounts Payable"],
+      distractors: ["Cash", "Owner's Capital"],
+      explanation: "Equipment increases and Accounts Payable increases."
+    },
+    {
+      id: "S5-08", difficulty: "standard", family: "service-on-account",
+      transaction: "Preti Salon provided ₱6,000 of services to a customer on account.",
+      correctAccounts: ["Accounts Receivable", "Service Revenue"],
+      distractors: ["Cash", "Accounts Payable"],
+      explanation: "Accounts Receivable increases and Service Revenue increases."
+    },
+    {
+      id: "S5-09", difficulty: "standard", family: "collection",
+      transaction: "Preti Salon collected ₱4,500 from a customer who previously owed the business.",
+      correctAccounts: ["Cash", "Accounts Receivable"],
+      distractors: ["Service Revenue", "Accounts Payable"],
+      explanation: "Cash increases and Accounts Receivable decreases."
+    },
+    {
+      id: "S5-10", difficulty: "standard", family: "payable-payment",
+      transaction: "Preti Salon paid ₱7,000 toward an amount owed to a supplier.",
+      correctAccounts: ["Accounts Payable", "Cash"],
+      distractors: ["Supplies", "Service Revenue"],
+      explanation: "Accounts Payable decreases and Cash decreases."
+    },
+    {
+      id: "S5-11", difficulty: "challenge", family: "advance-receipt",
+      transaction: "Preti Salon received ₱10,000 cash from a client for services to be performed next month.",
+      correctAccounts: ["Cash", "Unearned Service Revenue"],
+      distractors: ["Service Revenue", "Accounts Receivable"],
+      explanation: "Cash increases and Unearned Service Revenue increases."
+    },
+    {
+      id: "S5-12", difficulty: "challenge", family: "advance-earned",
+      transaction: "Preti Salon completed ₱4,000 of services that had previously been paid for in advance.",
+      correctAccounts: ["Unearned Service Revenue", "Service Revenue"],
+      distractors: ["Cash", "Accounts Receivable"],
+      explanation: "Unearned Service Revenue decreases and Service Revenue increases."
+    },
+    {
+      id: "S5-13", difficulty: "standard", family: "expense-cash",
+      transaction: "Preti Salon paid ₱1,800 for the month's electricity and water.",
+      correctAccounts: ["Utilities Expense", "Cash"],
+      distractors: ["Accounts Payable", "Salaries Expense"],
+      explanation: "Utilities Expense increases and Cash decreases."
+    },
+    {
+      id: "S5-14", difficulty: "standard", family: "asset-cash",
+      transaction: "Preti Salon purchased furniture for ₱15,000 cash.",
+      correctAccounts: ["Furniture", "Cash"],
+      distractors: ["Rent Expense", "Accounts Payable"],
+      explanation: "Furniture increases and Cash decreases."
+    },
+    {
+      id: "S5-15", difficulty: "challenge", family: "prepayment",
+      transaction: "Preti Salon paid ₱12,000 for a one-year insurance policy.",
+      correctAccounts: ["Prepaid Insurance", "Cash"],
+      distractors: ["Insurance Expense", "Accounts Payable"],
+      explanation: "Prepaid Insurance increases and Cash decreases."
+    },
+    {
+      id: "S5-16", difficulty: "challenge", family: "borrowing",
+      transaction: "Preti Salon borrowed ₱40,000 from a bank and signed a promissory note.",
+      correctAccounts: ["Cash", "Notes Payable"],
+      distractors: ["Owner's Capital", "Service Revenue"],
+      explanation: "Cash increases and Notes Payable increases."
+    },
+    {
+      id: "S5-17", difficulty: "challenge", family: "note-payment",
+      transaction: "Preti Salon paid ₱5,000 on the principal of a note payable.",
+      correctAccounts: ["Notes Payable", "Cash"],
+      distractors: ["Interest Expense", "Accounts Payable"],
+      explanation: "Notes Payable decreases and Cash decreases."
+    },
+    {
+      id: "S5-18", difficulty: "standard", family: "advertising",
+      transaction: "Preti Salon paid ₱2,200 cash for online advertising used this month.",
+      correctAccounts: ["Advertising Expense", "Cash"],
+      distractors: ["Prepaid Insurance", "Accounts Payable"],
+      explanation: "Advertising Expense increases and Cash decreases."
+    },
+    {
+      id: "S5-19", difficulty: "standard", family: "asset-payable",
+      transaction: "Preti Salon purchased ₱3,600 of supplies on account.",
+      correctAccounts: ["Supplies", "Accounts Payable"],
+      distractors: ["Cash", "Supplies Expense"],
+      explanation: "Supplies increases and Accounts Payable increases."
+    },
+    {
+      id: "S5-20", difficulty: "standard", family: "capital-addition",
+      transaction: "The owner contributed furniture valued at ₱20,000 to the business.",
+      correctAccounts: ["Furniture", "Owner's Capital"],
+      distractors: ["Cash", "Service Revenue"],
+      explanation: "Furniture increases and Owner's Capital increases."
+    },
+    {
+      id: "S5-21", difficulty: "standard", family: "cash-service",
+      transaction: "Preti Salon earned ₱5,400 from walk-in clients and received cash immediately.",
+      correctAccounts: ["Cash", "Service Revenue"],
+      distractors: ["Accounts Receivable", "Owner's Capital"],
+      explanation: "Cash increases and Service Revenue increases."
+    },
+    {
+      id: "S5-22", difficulty: "standard", family: "service-on-account",
+      transaction: "Preti Salon completed ₱7,500 of services for a corporate client who will pay next month.",
+      correctAccounts: ["Accounts Receivable", "Service Revenue"],
+      distractors: ["Cash", "Unearned Service Revenue"],
+      explanation: "Accounts Receivable increases and Service Revenue increases."
+    },
+    {
+      id: "S5-23", difficulty: "standard", family: "collection",
+      transaction: "A customer paid ₱3,000 of an existing account balance.",
+      correctAccounts: ["Cash", "Accounts Receivable"],
+      distractors: ["Service Revenue", "Notes Payable"],
+      explanation: "Cash increases and Accounts Receivable decreases."
+    },
+    {
+      id: "S5-24", difficulty: "standard", family: "payable-payment",
+      transaction: "Preti Salon paid ₱2,500 of its outstanding balance to a supplier.",
+      correctAccounts: ["Accounts Payable", "Cash"],
+      distractors: ["Supplies Expense", "Owner's Drawing"],
+      explanation: "Accounts Payable decreases and Cash decreases."
+    },
+    {
+      id: "S5-25", difficulty: "challenge", family: "equipment-note",
+      transaction: "Preti Salon acquired equipment worth ₱22,000 by signing a promissory note.",
+      correctAccounts: ["Equipment", "Notes Payable"],
+      distractors: ["Cash", "Accounts Payable"],
+      explanation: "Equipment increases and Notes Payable increases."
+    },
+    {
+      id: "S5-26", difficulty: "challenge", family: "note-payment",
+      transaction: "Preti Salon paid ₱3,500 cash toward the principal of a note payable.",
+      correctAccounts: ["Notes Payable", "Cash"],
+      distractors: ["Accounts Payable", "Salaries Expense"],
+      explanation: "Notes Payable decreases and Cash decreases."
+    },
+    {
+      id: "S5-27", difficulty: "standard", family: "advertising",
+      transaction: "Preti Salon paid ₱2,200 cash for advertising used this month.",
+      correctAccounts: ["Advertising Expense", "Cash"],
+      distractors: ["Accounts Payable", "Service Revenue"],
+      explanation: "Advertising Expense increases and Cash decreases."
+    },
+    {
+      id: "S5-28", difficulty: "challenge", family: "equipment-note",
+      transaction: "Preti Salon purchased a salon machine and signed a ₱16,000 note for the amount.",
+      correctAccounts: ["Equipment", "Notes Payable"],
+      distractors: ["Cash", "Owner's Capital"],
+      explanation: "Equipment increases and Notes Payable increases."
+    },
+    {
+      id: "S5-29", difficulty: "challenge", family: "advance-receipt",
+      transaction: "A client paid ₱6,500 today for a salon package scheduled for next month.",
+      correctAccounts: ["Cash", "Unearned Service Revenue"],
+      distractors: ["Service Revenue", "Accounts Receivable"],
+      explanation: "Cash increases and Unearned Service Revenue increases."
+    },
+    {
+      id: "S5-30", difficulty: "challenge", family: "advance-earned",
+      transaction: "Preti Salon performed ₱2,500 of services from a package that a customer had prepaid.",
+      correctAccounts: ["Unearned Service Revenue", "Service Revenue"],
+      distractors: ["Cash", "Accounts Receivable"],
+      explanation: "Unearned Service Revenue decreases and Service Revenue increases."
+    },
+    {
+      id: "S5-31", difficulty: "standard", family: "asset-cash",
+      transaction: "Preti Salon purchased a new styling chair for ₱9,000 cash.",
+      correctAccounts: ["Furniture", "Cash"],
+      distractors: ["Rent Expense", "Accounts Payable"],
+      explanation: "Furniture increases and Cash decreases."
+    },
+    {
+      id: "S5-32", difficulty: "standard", family: "asset-payable",
+      transaction: "Preti Salon acquired a new dryer worth ₱14,000 on account.",
+      correctAccounts: ["Equipment", "Accounts Payable"],
+      distractors: ["Cash", "Utilities Expense"],
+      explanation: "Equipment increases and Accounts Payable increases."
+    },
+    {
+      id: "S5-33", difficulty: "foundation", family: "expense-cash",
+      transaction: "Preti Salon paid ₱1,500 cash for utilities used this month.",
+      correctAccounts: ["Utilities Expense", "Cash"],
+      distractors: ["Accounts Payable", "Prepaid Insurance"],
+      explanation: "Utilities Expense increases and Cash decreases."
+    },
+    {
+      id: "S5-34", difficulty: "standard", family: "owner-investment",
+      transaction: "The owner added ₱25,000 cash to the business.",
+      correctAccounts: ["Cash", "Owner's Capital"],
+      distractors: ["Service Revenue", "Owner's Drawing"],
+      explanation: "Cash increases and Owner's Capital increases."
+    },
+    {
+      id: "S5-35", difficulty: "foundation", family: "drawing",
+      transaction: "The owner took ₱1,200 cash from the business for personal expenses.",
+      correctAccounts: ["Owner's Drawing", "Cash"],
+      distractors: ["Owner's Capital", "Rent Expense"],
+      explanation: "Owner's Drawing increases and Cash decreases."
+    },
+    {
+      id: "S5-36", difficulty: "challenge", family: "liability-payment",
+      transaction: "Preti Salon paid the full ₱4,000 balance of a short-term account payable.",
+      correctAccounts: ["Accounts Payable", "Cash"],
+      distractors: ["Notes Payable", "Supplies"],
+      explanation: "Accounts Payable decreases and Cash decreases."
+    }].map(item => ({ ...item, type: "multi", prompt: "Identify the Accounts", question: "Which TWO accounts are affected?" }));
+
+    const STAGES = [
+      { key: "recall", title: "Quick Recall", subtitle: "Recall the normal balance before moving into application.", pool: STAGE1_POOL, validator: items => unique(items.map(item => item.family)).length >= 3 },
+      { key: "normal-opposite", title: "Normal or Opposite?", subtitle: "Apply the rule before translating it into Debit and Credit.", pool: STAGE2_POOL, validator: items => unique(items.map(item => item.family)).length >= 3 && unique(items.map(item => item.change)).length === 2 },
+      { key: "debit-credit", title: "Debit or Credit?", subtitle: "Use the normal balance and the direction of change.", pool: STAGE3_POOL, validator: items => unique(items.map(item => item.family)).length >= 3 && unique(items.map(item => item.change)).length === 2 },
+      { key: "transaction-detective", title: "Transaction Detective", subtitle: "Read the transaction and determine what happened to the target account.", pool: STAGE4_POOL, validator: items => unique(items.map(item => item.family)).length >= 3 && unique(items.map(item => item.change)).length === 2 },
+      { key: "two-accounts", title: "Two-Account Application", subtitle: "Identify the two accounts affected by each transaction.", pool: STAGE5_POOL, validator: items => unique(items.map(item => item.family)).length >= 3 }
+    ];
+
+    let currentAttemptNumber = 1;
+    let resultCommitted = false;
+    let score = 0;
+    let stageScores = [0, 0, 0, 0, 0];
+    let currentStreak = 0;
+    let assessmentStart = null;
+    let assessmentEnd = null;
+    let attemptCode = "";
+    let student = { name: "", email: "", section: "", date: "" };
+
+    let sessionStages = [];
+    let flatItems = [];
+    let currentStageIndex = 0;
+    let currentItemIndex = 0;
+    let overallItemIndex = 0;
+    let locked = false;
+
+    const infoScreen = document.getElementById("infoScreen");
+    const reviewScreen = document.getElementById("reviewScreen");
+    const assessmentScreen = document.getElementById("assessmentScreen");
+    const resultsScreen = document.getElementById("resultsScreen");
+    const infoValidation = document.getElementById("infoValidation");
+    const deviceAttemptCount = document.getElementById("deviceAttemptCount");
+    const deviceBestScore = document.getElementById("deviceBestScore");
+    const transactionBox = document.getElementById("transactionBox");
+    const promptTitle = document.getElementById("promptTitle");
+    const metaChip = document.getElementById("metaChip");
+    const questionText = document.getElementById("questionText");
+    const interactionArea = document.getElementById("interactionArea");
+    const stageNumber = document.getElementById("stageNumber");
+    const stageTitle = document.getElementById("stageTitle");
+    const stageSubtitle = document.getElementById("stageSubtitle");
+    const overallProgress = document.getElementById("overallProgress");
+    const stageProgress = document.getElementById("stageProgress");
+    const progressFill = document.getElementById("progressFill");
+    const feedback = document.getElementById("feedback");
+    const feedbackTitle = document.getElementById("feedbackTitle");
+    const feedbackExplanation = document.getElementById("feedbackExplanation");
+    const reasoning = document.getElementById("reasoning");
+    const nextButton = document.getElementById("nextButton");
+    const streakToast = document.getElementById("streakToast");
+
+    function showOnly(screen) {
+      [infoScreen, reviewScreen, assessmentScreen, resultsScreen].forEach(section => section.classList.add("hidden"));
+      screen.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function defaultHistory() {
+      return { completedAttempts: 0, bestScore: null, bestTimeMs: null, name: "", email: "", section: "" };
+    }
+
+    function loadHistory() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? { ...defaultHistory(), ...JSON.parse(raw) } : defaultHistory();
+      } catch (error) {
+        return defaultHistory();
+      }
+    }
+
+    function saveHistory(history) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+      } catch (error) {
+        // ignore storage errors
+      }
+    }
+
+    function setDefaultDate() {
+      const now = new Date();
+      const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+      document.getElementById("assessmentDate").value = local.toISOString().slice(0, 10);
+    }
+
+    function validEmail(value) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    function refreshDeviceStatus() {
+      const history = loadHistory();
+      deviceAttemptCount.textContent = history.completedAttempts;
+      deviceBestScore.textContent = history.bestScore === null ? "No completed attempt yet" : `${history.bestScore} / 20`;
+    }
+
+    function prefillStudentFromHistory() {
+      const history = loadHistory();
+      document.getElementById("studentName").value = history.name || "";
+      document.getElementById("studentEmail").value = history.email || "";
+      document.getElementById("studentSection").value = history.section || "";
+      refreshDeviceStatus();
+    }
+
+    function buildSession() {
+      sessionStages = STAGES.map(stage => ({ ...stage, items: pickDifficultyMix(stage.pool, stage.validator) }));
+      flatItems = sessionStages.flatMap(stage => stage.items);
+      currentStageIndex = 0;
+      currentItemIndex = 0;
+      overallItemIndex = 0;
+      score = 0;
+      stageScores = [0, 0, 0, 0, 0];
+      currentStreak = 0;
+      locked = false;
+      assessmentStart = Date.now();
+      assessmentEnd = null;
+      attemptCode = createAttemptCode(flatItems);
+      resultCommitted = false;
+      currentAttemptNumber = loadHistory().completedAttempts + 1;
+    }
+
+    function renderCurrentItem() {
+      const stage = sessionStages[currentStageIndex];
+      const item = stage.items[currentItemIndex];
+      locked = false;
+
+      stageNumber.textContent = `Stage ${currentStageIndex + 1} of ${sessionStages.length}`;
+      stageTitle.textContent = stage.title;
+      stageSubtitle.textContent = stage.subtitle;
+      overallProgress.textContent = `Item ${overallItemIndex + 1} of 20`;
+      stageProgress.textContent = `${currentItemIndex + 1} of 4 in this stage`;
+      progressFill.style.width = `${(overallItemIndex / 20) * 100}%`;
+
+      if (item.transaction) {
+        transactionBox.textContent = item.transaction;
+        transactionBox.classList.remove("hidden");
+      } else {
+        transactionBox.textContent = "";
+        transactionBox.classList.add("hidden");
+      }
+
+      promptTitle.textContent = item.prompt || "";
+
+      if (item.meta) {
+        metaChip.textContent = item.meta;
+        metaChip.classList.remove("hidden");
+      } else {
+        metaChip.textContent = "";
+        metaChip.classList.add("hidden");
+      }
+
+      questionText.textContent = item.question;
+      interactionArea.innerHTML = "";
+      feedback.classList.add("hidden");
+      feedbackTitle.textContent = "";
+      feedbackExplanation.textContent = "";
+      reasoning.innerHTML = "";
+
+      if (item.type === "single") {
+        renderSingleItem(item);
+      } else {
+        renderMultiItem(item);
+      }
+    }
+
+    function renderSingleItem(item) {
+      const grid = document.createElement("div");
+      grid.className = "answer-grid";
+
+      item.options.forEach(option => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "answer-button";
+        button.dataset.value = option;
+
+        if (option === "Debit") {
+          button.innerHTML = "<strong>← DEBIT</strong><small>LEFT</small>";
+        } else if (option === "Credit") {
+          button.innerHTML = "<strong>CREDIT →</strong><small>RIGHT</small>";
+        } else if (option === "Increase") {
+          button.innerHTML = "<strong>INCREASE</strong><small>GOES UP</small>";
+        } else if (option === "Decrease") {
+          button.innerHTML = "<strong>DECREASE</strong><small>GOES DOWN</small>";
+        } else if (option === "Normal Side") {
+          button.innerHTML = "<strong>NORMAL SIDE</strong><small>FOLLOW THE RULE</small>";
+        } else if (option === "Opposite Side") {
+          button.innerHTML = "<strong>OPPOSITE SIDE</strong><small>GO AGAINST THE RULE</small>";
+        } else {
+          button.textContent = option;
+        }
+
+        button.addEventListener("click", () => answerSingle(item, option, grid));
+        grid.appendChild(button);
+      });
+
+      interactionArea.appendChild(grid);
+    }
+
+    function answerSingle(item, choice, grid) {
+      if (locked) return;
+      locked = true;
+
+      const isCorrect = choice === item.answer;
+      grid.querySelectorAll(".answer-button").forEach(button => {
+        button.disabled = true;
+        const value = button.dataset.value;
+
+        if (value === item.answer) button.classList.add("correct");
+        if (value === choice && value !== item.answer) button.classList.add("incorrect");
+      });
+
+      recordResult(isCorrect, item);
+    }
+
+    function renderMultiItem(item) {
+      const grid = document.createElement("div");
+      grid.className = "check-grid";
+      const selected = new Set();
+      const options = shuffle([...item.correctAccounts, ...item.distractors]);
+
+      options.forEach(option => {
+        const label = document.createElement("label");
+        label.className = "check-choice";
+
+        const input = document.createElement("input");
+        input.type = "checkbox";
+        input.value = option;
+
+        const text = document.createElement("span");
+        text.textContent = option;
+
+        input.addEventListener("change", () => {
+          if (input.checked) {
+            if (selected.size >= 2) {
+              input.checked = false;
+              return;
+            }
+            selected.add(option);
+          } else {
+            selected.delete(option);
+          }
+          submit.disabled = selected.size !== 2;
+        });
+
+        label.append(input, text);
+        grid.appendChild(label);
+      });
+
+      const submit = document.createElement("button");
+      submit.type = "button";
+      submit.className = "primary";
+      submit.textContent = "CHECK ANSWER";
+      submit.disabled = true;
+      submit.style.marginTop = "18px";
+
+      submit.addEventListener("click", () => {
+        if (locked) return;
+        locked = true;
+
+        const chosen = [...selected];
+        const isCorrect = sameMembers(chosen, item.correctAccounts);
+
+        grid.querySelectorAll(".check-choice").forEach(label => {
+          const input = label.querySelector("input");
+          input.disabled = true;
+
+          if (item.correctAccounts.includes(input.value)) {
+            label.classList.add("correct");
+          } else if (input.checked) {
+            label.classList.add("incorrect");
+          }
+        });
+
+        submit.disabled = true;
+        recordResult(isCorrect, item);
+      });
+
+      interactionArea.append(grid, submit);
+    }
+
+    function renderReasoning(steps) {
+      reasoning.innerHTML = "";
+      steps.forEach((step, index) => {
+        const chip = document.createElement("span");
+        chip.textContent = step;
+        reasoning.appendChild(chip);
+
+        if (index < steps.length - 1) {
+          const arrow = document.createElement("b");
+          arrow.textContent = "→";
+          reasoning.appendChild(arrow);
+        }
+      });
+    }
+
+    function maybeShowStreak(streak) {
+      const notices = {
+        3: { title: "Nice start.", message: "You’re building a consistent pattern.", tone: "tone-blue" },
+        5: { title: "5 in a row.", message: "You’re applying the normal balance rule well.", tone: "tone-violet" },
+        8: { title: "Strong streak.", message: "Keep following the account → normal balance → change logic.", tone: "tone-blue" },
+        10: { title: "10 in a row.", message: "Your Debit and Credit decisions are becoming more consistent.", tone: "tone-gold" },
+        15: { title: "Excellent consistency.", message: "Stay careful through the remaining items.", tone: "tone-green" },
+        20: { title: "Perfect streak.", message: "You maintained accurate reasoning from start to finish.", tone: "tone-gold" }
+      };
+
+      const notice = notices[streak];
+      if (!notice) return;
+
+      clearTimeout(window.__streakTimeout);
+      streakToast.className = `streak-toast ${notice.tone}`;
+      streakToast.innerHTML = `<strong>${notice.title}</strong><span>${notice.message}</span>`;
+      requestAnimationFrame(() => streakToast.classList.add("show"));
+      window.__streakTimeout = setTimeout(() => streakToast.classList.remove("show"), 3000);
+    }
+
+    function recordResult(isCorrect, item) {
+      if (isCorrect) {
+        score++;
+        stageScores[currentStageIndex]++;
+        currentStreak++;
+        maybeShowStreak(currentStreak);
+      } else {
+        currentStreak = 0;
+      }
+
+      if (overallItemIndex === 19) assessmentEnd = Date.now();
+
+      feedbackTitle.textContent = isCorrect ? "Correct." : "Not quite.";
+      feedbackTitle.className = isCorrect ? "feedback-title good" : "feedback-title";
+      feedbackExplanation.textContent = item.explanation;
+      renderReasoning(item.reasoning || []);
+      feedback.classList.remove("hidden");
+
+      nextButton.textContent = overallItemIndex === 19 ? "VIEW ASSESSMENT SUMMARY" : "CONTINUE";
+      progressFill.style.width = `${((overallItemIndex + 1) / 20) * 100}%`;
+    }
+
+    function moveNext() {
+      if (!locked) return;
+
+      if (overallItemIndex === 19) {
+        showResults();
+        return;
+      }
+
+      overallItemIndex++;
+
+      if (currentItemIndex < 3) currentItemIndex++;
+      else {
+        currentStageIndex++;
+        currentItemIndex = 0;
+      }
+
+      renderCurrentItem();
+    }
+
+    function resultLevel(percentage) {
+      if (percentage >= 90) return "Strong";
+      if (percentage >= 80) return "Proficient";
+      if (percentage >= 70) return "Developing";
+      return "Needs More Practice";
+    }
+
+    function endingMessage(scoreValue) {
+      if (scoreValue === 20) return { title: "Excellent work.", message: "You demonstrated strong control of normal balances and their application to basic transactions." };
+      if (scoreValue >= 18) return { title: "Strong performance.", message: "Your understanding of normal balances is becoming dependable. Review the few items you missed and keep applying the same reasoning." };
+      if (scoreValue >= 15) return { title: "Good progress.", message: "You understand the main pattern. A little more practice with increases, decreases, and transaction effects will strengthen your accuracy." };
+      if (scoreValue >= 11) return { title: "You’re getting there.", message: "Review how each account is classified, identify its normal balance, then decide whether the account increased or decreased." };
+      return { title: "More practice will help.", message: "Return to the Normal Balance Guide and work through the sequence one step at a time: account type → normal balance → increase/decrease → Debit or Credit." };
+    }
+
+    function commitCompletedAttempt() {
+      if (resultCommitted) return loadHistory();
+
+      const history = loadHistory();
+      const elapsed = assessmentEnd - assessmentStart;
+
+      history.completedAttempts += 1;
+      history.name = student.name;
+      history.email = student.email;
+      history.section = student.section;
+
+      if (history.bestScore === null || score > history.bestScore || (score === history.bestScore && (history.bestTimeMs === null || elapsed < history.bestTimeMs))) {
+        history.bestScore = score;
+        history.bestTimeMs = elapsed;
+      }
+
+      saveHistory(history);
+      resultCommitted = true;
+      currentAttemptNumber = history.completedAttempts;
+      return history;
+    }
+
+    function showResults() {
+      if (!assessmentEnd) assessmentEnd = Date.now();
+      const percentage = Math.round((score / 20) * 100);
+      const history = commitCompletedAttempt();
+      const encouragement = endingMessage(score);
+
+      document.getElementById("resultLevel").textContent = resultLevel(percentage);
+      document.getElementById("resultPercentage").textContent = `${percentage}%`;
+      document.getElementById("resultScore").textContent = `${score} / 20`;
+      document.getElementById("resultName").textContent = student.name;
+      document.getElementById("resultEmail").textContent = student.email;
+      document.getElementById("resultSection").textContent = student.section;
+      document.getElementById("resultDate").textContent = formatDateLong(student.date);
+      document.getElementById("resultAttemptNumber").textContent = currentAttemptNumber;
+      document.getElementById("resultAttemptCode").textContent = attemptCode;
+      document.getElementById("resultBestScore").textContent = `${history.bestScore} / 20`;
+      document.getElementById("resultTime").textContent = formatElapsed(assessmentEnd - assessmentStart);
+      document.getElementById("resultCompleted").textContent = new Date(assessmentEnd).toLocaleString(undefined, { year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+      document.getElementById("encouragementTitle").textContent = encouragement.title;
+      document.getElementById("encouragementMessage").textContent = encouragement.message;
+
+      const breakdownRows = document.getElementById("breakdownRows");
+      breakdownRows.innerHTML = "";
+      sessionStages.forEach((stage, index) => {
+        const row = document.createElement("div");
+        row.className = "breakdown-row";
+
+        const text = document.createElement("div");
+        const title = document.createElement("strong");
+        title.textContent = `${index + 1}. ${stage.title}`;
+        const description = document.createElement("p");
+        description.textContent = stage.subtitle;
+        text.append(title, description);
+
+        const scoreCell = document.createElement("div");
+        scoreCell.className = "breakdown-score";
+        scoreCell.textContent = `${stageScores[index]} / 4`;
+
+        row.append(text, scoreCell);
+        breakdownRows.appendChild(row);
+      });
+
+      showOnly(resultsScreen);
+    }
+
+    function resetForNewAttempt() {
+      const history = loadHistory();
+      student = { name: history.name || "", email: history.email || "", section: history.section || "", date: "" };
+      document.getElementById("studentName").value = student.name;
+      document.getElementById("studentEmail").value = student.email;
+      document.getElementById("studentSection").value = student.section;
+      setDefaultDate();
+      sessionStages = [];
+      flatItems = [];
+      currentStageIndex = 0;
+      currentItemIndex = 0;
+      overallItemIndex = 0;
+      score = 0;
+      stageScores = [0, 0, 0, 0, 0];
+      currentStreak = 0;
+      assessmentStart = null;
+      assessmentEnd = null;
+      attemptCode = "";
+      locked = false;
+      resultCommitted = false;
+      infoValidation.classList.add("hidden");
+      refreshDeviceStatus();
+      showOnly(infoScreen);
+      document.getElementById("studentName").focus();
+    }
+
+    document.getElementById("continueToReview").addEventListener("click", () => {
+      const name = document.getElementById("studentName").value.trim();
+      const email = document.getElementById("studentEmail").value.trim();
+      const section = document.getElementById("studentSection").value.trim();
+      const date = document.getElementById("assessmentDate").value;
+
+      if (!name || !email || !section || !date || !validEmail(email)) {
+        infoValidation.textContent = !email || validEmail(email) ? "Please complete your name, institutional email, section, and date." : "Please enter a valid institutional email address.";
+        infoValidation.classList.remove("hidden");
+        return;
+      }
+
+      infoValidation.classList.add("hidden");
+      student = { name, email, section, date };
+      showOnly(reviewScreen);
+    });
+
+    document.getElementById("backToInfo").addEventListener("click", () => showOnly(infoScreen));
+    document.getElementById("beginAssessment").addEventListener("click", () => {
+      buildSession();
+      showOnly(assessmentScreen);
+      renderCurrentItem();
+    });
+    nextButton.addEventListener("click", moveNext);
+    document.getElementById("printResult").addEventListener("click", () => window.print());
+    document.getElementById("newAttempt").addEventListener("click", resetForNewAttempt);
+
+    setDefaultDate();
+prefillStudentFromHistory();
+  </script>
+</body>
+</html>

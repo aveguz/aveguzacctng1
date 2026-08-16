@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ave Guzman ACCTNG 1 Learning Hub</title>
+<meta name="description" content="Ave Guzman ACCTNG 1 Learning Hub is an online space for Fundamentals of Accountancy, Business, and Management 1, bringing together interactive modules, guided activities, resources, and challenges to strengthen accounting foundations through practice.">
+
+<style>
+:root{
+  --bg:#f3f7f7;
+  --surface:#ffffff;
+  --surface-2:#f8fbfb;
+  --ink:#203136;
+  --muted:#697c81;
+  --line:#d7e2e3;
+  --accent:#3f6870;
+  --accent-dark:#31535a;
+  --accent-soft:#e8f1f2;
+  --gold:#87683b;
+  --gold-soft:#f7f1e5;
+  --shadow:0 10px 28px rgba(33,55,60,.075);
+  --radius:18px;
+  --max:1180px;
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at top left,rgba(63,104,112,.07),transparent 24rem),
+    var(--bg);
+  line-height:1.6;
+}
+
+a{color:inherit}
+
+.container{
+  width:min(var(--max),calc(100% - 40px));
+  margin-inline:auto;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:30;
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+
+.nav{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:22px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  text-decoration:none;
+  min-width:0;
+}
+
+.brand-mark{
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:var(--accent);
+  color:white;
+  font-size:.9rem;
+  font-weight:900;
+  letter-spacing:.04em;
+  flex:0 0 auto;
+}
+
+.brand-title{
+  font-size:.82rem;
+  font-weight:900;
+  letter-spacing:.1em;
+  color:var(--accent-dark);
+}
+
+.brand-sub{
+  margin-top:2px;
+  color:var(--muted);
+  font-size:.72rem;
+  font-weight:750;
+  letter-spacing:.045em;
+}
+
+.navlinks{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.navlinks a,
+.navlinks .nav-inactive{
+  display:inline-block;
+  padding:8px 9px;
+  border-radius:9px;
+  text-decoration:none;
+  color:var(--muted);
+  font-size:.75rem;
+  font-weight:850;
+  letter-spacing:.045em;
+}
+
+.navlinks a:hover,
+.navlinks a:focus-visible,
+.navlinks a.active{
+  color:var(--accent-dark);
+  background:var(--accent-soft);
+}
+
+.navlinks .nav-inactive{
+  opacity:.48;
+  cursor:not-allowed;
+}
+
+.hero{
+  padding:72px 0 54px;
+}
+
+.hero-inner{
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:40px;
+  align-items:center;
+}
+
+.eyebrow,
+.kicker{
+  font-size:.76rem;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  color:var(--accent);
+}
+
+h1,h2,h3,h4,p{margin-top:0}
+
+h1{
+  margin:12px 0 7px;
+  font-size:clamp(3rem,8vw,6rem);
+  line-height:.95;
+  letter-spacing:-.06em;
+}
+
+.subtitle{
+  margin:0 0 17px;
+  font-size:clamp(1.02rem,2vw,1.28rem);
+  font-weight:700;
+  color:#435b61;
+}
+
+.lead{
+  max-width:650px;
+  color:var(--muted);
+  font-size:1.05rem;
+}
+
+.lead strong{color:var(--ink)}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:24px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  padding:10px 14px;
+  border:1px solid transparent;
+  border-radius:11px;
+  text-decoration:none;
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.035em;
+  transition:transform .18s ease,background .18s ease,border-color .18s ease,color .18s ease;
+}
+
+.btn:hover{transform:translateY(-1px)}
+
+.btn-primary{
+  background:var(--accent);
+  color:#fff;
+  box-shadow:0 4px 12px rgba(63,104,112,.14);
+}
+
+.btn-primary:hover{background:var(--accent-dark)}
+
+.btn-secondary{
+  background:var(--accent-soft);
+  color:var(--accent-dark);
+  border-color:#d3e2e4;
+}
+
+.btn-secondary:hover{background:#dcebed}
+
+.btn-amber{
+  background:var(--gold);
+  color:#fff;
+}
+
+.btn-muted{
+  background:#eef2f2;
+  color:#88979a;
+  border-color:#e0e7e8;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+
+.hero-card,
+.card,
+.panel,
+.notice{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.hero-card{
+  padding:24px;
+}
+
+.equation{
+  padding:18px 16px;
+  border-radius:14px;
+  background:var(--accent-soft);
+  color:var(--accent-dark);
+  text-align:center;
+  font-size:clamp(1.15rem,3vw,1.6rem);
+  font-weight:900;
+  letter-spacing:-.02em;
+}
+
+.mini-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+  margin-top:13px;
+}
+
+.mini{
+  min-height:112px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:var(--surface-2);
+}
+
+.mini span,
+.mini small{
+  display:block;
+  color:var(--muted);
+}
+
+.mini span{
+  margin-bottom:6px;
+  font-size:.7rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  font-weight:850;
+}
+
+.mini strong{
+  display:block;
+  margin-bottom:3px;
+  font-size:1rem;
+}
+
+.mini small{
+  font-size:.8rem;
+  line-height:1.45;
+}
+
+.section{
+  padding:38px 0;
+}
+
+.section-title{
+  margin:0 0 18px;
+  font-size:clamp(1.6rem,4vw,2.45rem);
+  letter-spacing:-.035em;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.card{
+  padding:20px;
+  min-height:255px;
+  display:flex;
+  flex-direction:column;
+}
+
+.card .icon{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  background:var(--accent-soft);
+  color:var(--accent-dark);
+  font-size:1.05rem;
+  font-weight:900;
+}
+
+.card.challenge .icon{
+  background:var(--gold-soft);
+  color:var(--gold);
+}
+
+.card h3{
+  margin:17px 0 7px;
+  font-size:1.15rem;
+}
+
+.card p{
+  color:var(--muted);
+  font-size:.92rem;
+}
+
+.card .btn{
+  margin-top:auto;
+  align-self:flex-start;
+}
+
+.feature-grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:16px;
+}
+
+.panel{
+  padding:22px;
+}
+
+.panel.highlight{
+  background:linear-gradient(180deg,#fff,var(--gold-soft));
+}
+
+.module-row{
+  display:grid;
+  grid-template-columns:64px 1fr;
+  gap:17px;
+  align-items:start;
+  margin-top:12px;
+}
+
+.module-badge{
+  width:58px;
+  height:58px;
+  display:grid;
+  place-items:center;
+  border-radius:16px;
+  background:var(--accent);
+  color:#fff;
+  font-size:1.05rem;
+  font-weight:900;
+}
+
+.small{
+  margin-bottom:4px;
+  color:var(--muted);
+  font-size:.73rem;
+  font-weight:850;
+  letter-spacing:.08em;
+}
+
+.panel h2{
+  margin-bottom:8px;
+  font-size:clamp(1.45rem,3vw,2rem);
+  letter-spacing:-.025em;
+}
+
+.panel p{
+  color:var(--muted);
+}
+
+.feature-list{
+  margin:15px 0 20px;
+  padding-left:19px;
+  color:#566b70;
+}
+
+.feature-list li{margin:5px 0}
+
+.notice{
+  padding:18px 20px;
+  color:#4c6268;
+  box-shadow:none;
+}
+
+.notice strong{
+  color:var(--accent-dark);
+}
+
+.about p{
+  max-width:900px;
+  color:var(--muted);
+}
+
+.footer{
+  margin-top:28px;
+  padding:38px 0 28px;
+  background:#eaf1f2;
+  border-top:1px solid #d5e1e2;
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.footer h4{
+  margin-bottom:5px;
+  color:var(--accent-dark);
+  font-size:.77rem;
+  letter-spacing:.1em;
+}
+
+.footer p{
+  margin:0;
+  color:var(--muted);
+  font-size:.85rem;
+}
+
+.copy{
+  margin-top:25px;
+  padding-top:17px;
+  border-top:1px solid #d4e0e1;
+  color:#65797e;
+  font-size:.79rem;
+  font-weight:750;
+}
+
+a:focus-visible,
+.btn:focus-visible{
+  outline:3px solid rgba(63,104,112,.24);
+  outline-offset:3px;
+}
+
+@media(max-width:980px){
+  .nav{
+    align-items:flex-start;
+    flex-direction:column;
+    padding:13px 0;
+  }
+
+  .navlinks{justify-content:flex-start}
+
+  .hero{padding-top:52px}
+
+  .hero-inner,
+  .feature-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cards{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:680px){
+  .container{
+    width:min(var(--max),calc(100% - 28px));
+  }
+
+  .navlinks{
+    width:100%;
+    gap:2px;
+  }
+
+  .navlinks a,
+  .navlinks .nav-inactive{
+    padding:7px;
+    font-size:.7rem;
+  }
+
+  .hero{padding:40px 0 30px}
+
+  .cards,
+  .mini-grid,
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .card{min-height:auto}
+
+  .module-row{
+    grid-template-columns:52px 1fr;
+  }
+
+  .module-badge{
+    width:48px;
+    height:48px;
+    border-radius:13px;
+  }
+
+  .actions .btn{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="index.html" aria-label="ACCTNG 1 Learning Hub home">
+      <div class="brand-mark">AG</div>
+      <div>
+        <div class="brand-title">AVE GUZMAN</div>
+        <div class="brand-sub">ACCTNG 1 LEARNING HUB</div>
+      </div>
+    </a>
+
+    <nav class="navlinks" aria-label="Main navigation">
+      <a class="active" href="index.html">HOME</a>
+      <a href="modules.html">MODULES</a>
+      <a href="#activities">ACTIVITIES</a>
+      <a href="challenges.html">CHALLENGES</a>
+      <a href="#resources">RESOURCES</a>
+      <a href="#about">ABOUT</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <div class="eyebrow">Ave Guzman Learning Hub</div>
+      <h1>ACCTNG 1</h1>
+      <p class="subtitle">Fundamentals of Accountancy, Business, and Management 1</p>
+      <p class="lead">
+        Learn the concepts. Practice the process.
+        <strong>Build accounting habits.</strong>
+      </p>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="module01.html">START HERE →</a>
+        <a class="btn btn-secondary" href="#how">HOW TO USE THIS SITE</a>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="equation">Assets = Liabilities + Owner's Equity</div>
+
+      <div class="mini-grid">
+        <div class="mini">
+          <span>Step 01</span>
+          <strong>Read</strong>
+          <small>What happened in the transaction?</small>
+        </div>
+
+        <div class="mini">
+          <span>Step 02</span>
+          <strong>Identify</strong>
+          <small>Which accounts were affected?</small>
+        </div>
+
+        <div class="mini">
+          <span>Step 03</span>
+          <strong>Analyze</strong>
+          <small>Did each account increase or decrease?</small>
+        </div>
+
+        <div class="mini">
+          <span>Step 04</span>
+          <strong>Connect</strong>
+          <small>How did the accounting equation change?</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Continue Learning</h2>
+
+    <div class="cards">
+      <article class="card">
+        <div class="icon" aria-hidden="true">01</div>
+        <h3>Modules</h3>
+        <p>Interactive lessons designed to build concepts and accounting processes step by step.</p>
+        <a class="btn btn-primary" href="module01.html">VIEW MODULES →</a>
+      </article>
+
+      <article class="card" id="activities">
+        <div class="icon" aria-hidden="true">A</div>
+        <h3>Activities</h3>
+        <p>Guided exercises and application tasks for skill-building.</p>
+        <span class="btn btn-muted">COMING SOON</span>
+      </article>
+
+      <article class="card challenge">
+        <div class="icon" aria-hidden="true">C</div>
+        <h3>Challenges</h3>
+        <p>Short interactive challenges for checking understanding and strengthening mastery.</p>
+        <a class="btn btn-primary" href="challenges.html">EXPLORE CHALLENGES →</a>
+      </article>
+
+      <article class="card" id="resources">
+        <div class="icon" aria-hidden="true">R</div>
+        <h3>Resources</h3>
+        <p>Guides, references, and supporting materials for review.</p>
+        <span class="btn btn-muted">COMING SOON</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:8px">
+  <div class="container feature-grid">
+
+    <article class="panel">
+      <div class="kicker">Current Focus</div>
+
+      <div class="module-row">
+        <div class="module-badge">01</div>
+
+        <div>
+          <div class="small">MODULE 01</div>
+          <h2>Changes in the Expanded Accounting Equation</h2>
+          <p>
+            Learn how common service-business transactions affect specific accounts,
+            determine whether those accounts increase or decrease, and connect the
+            changes to the Expanded Accounting Equation.
+          </p>
+          <a class="btn btn-primary" href="module01.html">OPEN MODULE 01 →</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="panel highlight">
+      <div class="kicker">Practice Now</div>
+      <h2>Normal Balance Challenge</h2>
+      <p>
+        A short interactive challenge for account classification, normal balances,
+        Debit and Credit, and transaction effect practice.
+      </p>
+
+      <ul class="feature-list">
+        <li>Randomized account items</li>
+        <li>Immediate feedback</li>
+        <li>Mastery-focused practice</li>
+        <li>Attempt and score summary</li>
+      </ul>
+
+      <a class="btn btn-primary" href="challenge-normal-balance.html">START CHALLENGE →</a>
+    </article>
+
+  </div>
+</section>
+
+<section class="section about" id="how">
+  <div class="container">
+    <h2 class="section-title">How to Use This Hub</h2>
+
+    <div class="notice">
+      <strong>Learn → Practice → Check → Build.</strong>
+      Begin with the current module. Move through the examples at your own pace,
+      return to earlier sections when needed, and use future activities and challenges
+      to strengthen the process through repeated application.
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="container">
+    <h2 class="section-title">About This Site</h2>
+    <p>
+      Ave Guzman ACCTNG 1 Learning Hub is an online learning space for
+      Fundamentals of Accountancy, Business, and Management 1. It brings together
+      interactive modules, guided practice, resources, and challenges designed to
+      strengthen accounting foundations and support careful, process-oriented learning.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>LEARN</h4>
+        <p>Understand the ideas clearly.</p>
+      </div>
+
+      <div>
+        <h4>PRACTICE</h4>
+        <p>Apply concepts through guided work.</p>
+      </div>
+
+      <div>
+        <h4>CHECK</h4>
+        <p>Identify what still needs review.</p>
+      </div>
+
+      <div>
+        <h4>BUILD</h4>
+        <p>Develop confidence and sound accounting habits.</p>
+      </div>
+    </div>
+
+    <div class="copy">Prepared for ACCTNG 1 • ave.guz • 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

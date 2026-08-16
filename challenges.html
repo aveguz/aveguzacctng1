@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Challenges | Ave Guzman ACCTNG 1 Learning Hub</title>
+<meta name="description" content="ACCTNG 1 interactive mastery challenges for Fundamentals of Accountancy, Business, and Management 1.">
+<style>
+:root{
+  --bg:#f3f7f7;
+  --surface:#ffffff;
+  --surface-2:#f8fbfb;
+  --ink:#203136;
+  --muted:#697c81;
+  --line:#d7e2e3;
+  --accent:#3f6870;
+  --accent-dark:#31535a;
+  --accent-soft:#e8f1f2;
+  --gold:#87683b;
+  --gold-dark:#70552f;
+  --gold-soft:#f7f1e5;
+  --shadow:0 10px 28px rgba(33,55,60,.075);
+  --radius:18px;
+  --max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:radial-gradient(circle at top left,rgba(63,104,112,.07),transparent 24rem),var(--bg);
+  line-height:1.6;
+}
+a{color:inherit}
+.container{width:min(var(--max),calc(100% - 40px));margin-inline:auto}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;min-width:0}
+.brand-mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:var(--accent);color:white;font-size:.9rem;font-weight:900;letter-spacing:.04em;flex:0 0 auto}
+.brand-title{font-size:.82rem;font-weight:900;letter-spacing:.1em;color:var(--accent-dark)}
+.brand-sub{margin-top:2px;color:var(--muted);font-size:.72rem;font-weight:750;letter-spacing:.045em}
+.navlinks{display:flex;align-items:center;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.navlinks a,.navlinks .nav-inactive{display:inline-block;padding:8px 9px;border-radius:9px;text-decoration:none;color:var(--muted);font-size:.75rem;font-weight:850;letter-spacing:.045em}
+.navlinks a:hover,.navlinks a:focus-visible,.navlinks a.active{color:var(--accent-dark);background:var(--accent-soft)}
+.navlinks .nav-inactive{opacity:.48;cursor:not-allowed}
+main{padding:0 0 58px}
+.page-head{padding:62px 0 30px}
+.eyebrow{font-size:.76rem;font-weight:900;text-transform:uppercase;letter-spacing:.13em;color:var(--gold)}
+h1,h2,h3,p{margin-top:0}
+h1{margin:10px 0 12px;font-size:clamp(2.6rem,7vw,5rem);line-height:.98;letter-spacing:-.055em}
+.lead{max-width:780px;margin-bottom:0;color:var(--muted);font-size:1.03rem}
+.challenge-list{display:grid;gap:16px}
+.challenge-card{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:22px;align-items:center;padding:24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.challenge-card.available:hover{transform:translateY(-2px);border-color:#d5c5a2;box-shadow:0 14px 32px rgba(33,55,60,.09)}
+.challenge-number{width:64px;height:64px;border-radius:17px;display:grid;place-items:center;background:var(--gold-soft);color:var(--gold);font-size:1.05rem;font-weight:900;letter-spacing:.04em}
+.challenge-card.available .challenge-number{background:var(--gold);color:white}
+.challenge-meta{margin-bottom:5px;font-size:.71rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+.challenge-card h2{margin:0 0 6px;font-size:clamp(1.2rem,2.5vw,1.55rem);letter-spacing:-.02em}
+.challenge-card p{max-width:760px;margin:0;color:var(--muted);font-size:.92rem}
+.challenge-action{display:flex;justify-content:flex-end;align-items:center;min-width:155px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 14px;border:1px solid transparent;border-radius:11px;text-decoration:none;font-size:.78rem;font-weight:900;letter-spacing:.035em;white-space:nowrap;transition:transform .18s ease,background .18s ease,border-color .18s ease,color .18s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-challenge{background:var(--gold);color:white;box-shadow:0 4px 12px rgba(135,104,59,.16)}
+.btn-challenge:hover{background:var(--gold-dark)}
+.btn-muted{background:#eef2f2;color:#88979a;border-color:#e0e7e8;cursor:not-allowed;box-shadow:none}
+.status-line{margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.status-text{font-size:.75rem;font-weight:800;color:#6f624b}
+.coming .challenge-number{background:#f0f4f4;color:#809094}
+.coming .challenge-meta{color:#86979b}
+.catalog-note{margin-top:22px;padding:16px 18px;border:1px solid var(--line);border-left:4px solid #cbb98e;border-radius:13px;background:rgba(255,255,255,.68);color:var(--muted);font-size:.86rem}
+.catalog-note strong{color:var(--ink)}
+.footer{margin-top:30px;padding:33px 0 27px;background:#eaf1f2;border-top:1px solid #d5e1e2}
+.footer-row{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:.8rem}
+.footer-row strong{color:var(--accent-dark)}
+a:focus-visible,.btn:focus-visible{outline:3px solid rgba(63,104,112,.24);outline-offset:3px}
+@media(max-width:840px){
+  .nav{align-items:flex-start;flex-direction:column;padding:13px 0}
+  .navlinks{justify-content:flex-start}
+  .challenge-card{grid-template-columns:60px 1fr;gap:16px}
+  .challenge-number{width:54px;height:54px;border-radius:15px}
+  .challenge-action{grid-column:2;justify-content:flex-start;min-width:0}
+}
+@media(max-width:560px){
+  .container{width:min(var(--max),calc(100% - 28px))}
+  .navlinks{width:100%;gap:2px}
+  .navlinks a,.navlinks .nav-inactive{padding:7px;font-size:.7rem}
+  .page-head{padding:42px 0 24px}
+  .challenge-card{grid-template-columns:1fr;padding:20px}
+  .challenge-number{width:50px;height:50px}
+  .challenge-action{grid-column:1}
+  .btn{width:100%}
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="container nav">
+    <a class="brand" href="index.html" aria-label="ACCTNG 1 Learning Hub home">
+      <div class="brand-mark">AG</div>
+      <div>
+        <div class="brand-title">AVE GUZMAN</div>
+        <div class="brand-sub">ACCTNG 1 LEARNING HUB</div>
+      </div>
+    </a>
+
+    <nav class="navlinks" aria-label="Main navigation">
+      <a href="index.html">HOME</a>
+      <a href="modules.html">MODULES</a>
+      <span class="nav-inactive" title="Coming soon">ACTIVITIES</span>
+      <a class="active" href="challenges.html">CHALLENGES</a>
+      <span class="nav-inactive" title="Coming soon">RESOURCES</span>
+      <a href="index.html#about">ABOUT</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <div class="eyebrow">Practice, check, strengthen</div>
+      <h1>Challenges</h1>
+      <p class="lead">Use the available challenges to check your understanding and strengthen mastery. These are designed for focused practice after you have worked through the related concepts and processes.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="challenge-list">
+        <article class="challenge-card available">
+          <div class="challenge-number" aria-hidden="true">01</div>
+          <div>
+            <div class="challenge-meta">Challenge 01 · Available</div>
+            <h2>Normal Balance: Left or Right?</h2>
+            <p>Complete a randomized 20-item mastery session on account classification, normal balances, and the Debit–Credit framework. Review your score, attempt details, and progress toward mastery at the end of each session.</p>
+            <div class="status-line"><span class="status-dot"></span><span class="status-text">24-Hour Mastery Challenge ready</span></div>
+          </div>
+          <div class="challenge-action"><a class="btn btn-challenge" href="challenge-normal-balance.html">OPEN CHALLENGE →</a></div>
+        </article>
+
+        <article class="challenge-card coming">
+          <div class="challenge-number" aria-hidden="true">02</div>
+          <div>
+            <div class="challenge-meta">Challenge 02</div>
+            <h2>Expanded Accounting Equation Challenge</h2>
+            <p>Practice identifying affected accounts, determining increases and decreases, and checking whether transaction effects keep the Expanded Accounting Equation in balance.</p>
+          </div>
+          <div class="challenge-action"><span class="btn btn-muted">COMING SOON</span></div>
+        </article>
+
+        <article class="challenge-card coming">
+          <div class="challenge-number" aria-hidden="true">03</div>
+          <div>
+            <div class="challenge-meta">Challenge 03</div>
+            <h2>Journal Entry Challenge</h2>
+            <p>Apply Debit and Credit rules to common service-business transactions and build accuracy in deciding which accounts belong on the left and right sides of an entry.</p>
+          </div>
+          <div class="challenge-action"><span class="btn btn-muted">COMING SOON</span></div>
+        </article>
+      </div>
+
+      <div class="catalog-note"><strong>More challenges will be added progressively.</strong> Items marked Coming Soon are visible to show the direction of your practice sequence, but they will remain inactive until they are ready for use.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-row">
+    <div><strong>ACCTNG 1</strong> · Fundamentals of Accountancy, Business, and Management 1</div>
+    <div>ave.guz · 2026</div>
+  </div>
+</footer>
+</body>
+</html>
