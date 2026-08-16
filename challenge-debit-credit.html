@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEBIT vs CREDIT: Mastery Challenge</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#f3f6f5;--surface:#fff;--soft:#f8faf9;--text:#18312d;--muted:#667772;
+  --border:#d7e0dd;--teal:#2f6f64;--teal-dark:#24584f;--blue:#4d6f8c;
+  --amber:#b9852e;--violet:#76659b;--green:#4c7b63;--red:#9a6767;
+  --good-bg:#eaf5ef;--good-border:#78a28b;--bad-bg:#f8eeee;--bad-border:#bd8a8a;
+}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+.app{min-height:100vh;display:flex;flex-direction:column}
+.topbar{padding:20px 28px 10px;display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.course{font-size:12px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.course-title{margin-top:4px;color:var(--muted);font-size:13px}
+.signature{font-size:12px;color:var(--muted);white-space:nowrap}
+.screen{width:min(940px,calc(100% - 32px));margin:20px auto 42px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:38px;box-shadow:0 12px 30px rgba(22,48,43,.05)}
+.center{text-align:center}
+.eyebrow{color:var(--teal);font-size:12px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+h1{font-size:clamp(34px,6vw,58px);letter-spacing:-.04em;margin:0 0 14px}
+h2{font-size:30px;margin:0 0 10px}
+h3{font-size:20px;margin:0 0 12px}
+p{line-height:1.6}
+.lead{max-width:680px;margin:0 auto 26px;color:var(--muted)}
+.notice{margin:22px auto 0;max-width:720px;padding:14px 16px;background:#eef4f2;border:1px solid #cfe0da;border-radius:12px;color:#405a53;font-size:14px}
+.auth{margin-top:18px;color:#7c8884;font-size:11px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left;margin-top:28px}
+.form-grid .full{grid-column:1/-1}
+label{display:block;margin-bottom:7px;color:var(--muted);font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+input,select{width:100%;min-height:48px;padding:11px 12px;border:1px solid #cdd8d4;border-radius:10px;background:#fff;color:var(--text);outline:none}
+input:focus,select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(47,111,100,.1)}
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+.status-box{padding:15px;background:var(--soft);border:1px solid var(--border);border-radius:12px;text-align:left}
+.status-box span{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.status-box strong{display:block;margin-top:4px;font-size:21px}
+.primary,.secondary{padding:13px 20px;border-radius:10px;font-weight:800}
+.primary{background:var(--teal);color:#fff;border:1px solid var(--teal)}
+.primary:hover{background:var(--teal-dark)}
+.secondary{background:#fff;color:var(--text);border:1px solid #cbd5d2}
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:28px 0;text-align:left}
+.guide-card{padding:22px;background:var(--soft);border:1px solid var(--border);border-radius:14px}
+.guide-card h3{color:var(--teal)}
+.guide-card p{margin:7px 0}
+.rule-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.rule-strip div{padding:14px;background:#f5f8f7;border:1px solid var(--border);border-radius:10px;font-weight:750}
+.progress-row{display:flex;justify-content:space-between;gap:16px;color:var(--muted);font-size:12px;font-weight:750;margin-bottom:8px}
+.track{height:6px;background:#dfe7e4;border-radius:999px;overflow:hidden;margin-bottom:22px}
+.fill{height:100%;width:0;background:var(--teal);transition:width .2s ease}
+.question-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:34px;box-shadow:0 10px 28px rgba(22,48,43,.045)}
+.stage-tag{font-size:12px;font-weight:850;letter-spacing:.1em;color:var(--teal);text-transform:uppercase}
+.transaction{margin:18px 0 22px;padding:18px 20px;background:#edf4f2;border-left:4px solid var(--teal);border-radius:10px;font-size:18px;line-height:1.6}
+.target{display:inline-block;margin:2px 0 18px;padding:8px 12px;border-radius:8px;background:#f3f6f5;border:1px solid var(--border);font-weight:800}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.answer{min-height:70px;padding:15px;border:1px solid #cdd8d4;border-radius:12px;background:#fbfcfc;font-weight:800}
+.answer:hover:not(:disabled){border-color:var(--teal);background:#f1f6f4}
+.answer.correct{background:var(--good-bg);border-color:var(--good-border)}
+.answer.wrong{background:var(--bad-bg);border-color:var(--bad-border)}
+.feedback{margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
+.feedback-title{font-size:19px;font-weight:850;margin-bottom:6px}
+.logic{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 20px}
+.logic span{padding:8px 11px;background:#f8faf9;border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:750}
+.logic b{color:#8a9793}
+.entry-builder{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.side{padding:18px;background:var(--soft);border:1px solid var(--border);border-radius:14px}
+.side-title{margin-bottom:14px;font-size:13px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.entry-row-form{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr) auto;gap:8px;align-items:end;margin-bottom:10px}
+.amount-wrap{position:relative}
+.peso{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-weight:800;color:var(--muted)}
+.amount-wrap input{padding-left:28px}
+.remove-row{width:42px;min-height:48px;border:1px solid #d8c8c8;background:#fff;border-radius:10px;color:#8b6666;font-weight:900}
+.side-actions{margin-top:8px}
+.add-row{border:none;background:transparent;color:var(--teal);font-weight:800;padding:6px 0}
+.totals{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.total-box{padding:13px 15px;background:#f7f9f8;border:1px solid var(--border);border-radius:10px}
+.total-box span{display:block;color:var(--muted);font-size:12px}
+.total-box strong{display:block;margin-top:3px;font-size:18px}
+.balance-note{margin-top:10px;font-size:13px;font-weight:750;color:var(--muted)}
+.streak-pop{position:fixed;left:50%;top:22px;transform:translateX(-50%) translateY(-14px);z-index:999;width:min(520px,calc(100% - 32px));padding:14px 18px;border-radius:14px;box-shadow:0 14px 38px rgba(25,45,40,.15);font-weight:800;opacity:0;pointer-events:none;transition:.25s ease}
+.streak-pop.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.streak-3{background:#edf5fb;border:1px solid #b9d1e3;color:#345d7b}
+.streak-5{background:#f2eef9;border:1px solid #cbbfe3;color:#5e4e84}
+.streak-8{background:#fff7e9;border:1px solid #e6ca95;color:#76551d}
+.streak-10,.streak-15,.streak-20{background:#edf6ef;border:1px solid #b5d1bd;color:#426d51}
+.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0;text-align:left}
+.summary-box{padding:15px;background:var(--soft);border:1px solid var(--border);border-radius:12px}
+.summary-box span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.summary-box strong{display:block;margin-top:4px;font-size:17px;word-break:break-word}
+.score-hero{width:175px;height:175px;margin:24px auto;border:8px solid #dfe8e4;border-radius:50%;display:grid;place-content:center}
+.score-hero strong{font-size:44px}.score-hero span{color:var(--muted)}
+.breakdown{margin-top:24px;border:1px solid var(--border);border-radius:12px;overflow:hidden;text-align:left}
+.break-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:13px 15px;border-top:1px solid var(--border)}
+.break-row:first-child{border-top:0}
+.encourage{margin:24px auto 0;max-width:680px;padding:18px;background:#fff7e9;border:1px solid #e5c892;border-radius:12px;color:#6f501d;font-weight:750;line-height:1.6}
+.hub-return-link{display:inline-block;margin-bottom:20px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:var(--soft);text-decoration:none;color:var(--teal);font-weight:800;font-size:12px}
+.hub-return-link:hover{background:#f4f7f5}
+footer{margin-top:auto;padding:16px 28px 24px;display:flex;justify-content:space-between;gap:16px;color:#7d8985;font-size:11px}
+@media(max-width:720px){
+  .topbar{padding:18px 18px 6px}.screen{width:min(100% - 20px,940px);margin-top:12px}.card,.question-card{padding:24px 18px}
+  .form-grid,.guide-grid,.rule-strip,.answers,.entry-builder,.totals,.summary-grid{grid-template-columns:1fr}
+  .status-grid{grid-template-columns:1fr 1fr}.entry-row-form{grid-template-columns:1fr 1fr auto}.transaction{font-size:16px}
+  footer{padding:14px 18px 20px;flex-direction:column}
+}
+@media print{
+  body{background:#fff}.topbar,.no-print,footer{display:none!important}.screen{width:100%;margin:0}.card{box-shadow:none;border:0;padding:0}.summary-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div><div class="course">ACCTNG 1</div><div class="course-title">Fundamentals of Accountancy, Business, and Management 1</div></div>
+  <div class="signature">ave.guz · 2026</div>
+</header>
+
+<a class="hub-return-link no-print" href="challenges.html">← Back to Challenges</a>
+
+<div id="streakPop" class="streak-pop"></div>
+
+<main id="infoScreen" class="screen">
+  <section class="card center">
+    <div class="eyebrow">Preti Salon</div>
+    <h1>DEBIT vs CREDIT</h1>
+    <h2>Mastery Challenge</h2>
+    <p class="lead">Analyze common service-business transactions, identify the correct Debit and Credit treatment, and build entries that balance.</p>
+
+    <div class="form-grid">
+      <div class="full"><label for="studentName">Student Name</label><input id="studentName" autocomplete="name"></div>
+      <div class="full"><label for="studentEmail">Institutional Email</label><input id="studentEmail" type="email" autocomplete="email"></div>
+      <div><label for="studentSection">Section</label><input id="studentSection"></div>
+      <div><label for="studentDate">Date</label><input id="studentDate" type="date"></div>
+    </div>
+
+    <div class="status-grid">
+      <div class="status-box"><span>Completed Attempts</span><strong id="attemptStatus">0</strong></div>
+      <div class="status-box"><span>Best Score</span><strong id="bestStatus">—</strong></div>
+    </div>
+
+    <div class="notice">
+      <strong>20 items per attempt:</strong> 10 one-account decisions, then 10 journal-entry builds. Each attempt includes exactly <strong>5 compound entries</strong>.
+    </div>
+
+    <div class="actions"><button class="primary" id="reviewBtn">REVIEW THE RULES</button></div>
+    <div class="auth">For authorized class use only. Unauthorized copying or distribution is prohibited.</div>
+  </section>
+</main>
+
+<main id="reviewScreen" class="screen hidden">
+  <section class="card">
+    <div class="eyebrow">Quick Review</div>
+    <h2>Before You Begin</h2>
+    <p class="lead" style="text-align:left;margin-left:0">Use the account's normal balance and whether it increased or decreased. Once the challenge begins, this guide is no longer available.</p>
+
+    <div class="guide-grid">
+      <div class="guide-card"><h3>← Normal Debit</h3><p>Assets</p><p>Expenses</p><p>Drawing</p></div>
+      <div class="guide-card"><h3>Normal Credit →</h3><p>Liabilities</p><p>Owner's Capital</p><p>Revenue</p></div>
+    </div>
+    <div class="rule-strip">
+      <div><strong>Increase</strong><br>Use the normal balance side.</div>
+      <div><strong>Decrease</strong><br>Use the opposite side.</div>
+    </div>
+    <div class="notice">In compound entries, more than one account may appear on the Debit side or Credit side. <strong>Total Debits must equal Total Credits.</strong></div>
+    <div class="actions no-print">
+      <button class="secondary" id="backInfoBtn">BACK</button>
+      <button class="primary" id="beginBtn">BEGIN CHALLENGE</button>
+    </div>
+  </section>
+</main>
+
+<main id="gameScreen" class="screen hidden">
+  <div class="progress-row">
+    <span id="stageLabel"></span>
+    <span id="questionCount"></span>
+  </div>
+  <div class="track"><div id="progressFill" class="fill"></div></div>
+
+  <section class="question-card">
+    <div class="stage-tag" id="questionStage"></div>
+    <div class="transaction" id="transactionText"></div>
+    <div id="questionArea"></div>
+    <div id="feedback" class="feedback hidden">
+      <div id="feedbackTitle" class="feedback-title"></div>
+      <div id="feedbackText"></div>
+      <div id="logic" class="logic"></div>
+      <div class="actions" style="justify-content:flex-start"><button class="primary" id="continueBtn">CONTINUE</button></div>
+    </div>
+  </section>
+</main>
+
+<main id="resultScreen" class="screen hidden">
+  <section class="card center">
+    <div class="eyebrow">Assessment Summary</div>
+    <h2 id="resultHeading"></h2>
+    <div class="score-hero"><strong id="resultPercent"></strong><span id="resultRaw"></span></div>
+
+    <div class="summary-grid">
+      <div class="summary-box"><span>Student</span><strong id="sumName"></strong></div>
+      <div class="summary-box"><span>Institutional Email</span><strong id="sumEmail"></strong></div>
+      <div class="summary-box"><span>Section</span><strong id="sumSection"></strong></div>
+      <div class="summary-box"><span>Date</span><strong id="sumDate"></strong></div>
+      <div class="summary-box"><span>Attempt No.</span><strong id="sumAttempt"></strong></div>
+      <div class="summary-box"><span>Attempt Code</span><strong id="sumCode"></strong></div>
+      <div class="summary-box"><span>Time Spent</span><strong id="sumTime"></strong></div>
+      <div class="summary-box"><span>Completed</span><strong id="sumCompleted"></strong></div>
+    </div>
+
+    <div class="breakdown">
+      <div class="break-row"><span>Level 1 · One Account at a Time</span><strong id="level1Score"></strong></div>
+      <div class="break-row"><span>Level 2 · Build the Entry</span><strong id="level2Score"></strong></div>
+      <div class="break-row"><span>Compound Entry Items</span><strong id="compoundScore"></strong></div>
+      <div class="break-row"><span>Best Score</span><strong id="sumBest"></strong></div>
+    </div>
+
+    <div id="encourage" class="encourage"></div>
+
+    <div class="actions no-print">
+      <button class="primary" onclick="window.print()">PRINT / SAVE RESULT</button>
+      <button class="secondary" id="newAttemptBtn">NEW ATTEMPT</button>
+    </div>
+    <div class="auth">For authorized class use only. Unauthorized copying or distribution is prohibited.<br><br>ave.guz · 2026</div>
+  </section>
+</main>
+
+<footer><span>For authorized class use only. Unauthorized copying or distribution is prohibited.</span><span>ave.guz · 2026</span></footer>
+</div>
+
+<script>
+const ACCOUNTS=[
+  "Cash","Accounts Receivable","Supplies","Prepaid Insurance","Prepaid Rent","Equipment","Furniture",
+  "Accounts Payable","Notes Payable","Unearned Service Revenue","Owner's Capital","Owner's Drawing",
+  "Service Revenue","Salaries Expense","Rent Expense","Utilities Expense","Cleaning and Maintenance Expense",
+  "Internet and Communication Expense","Advertising Expense","Repairs Expense"
+];
+
+const T=[
+{id:1,d:"foundation",c:false,t:"The owner invested ₱80,000 cash to start Preti Salon.",e:[["Cash","D",80000],["Owner's Capital","C",80000]]},
+{id:2,d:"compound",c:true,t:"The owner contributed ₱50,000 cash and salon equipment worth ₱30,000 as additional investment.",e:[["Cash","D",50000],["Equipment","D",30000],["Owner's Capital","C",80000]]},
+{id:3,d:"foundation",c:false,t:"The owner contributed furniture worth ₱18,000 to the business.",e:[["Furniture","D",18000],["Owner's Capital","C",18000]]},
+{id:4,d:"foundation",c:false,t:"Preti Salon purchased salon equipment for ₱25,000 cash.",e:[["Equipment","D",25000],["Cash","C",25000]]},
+{id:5,d:"foundation",c:false,t:"Preti Salon purchased furniture for ₱12,000 cash.",e:[["Furniture","D",12000],["Cash","C",12000]]},
+{id:6,d:"foundation",c:false,t:"Preti Salon purchased supplies for ₱4,500 cash.",e:[["Supplies","D",4500],["Cash","C",4500]]},
+{id:7,d:"standard",c:false,t:"Preti Salon purchased supplies worth ₱6,000 on account.",e:[["Supplies","D",6000],["Accounts Payable","C",6000]]},
+{id:8,d:"standard",c:false,t:"Preti Salon purchased salon equipment worth ₱28,000 on account.",e:[["Equipment","D",28000],["Accounts Payable","C",28000]]},
+{id:9,d:"standard",c:false,t:"Preti Salon purchased equipment worth ₱40,000 by signing a promissory note.",e:[["Equipment","D",40000],["Notes Payable","C",40000]]},
+{id:10,d:"standard",c:false,t:"Preti Salon borrowed ₱50,000 cash and signed a promissory note.",e:[["Cash","D",50000],["Notes Payable","C",50000]]},
+{id:11,d:"compound",c:true,t:"Preti Salon purchased equipment worth ₱30,000, paying ₱10,000 cash and the balance on account.",e:[["Equipment","D",30000],["Cash","C",10000],["Accounts Payable","C",20000]]},
+{id:12,d:"compound",c:true,t:"Preti Salon purchased furniture worth ₱20,000, paying ₱8,000 cash and signing a promissory note for the balance.",e:[["Furniture","D",20000],["Cash","C",8000],["Notes Payable","C",12000]]},
+{id:13,d:"compound",c:true,t:"Preti Salon purchased supplies worth ₱7,500, paying ₱3,000 cash and agreeing to pay the balance later.",e:[["Supplies","D",7500],["Cash","C",3000],["Accounts Payable","C",4500]]},
+{id:14,d:"standard",c:false,t:"Preti Salon paid ₱10,000 for three months' advance rent.",e:[["Prepaid Rent","D",10000],["Cash","C",10000]]},
+{id:15,d:"standard",c:false,t:"Preti Salon paid ₱12,000 for a one-year insurance policy.",e:[["Prepaid Insurance","D",12000],["Cash","C",12000]]},
+{id:16,d:"foundation",c:false,t:"Preti Salon paid ₱6,000 for advertising used during the current month.",e:[["Advertising Expense","D",6000],["Cash","C",6000]]},
+{id:17,d:"foundation",c:false,t:"Preti Salon paid ₱4,500 cash for monthly rent.",e:[["Rent Expense","D",4500],["Cash","C",4500]]},
+{id:18,d:"foundation",c:false,t:"Preti Salon paid ₱3,200 cash for electricity and water used during the month.",e:[["Utilities Expense","D",3200],["Cash","C",3200]]},
+{id:19,d:"foundation",c:false,t:"Preti Salon paid ₱9,000 cash for employee salaries.",e:[["Salaries Expense","D",9000],["Cash","C",9000]]},
+{id:20,d:"foundation",c:false,t:"Preti Salon paid ₱2,500 cash for cleaning and maintenance services.",e:[["Cleaning and Maintenance Expense","D",2500],["Cash","C",2500]]},
+{id:21,d:"foundation",c:false,t:"Preti Salon paid ₱1,800 cash for internet and communication expenses.",e:[["Internet and Communication Expense","D",1800],["Cash","C",1800]]},
+{id:22,d:"foundation",c:false,t:"Preti Salon paid ₱2,200 cash for advertising used during the current month.",e:[["Advertising Expense","D",2200],["Cash","C",2200]]},
+{id:23,d:"foundation",c:false,t:"Preti Salon paid ₱1,500 cash for minor salon repairs.",e:[["Repairs Expense","D",1500],["Cash","C",1500]]},
+{id:24,d:"foundation",c:false,t:"Preti Salon provided salon services for cash and received ₱8,500.",e:[["Cash","D",8500],["Service Revenue","C",8500]]},
+{id:25,d:"foundation",c:false,t:"Preti Salon provided hair and beauty services for cash totaling ₱12,000.",e:[["Cash","D",12000],["Service Revenue","C",12000]]},
+{id:26,d:"standard",c:false,t:"Preti Salon provided salon services on account for ₱7,500.",e:[["Accounts Receivable","D",7500],["Service Revenue","C",7500]]},
+{id:27,d:"standard",c:false,t:"Preti Salon provided services to a corporate client on account for ₱15,000.",e:[["Accounts Receivable","D",15000],["Service Revenue","C",15000]]},
+{id:28,d:"compound",c:true,t:"Preti Salon provided services totaling ₱14,000, receiving ₱9,000 cash and allowing the customer to pay the remaining ₱5,000 later.",e:[["Cash","D",9000],["Accounts Receivable","D",5000],["Service Revenue","C",14000]]},
+{id:29,d:"compound",c:true,t:"Preti Salon provided services worth ₱20,000, receiving ₱12,000 cash and recording the remaining amount as receivable.",e:[["Cash","D",12000],["Accounts Receivable","D",8000],["Service Revenue","C",20000]]},
+{id:30,d:"standard",c:false,t:"Preti Salon received ₱6,000 cash from a customer who previously owed the business.",e:[["Cash","D",6000],["Accounts Receivable","C",6000]]},
+{id:31,d:"standard",c:false,t:"Preti Salon collected ₱4,500 from an outstanding customer account.",e:[["Cash","D",4500],["Accounts Receivable","C",4500]]},
+{id:32,d:"standard",c:false,t:"Preti Salon received ₱10,000 cash in advance for salon services to be provided next month.",e:[["Cash","D",10000],["Unearned Service Revenue","C",10000]]},
+{id:33,d:"standard",c:false,t:"A customer paid ₱7,500 in advance for a future bridal package.",e:[["Cash","D",7500],["Unearned Service Revenue","C",7500]]},
+{id:34,d:"standard",c:false,t:"Preti Salon completed ₱4,000 worth of services that had previously been paid for in advance.",e:[["Unearned Service Revenue","D",4000],["Service Revenue","C",4000]]},
+{id:35,d:"standard",c:false,t:"Preti Salon completed ₱3,500 of a prepaid bridal package.",e:[["Unearned Service Revenue","D",3500],["Service Revenue","C",3500]]},
+{id:36,d:"compound",c:true,t:"Preti Salon received ₱12,000 cash, of which ₱8,000 was for services already performed and ₱4,000 was for services to be provided next month.",e:[["Cash","D",12000],["Service Revenue","C",8000],["Unearned Service Revenue","C",4000]]},
+{id:37,d:"compound",c:true,t:"Preti Salon rendered ₱16,000 of services, receiving ₱10,000 cash and accepting ₱6,000 on account.",e:[["Cash","D",10000],["Accounts Receivable","D",6000],["Service Revenue","C",16000]]},
+{id:38,d:"standard",c:false,t:"Preti Salon paid ₱5,000 toward its Accounts Payable balance.",e:[["Accounts Payable","D",5000],["Cash","C",5000]]},
+{id:39,d:"standard",c:false,t:"Preti Salon made a ₱3,500 partial payment on an amount owed to a supplier.",e:[["Accounts Payable","D",3500],["Cash","C",3500]]},
+{id:40,d:"standard",c:false,t:"Preti Salon paid the remaining ₱6,000 balance owed to a supplier.",e:[["Accounts Payable","D",6000],["Cash","C",6000]]},
+{id:41,d:"standard",c:false,t:"Preti Salon paid ₱8,000 principal on a Notes Payable.",e:[["Notes Payable","D",8000],["Cash","C",8000]]},
+{id:42,d:"standard",c:false,t:"Preti Salon paid ₱5,000 principal on a promissory note.",e:[["Notes Payable","D",5000],["Cash","C",5000]]},
+{id:43,d:"compound",c:true,t:"Preti Salon purchased supplies worth ₱9,000, paying ₱4,000 cash and agreeing to pay the remaining balance later.",e:[["Supplies","D",9000],["Cash","C",4000],["Accounts Payable","C",5000]]},
+{id:44,d:"compound",c:true,t:"Preti Salon purchased equipment worth ₱24,000, paying ₱9,000 cash and signing a promissory note for ₱15,000.",e:[["Equipment","D",24000],["Cash","C",9000],["Notes Payable","C",15000]]},
+{id:45,d:"compound",c:true,t:"Preti Salon purchased furniture worth ₱18,000, paying ₱6,000 cash and agreeing to pay the remaining ₱12,000 on account.",e:[["Furniture","D",18000],["Cash","C",6000],["Accounts Payable","C",12000]]},
+{id:46,d:"compound",c:true,t:"The owner made an additional investment consisting of ₱20,000 cash and equipment worth ₱15,000.",e:[["Cash","D",20000],["Equipment","D",15000],["Owner's Capital","C",35000]]},
+{id:47,d:"compound",c:true,t:"The owner invested ₱25,000 cash, furniture worth ₱10,000, and salon equipment worth ₱20,000.",e:[["Cash","D",25000],["Furniture","D",10000],["Equipment","D",20000],["Owner's Capital","C",55000]]},
+{id:48,d:"foundation",c:false,t:"The owner withdrew ₱3,000 cash for personal use.",e:[["Owner's Drawing","D",3000],["Cash","C",3000]]},
+{id:49,d:"foundation",c:false,t:"The owner withdrew ₱5,000 cash from the business for personal expenses.",e:[["Owner's Drawing","D",5000],["Cash","C",5000]]},
+{id:50,d:"standard",c:false,t:"The owner withdrew supplies worth ₱1,200 for personal use.",e:[["Owner's Drawing","D",1200],["Supplies","C",1200]]},
+{id:51,d:"compound",c:true,t:"Preti Salon paid ₱6,000 for salaries and ₱2,500 for utilities in one cash payment.",e:[["Salaries Expense","D",6000],["Utilities Expense","D",2500],["Cash","C",8500]]},
+{id:52,d:"compound",c:true,t:"Preti Salon paid ₱4,500 rent and ₱1,500 advertising expense in one cash payment.",e:[["Rent Expense","D",4500],["Advertising Expense","D",1500],["Cash","C",6000]]},
+{id:53,d:"compound",c:true,t:"Preti Salon purchased supplies worth ₱5,000 and furniture worth ₱15,000 for a total cash payment of ₱20,000.",e:[["Supplies","D",5000],["Furniture","D",15000],["Cash","C",20000]]},
+{id:54,d:"compound",c:true,t:"Preti Salon purchased equipment worth ₱25,000 and supplies worth ₱4,000 on account.",e:[["Equipment","D",25000],["Supplies","D",4000],["Accounts Payable","C",29000]]},
+{id:55,d:"compound",c:true,t:"Preti Salon received ₱18,000 cash from customers, consisting of ₱13,000 for services performed today and ₱5,000 for services to be performed in the future.",e:[["Cash","D",18000],["Service Revenue","C",13000],["Unearned Service Revenue","C",5000]]},
+{id:56,d:"compound",c:true,t:"Preti Salon received ₱11,000 from a client, consisting of ₱6,000 collected from an existing receivable and ₱5,000 for services performed today.",e:[["Cash","D",11000],["Accounts Receivable","C",6000],["Service Revenue","C",5000]]},
+{id:57,d:"compound",c:true,t:"Preti Salon provided ₱15,000 of services, receiving ₱5,000 cash, applying ₱4,000 from a customer's previous advance, and allowing the remaining ₱6,000 to be paid later.",e:[["Cash","D",5000],["Unearned Service Revenue","D",4000],["Accounts Receivable","D",6000],["Service Revenue","C",15000]]},
+{id:58,d:"compound",c:true,t:"Preti Salon acquired salon equipment worth ₱36,000, paying ₱10,000 cash, recording ₱11,000 on account, and signing a promissory note for the remaining ₱15,000.",e:[["Equipment","D",36000],["Cash","C",10000],["Accounts Payable","C",11000],["Notes Payable","C",15000]]},
+{id:59,d:"compound",c:true,t:"The owner made an additional investment consisting of ₱15,000 cash, furniture worth ₱8,000, and equipment worth ₱12,000.",e:[["Cash","D",15000],["Furniture","D",8000],["Equipment","D",12000],["Owner's Capital","C",35000]]},
+{id:60,d:"compound",c:true,t:"Preti Salon paid ₱4,000 toward Accounts Payable, ₱5,000 principal on Notes Payable, and ₱3,000 for current-month utilities, all in cash.",e:[["Accounts Payable","D",4000],["Notes Payable","D",5000],["Utilities Expense","D",3000],["Cash","C",12000]]}
+];
+
+let attempt=[],idx=0,score=0,streak=0,startTime=0,attemptCode="",breakdown={l1:0,l2:0,compound:0},answered=false;
+
+const $=id=>document.getElementById(id);
+const screens=["infoScreen","reviewScreen","gameScreen","resultScreen"];
+function show(id){screens.forEach(s=>$(s).classList.add("hidden"));$(id).classList.remove("hidden");window.scrollTo(0,0)}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function pick(a,n){return shuffle(a).slice(0,n)}
+function money(n){return "₱"+Number(n||0).toLocaleString("en-PH",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function profileKey(){return "preti_dvc_profile"}
+function historyKey(){return "preti_dvc_history"}
+function getHistory(){try{return JSON.parse(localStorage.getItem(historyKey())||"[]")}catch{return []}}
+function saveProfile(){localStorage.setItem(profileKey(),JSON.stringify({name:$("studentName").value.trim(),email:$("studentEmail").value.trim(),section:$("studentSection").value.trim()}))}
+function loadProfile(){try{let p=JSON.parse(localStorage.getItem(profileKey())||"{}");$("studentName").value=p.name||"";$("studentEmail").value=p.email||"";$("studentSection").value=p.section||""}catch{}}
+function refreshStatus(){let h=getHistory();$("attemptStatus").textContent=h.length;$("bestStatus").textContent=h.length?Math.max(...h.map(x=>x.score))+"/20":"—"}
+function today(){let d=new Date();let local=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);$("studentDate").value=local}
+function code(){return "DVC-"+Math.random().toString(36).slice(2,6).toUpperCase()+"-"+Math.floor(100+Math.random()*900)}
+function validateInfo(){
+  if(!$("studentName").value.trim()||!$("studentEmail").value.trim()||!$("studentSection").value.trim()||!$("studentDate").value){alert("Please complete all student information fields.");return false}
+  if(!$("studentEmail").checkValidity()){alert("Please enter a valid institutional email address.");return false}
+  saveProfile();return true
+}
+function buildAttempt(){
+  const simple=T.filter(x=>!x.c), compound=T.filter(x=>x.c);
+  const l1=pick(simple,10).map(x=>({mode:"l1",tx:x,target:shuffle(x.e)[0]}));
+  const used=new Set(l1.map(x=>x.tx.id));
+  const remainingSimple=simple.filter(x=>!used.has(x.id));
+  const l2simple=pick(remainingSimple,5).map(x=>({mode:"l2",tx:x}));
+  const l2compound=pick(compound,5).map(x=>({mode:"l2",tx:x}));
+  attempt=[...l1,...shuffle([...l2simple,...l2compound])];
+}
+function begin(){
+  buildAttempt();idx=0;score=0;streak=0;breakdown={l1:0,l2:0,compound:0};startTime=Date.now();attemptCode=code();show("gameScreen");render()
+}
+function render(){
+  answered=false;$("feedback").classList.add("hidden");$("logic").innerHTML="";
+  const q=attempt[idx],tx=q.tx;
+  $("stageLabel").textContent=q.mode==="l1"?"LEVEL 1 · ONE ACCOUNT AT A TIME":"LEVEL 2 · BUILD THE ENTRY";
+  $("questionStage").textContent=q.mode==="l1"?"Level 1 · Analyze One Account":"Level 2 · Journal-Entry Builder";
+  $("questionCount").textContent=`Question ${idx+1} of 20`;
+  $("progressFill").style.width=`${(idx/20)*100}%`;
+  $("transactionText").textContent=tx.t;
+  if(q.mode==="l1") renderL1(q); else renderL2(q)
+}
+function renderL1(q){
+  const [acct,side,amt]=q.target;
+  $("questionArea").innerHTML=`
+    <div class="target">Target Account: ${acct} · ${money(amt)}</div>
+    <h3>Which side records this account in the transaction?</h3>
+    <div class="answers">
+      <button class="answer" data-side="D">← DEBIT · LEFT</button>
+      <button class="answer" data-side="C">CREDIT · RIGHT →</button>
+    </div>`;
+  document.querySelectorAll(".answer").forEach(b=>b.addEventListener("click",()=>checkL1(b,q)))
+}
+function checkL1(btn,q){
+  if(answered)return;answered=true;
+  const correct=q.target[1], chosen=btn.dataset.side;
+  document.querySelectorAll(".answer").forEach(b=>{b.disabled=true;if(b.dataset.side===correct)b.classList.add("correct")});
+  if(chosen!==correct)btn.classList.add("wrong");
+  const ok=chosen===correct;if(ok){score++;breakdown.l1++;streak++;maybeStreak()}else streak=0;
+  const [acct,side,amt]=q.target;
+  showFeedback(ok,`${acct} is recorded on the ${side==="D"?"Debit":"Credit"} side for ${money(amt)} in this transaction.`,[[acct,side==="D"?"Debit":"Credit",money(amt)]])
+}
+function makeOptions(selected=""){return `<option value="">Select account</option>`+ACCOUNTS.map(a=>`<option ${a===selected?"selected":""}>${a}</option>`).join("")}
+function sideRow(side){
+  const div=document.createElement("div");div.className="entry-row-form";
+  div.innerHTML=`<div><label>Account</label><select class="acct">${makeOptions()}</select></div>
+  <div><label>Amount</label><div class="amount-wrap"><span class="peso">₱</span><input class="amt" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></div></div>
+  <button type="button" class="remove-row">×</button>`;
+  div.querySelector(".remove-row").onclick=()=>{div.remove();updateTotals()};
+  div.querySelector(".amt").addEventListener("input",updateTotals);
+  return div
+}
+function renderL2(q){
+  $("questionArea").innerHTML=`
+  <h3>Build the journal entry. Select the account(s) and enter each amount.</h3>
+  <div class="entry-builder">
+    <div class="side"><div class="side-title">← Debit · Left</div><div id="debitRows"></div><div class="side-actions"><button type="button" class="add-row" id="addDebit">+ Add Debit row</button></div></div>
+    <div class="side"><div class="side-title">Credit · Right →</div><div id="creditRows"></div><div class="side-actions"><button type="button" class="add-row" id="addCredit">+ Add Credit row</button></div></div>
+  </div>
+  <div class="totals"><div class="total-box"><span>Debit Total</span><strong id="dTotal">₱0.00</strong></div><div class="total-box"><span>Credit Total</span><strong id="cTotal">₱0.00</strong></div></div>
+  <div id="balanceNote" class="balance-note">Enter the accounts and amounts, then check the entry.</div>
+  <div class="actions" style="justify-content:flex-start"><button class="primary" id="checkEntry">CHECK ENTRY</button><button class="secondary" id="resetEntry">RESET</button></div>`;
+  $("debitRows").appendChild(sideRow("D"));$("creditRows").appendChild(sideRow("C"));
+  $("addDebit").onclick=()=>$("debitRows").appendChild(sideRow("D"));
+  $("addCredit").onclick=()=>$("creditRows").appendChild(sideRow("C"));
+  $("resetEntry").onclick=()=>renderL2(q);
+  $("checkEntry").onclick=()=>checkEntry(q);
+  updateTotals()
+}
+function rows(id){return [...$(id).querySelectorAll(".entry-row-form")].map(r=>[r.querySelector(".acct").value,Number(r.querySelector(".amt").value)])}
+function updateTotals(){
+  if(!$("dTotal"))return;
+  const d=rows("debitRows").reduce((s,x)=>s+(x[1]||0),0),c=rows("creditRows").reduce((s,x)=>s+(x[1]||0),0);
+  $("dTotal").textContent=money(d);$("cTotal").textContent=money(c);
+  $("balanceNote").textContent=d&&c?(d===c?"Entry is balanced by amount.":"Debit and Credit totals are not equal."):"Enter the accounts and amounts, then check the entry."
+}
+function normalize(arr){return arr.filter(x=>x[0]&&x[1]>0).map(x=>[x[0],Number(x[1])]).sort((a,b)=>(a[0]+a[1]).localeCompare(b[0]+b[1]))}
+function equal(a,b){return JSON.stringify(normalize(a))===JSON.stringify(normalize(b))}
+function checkEntry(q){
+  if(answered)return;
+  const d=rows("debitRows"),c=rows("creditRows");
+  if(!normalize(d).length||!normalize(c).length){alert("Complete at least one Debit row and one Credit row.");return}
+  answered=true;
+  document.querySelectorAll("#questionArea select,#questionArea input,#questionArea button").forEach(x=>x.disabled=true);
+  const ed=q.tx.e.filter(x=>x[1]==="D").map(x=>[x[0],x[2]]),ec=q.tx.e.filter(x=>x[1]==="C").map(x=>[x[0],x[2]]);
+  const ok=equal(d,ed)&&equal(c,ec);
+  if(ok){score++;breakdown.l2++;if(q.tx.c)breakdown.compound++;streak++;maybeStreak()}else streak=0;
+  showFeedback(ok,ok?"Your accounts, sides, and amounts are correct. Total Debits equal Total Credits.":"Review the affected accounts, their Debit/Credit placement, and each amount.",q.tx.e.map(x=>[x[0],x[1]==="D"?"Debit":"Credit",money(x[2])]))
+}
+function showFeedback(ok,text,steps){
+  $("feedbackTitle").textContent=ok?"Correct.":"Check your entry.";
+  $("feedbackTitle").style.color=ok?"var(--teal)":"var(--red)";
+  $("feedbackText").textContent=text;
+  $("logic").innerHTML=steps.map(x=>`<span>${x.join(" · ")}</span>`).join("<b>→</b>");
+  $("feedback").classList.remove("hidden")
+}
+function maybeStreak(){
+  const messages={
+    3:["streak-3","Nice start. You're building a consistent pattern."],
+    5:["streak-5","5 in a row. You're applying Debit and Credit logic well."],
+    8:["streak-8","Strong streak. Keep following the transaction logic."],
+    10:["streak-10","10 in a row. Your Debit and Credit decisions are becoming consistent."],
+    15:["streak-15","Excellent consistency. Stay careful through the remaining items."],
+    20:["streak-20","Perfect streak. Accurate reasoning from start to finish."]
+  };
+  if(!messages[streak])return;
+  const [cls,msg]=messages[streak],p=$("streakPop");p.className="streak-pop "+cls;p.textContent=msg;
+  requestAnimationFrame(()=>p.classList.add("show"));setTimeout(()=>p.classList.remove("show"),2600)
+}
+function next(){
+  idx++;if(idx<20){render();return}finish()
+}
+function fmtTime(ms){let s=Math.floor(ms/1000),m=Math.floor(s/60);s%=60;return `${m} min ${String(s).padStart(2,"0")} sec`}
+function finish(){
+  const elapsed=Date.now()-startTime,now=new Date(),history=getHistory(),attemptNo=history.length+1;
+  const record={score,code:attemptCode,when:now.toISOString(),elapsed};
+  history.push(record);localStorage.setItem(historyKey(),JSON.stringify(history));
+  const best=Math.max(...history.map(x=>x.score)),pct=Math.round(score/20*100);
+  $("resultPercent").textContent=pct+"%";$("resultRaw").textContent=score+"/20";
+  let heading,msg;
+  if(score===20){heading="Excellent work.";msg="You demonstrated strong control of Debit and Credit and built balanced entries accurately. Keep practicing until the reasoning becomes automatic, not just memorized."}
+  else if(score>=18){heading="Strong performance.";msg="Your Debit and Credit decisions are becoming dependable. Review the few items you missed and keep applying the same account-and-change logic."}
+  else if(score>=15){heading="Good progress.";msg="You understand the main pattern. A little more practice with compound entries and transaction analysis will strengthen your accuracy."}
+  else if(score>=11){heading="You're getting there.";msg="Work through each transaction one account at a time: identify the account, determine the change, then place it on the correct Debit or Credit side."}
+  else{heading="More practice will help.";msg="Return to the normal-balance pattern and work slowly through the transaction. Accuracy comes before speed."}
+  $("resultHeading").textContent=heading;$("encourage").textContent=msg;
+  $("sumName").textContent=$("studentName").value.trim();$("sumEmail").textContent=$("studentEmail").value.trim();$("sumSection").textContent=$("studentSection").value.trim();$("sumDate").textContent=$("studentDate").value;
+  $("sumAttempt").textContent=attemptNo;$("sumCode").textContent=attemptCode;$("sumTime").textContent=fmtTime(elapsed);$("sumCompleted").textContent=now.toLocaleString();
+  $("level1Score").textContent=breakdown.l1+"/10";$("level2Score").textContent=breakdown.l2+"/10";$("compoundScore").textContent=breakdown.compound+"/5";$("sumBest").textContent=best+"/20";
+  refreshStatus();show("resultScreen")
+}
+
+$("reviewBtn").onclick=()=>{if(validateInfo())show("reviewScreen")};
+$("backInfoBtn").onclick=()=>show("infoScreen");
+$("beginBtn").onclick=begin;
+$("continueBtn").onclick=next;
+$("newAttemptBtn").onclick=()=>{show("infoScreen");refreshStatus()};
+loadProfile();today();refreshStatus();
+</script>
+</body>
+</html>
