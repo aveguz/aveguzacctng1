@@ -23,6 +23,8 @@ button{font:inherit;cursor:pointer}
 .shell{min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
 .topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .topbar-inner{max-width:1200px;margin:auto;padding:11px 20px;display:flex;gap:18px;align-items:center;justify-content:space-between}
+.home-link{display:inline-flex;align-items:center;text-decoration:none;padding:8px 12px;border-radius:10px;background:var(--accent-soft);color:var(--accent-dark);font-weight:800;font-size:.8rem;white-space:nowrap}
+.home-link:hover{background:#dcebed}
 .brand-kicker{font-size:.74rem;letter-spacing:.13em;font-weight:900;color:var(--accent)}
 .brand-title{font-size:.92rem;font-weight:760}
 .nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
@@ -176,6 +178,7 @@ h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em;margin:7px 0 10px}
 <div class="shell">
 <header class="topbar">
   <div class="topbar-inner">
+    <a class="home-link" href="index.html">Home</a>
     <div><div class="brand-kicker">ACCTNG 1 · MODULE 04</div><div class="brand-title">Changes in the Expanded Accounting Equation</div></div>
     <nav class="nav">
       <button data-screen="welcome">Overview</button>
@@ -183,7 +186,6 @@ h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em;margin:7px 0 10px}
       <button data-screen="journey">Transaction Flow</button>
       <button data-screen="analyze">Analyze</button>
       <button data-screen="bridge">Bridge</button>
-      <a href="modules.html">← Back to Modules</a>
     </nav>
   </div>
   <div class="progress"><div id="progressFill"></div></div>

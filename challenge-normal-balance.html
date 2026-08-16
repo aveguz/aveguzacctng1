@@ -682,10 +682,6 @@
     }
 
     .hub-return-link {
-      position: fixed;
-      top: 14px;
-      left: 16px;
-      z-index: 300;
       display: inline-flex;
       align-items: center;
       min-height: 36px;
@@ -698,6 +694,14 @@
       font-size: 12px;
       font-weight: 800;
       box-shadow: 0 5px 16px rgba(20,30,25,.06);
+    }
+    .hub-nav {
+      position: fixed;
+      top: 14px;
+      left: 16px;
+      z-index: 300;
+      display: flex;
+      gap: 8px;
     }
     .hub-return-link:hover { background: #f4f7f5; }
 
@@ -716,7 +720,8 @@
       .result-top { justify-items: start; }
       .button-row, .result-actions { flex-direction: column; }
       .button-row button, .result-actions button { width: 100%; }
-      .hub-return-link { position: static; margin: 12px 0 0 12px; }
+      .hub-nav { position: static; margin: 12px 0 0 12px; }
+      .hub-return-link { margin: 0; }
     }
 
     @media print {
@@ -726,7 +731,7 @@
       #assessmentScreen,
       #streakToast,
       .no-print,
-      .hub-return-link {
+      .hub-nav {
         display: none !important;
       }
       #resultsScreen {
@@ -747,7 +752,7 @@
   </style>
 </head>
 <body>
-  <a class="hub-return-link no-print" href="challenges.html">← Back to Challenges</a>
+  <nav class="hub-nav no-print" aria-label="Hub navigation"><a class="hub-return-link" href="index.html">Home</a><a class="hub-return-link" href="challenges.html">← Back to Challenges</a></nav>
   <div class="app-shell">
     <section id="infoScreen" class="center-screen">
       <div class="card">
