@@ -62,6 +62,8 @@ h1{margin:10px 0 12px;font-size:clamp(2.6rem,7vw,5rem);line-height:.98;letter-sp
 .btn:hover{transform:translateY(-1px)}
 .btn-primary{background:var(--accent);color:white;box-shadow:0 4px 12px rgba(63,104,112,.14)}
 .btn-primary:hover{background:var(--accent-dark)}
+.btn-ready{background:var(--accent-dark);color:white;border-color:var(--accent-dark);box-shadow:0 4px 12px rgba(49,83,90,.18)}
+.btn-ready:hover,.btn-ready:focus-visible{background:#243f45;border-color:#243f45;color:white}
 .btn-muted{background:#eef2f2;color:#88979a;border-color:#e0e7e8;cursor:not-allowed;box-shadow:none}
 .status-line{margin-top:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .status-dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
@@ -108,7 +110,7 @@ a:focus-visible,.btn:focus-visible{outline:3px solid rgba(63,104,112,.24);outlin
       <a href="index.html">HOME</a>
       <a class="active" href="modules.html">MODULES</a>
       <span class="nav-inactive" title="Coming soon">ACTIVITIES</span>
-      <a href="challenge.html">CHALLENGES</a>
+      <a href="challenges.html">CHALLENGES</a>
       <span class="nav-inactive" title="Coming soon">RESOURCES</span>
       <a href="index.html#about">ABOUT</a>
     </nav>
@@ -120,44 +122,21 @@ a:focus-visible,.btn:focus-visible{outline:3px solid rgba(63,104,112,.24);outlin
     <div class="container">
       <div class="eyebrow">Learn the process, one step at a time</div>
       <h1>Modules</h1>
-      <p class="lead">Work through the available lessons in sequence. Each module is designed to strengthen a specific part of the accounting process before you move on to the next skill.</p>
+      <p class="lead">Follow the learning sequence from course orientation and accounting foundations through transaction recording and the early stages of the accounting cycle. Modules will become available as each learning object is completed.</p>
     </div>
   </section>
 
   <section>
     <div class="container">
       <div class="module-list">
-        <article class="module-card available">
-          <div class="module-number" aria-hidden="true">01</div>
-          <div>
-            <div class="module-meta">Module 01 · Available</div>
-            <h2>Changes in the Expanded Accounting Equation</h2>
-            <p>Understand how business transactions affect specific accounts, determine whether each account increases or decreases, and connect those changes to the Expanded Accounting Equation.</p>
-            <div class="status-line"><span class="status-dot"></span><span class="status-text">Interactive lesson ready</span></div>
-          </div>
-          <div class="module-action"><a class="btn btn-primary" href="module01.html">OPEN MODULE →</a></div>
-        </article>
-
-        <article class="module-card available">
-          <div class="module-number" aria-hidden="true">02</div>
-          <div>
-            <div class="module-meta">Module 02 · Available</div>
-            <h2>Account Classification, Normal Balances, and the Debit–Credit Framework</h2>
-            <p>Organize accounts by classification, understand normal balances, and learn how Debit and Credit rules connect to account types and changes.</p>
-            <div class="status-line"><span class="status-dot"></span><span class="status-text">Interactive lesson ready</span></div>
-          </div>
-          <div class="module-action"><a class="btn btn-primary" href="module02.html">OPEN MODULE →</a></div>
-        </article>
-
-        <article class="module-card coming">
-          <div class="module-number" aria-hidden="true">03</div>
-          <div>
-            <div class="module-meta">Module 03</div>
-            <h2>Journals, Ledgers, and Account Balances</h2>
-            <p>Organize transaction records, apply Debit and Credit in journal entries, and trace amounts through the basic accounting cycle.</p>
-          </div>
-          <div class="module-action"><span class="btn btn-muted">COMING SOON</span></div>
-        </article>
+        <article class="module-card coming"><div class="module-number" aria-hidden="true">01</div><div><div class="module-meta">Module 01</div><h2>Nature and Purpose of Accounting</h2><p>Build the foundation for understanding what accounting is, why it matters, who uses accounting information, and how it supports responsible business decisions.</p></div><div class="module-action"><span class="btn btn-muted">COMING SOON</span></div></article>
+        <article class="module-card coming"><div class="module-number" aria-hidden="true">02</div><div><div class="module-meta">Module 02</div><h2>Business Transactions and Source Documents</h2><p>Distinguish recordable from non-recordable business events and connect common transactions with the source documents that provide evidence for accounting records.</p></div><div class="module-action"><span class="btn btn-muted">COMING SOON</span></div></article>
+        <article class="module-card coming"><div class="module-number" aria-hidden="true">03</div><div><div class="module-meta">Module 03</div><h2>Elements of<br>Financial<br>Statements, the Accounting Equation, and Effects of Business Transactions</h2><p>Identify the elements of financial statements, understand the Accounting Equation, and examine how business transactions affect financial position.</p></div><div class="module-action"><span class="btn btn-muted">COMING SOON</span></div></article>
+        <article class="module-card available"><div class="module-number" aria-hidden="true">04</div><div><div class="module-meta">Module 04</div><h2>Changes in the Expanded Accounting Equation</h2><p>Analyze how common business transactions affect specific accounts, determine whether each account increases or decreases, and connect those changes to the Expanded Accounting Equation.</p></div><div class="module-action"><a class="btn btn-ready" href="module04.html">OPEN MODULE 04 →</a></div></article>
+        <article class="module-card available"><div class="module-number" aria-hidden="true">05</div><div><div class="module-meta">Module 05</div><h2>Account Classification, Normal Balances, and the Debit-Credit Framework</h2><p>Organize accounts by classification, determine their normal balances, and apply the Debit-Credit framework to account increases and decreases.</p></div><div class="module-action"><a class="btn btn-ready" href="module05.html">OPEN MODULE 05 →</a></div></article>
+        <article class="module-card coming"><div class="module-number" aria-hidden="true">06</div><div><div class="module-meta">Module 06</div><h2>General Journal / Journalizing Business Transactions</h2><p>Bring transaction analysis and Debit-Credit decisions together by preparing properly formatted simple and compound entries in the General Journal.</p></div><div class="module-action"><span class="btn btn-muted">IN DEVELOPMENT</span></div></article>
+        <article class="module-card coming"><div class="module-number" aria-hidden="true">07</div><div><div class="module-meta">Module 07</div><h2>General Ledger</h2><p>Move from chronological journal entries to account-by-account records by posting transactions to the General Ledger and tracing changes in individual account balances.</p></div><div class="module-action"><span class="btn btn-muted">COMING SOON</span></div></article>
+        <article class="module-card coming"><div class="module-number" aria-hidden="true">08</div><div><div class="module-meta">Module 08</div><h2>Trial Balance</h2><p>Summarize ledger account balances in a Trial Balance and use total Debits and Credits as an initial check of the recording process.</p></div><div class="module-action"><span class="btn btn-muted">COMING SOON</span></div></article>
       </div>
 
       <div class="catalog-note"><strong>More modules will be added progressively.</strong> Items marked Coming Soon are intentionally visible so you can see where the learning sequence is headed without opening unfinished materials.</div>
