@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACCTNG 1 | Activity 06.1 · Building the General Journal</title>
+<style>
+:root{
+  --bg:#f3f7f7;--surface:#ffffff;--surface2:#f8fbfb;--ink:#203136;--muted:#687b80;
+  --line:#d7e2e3;--accent:#3f6870;--accent-dark:#31535a;--accent-soft:#e8f1f2;
+  --gold:#87683b;--gold-soft:#f7f1e5;--good:#4e775f;--good-soft:#edf5ef;
+  --bad:#8a4f4f;--bad-soft:#fbefef;--shadow:0 10px 28px rgba(33,55,60,.075);
+  --radius:18px;--max:1180px
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);line-height:1.55}button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}.hidden{display:none!important}.shell{min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}.topbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.topbar-inner{max-width:var(--max);margin:auto;padding:11px 20px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand-area{display:flex;align-items:center;gap:18px;min-width:0}.brand-copy{min-width:0}.home-btn{display:inline-flex;align-items:center;justify-content:center;border:0;background:var(--accent-soft);color:var(--accent-dark);border-radius:11px;padding:10px 12px;font-size:.78rem;font-weight:900;white-space:nowrap}.home-btn:hover{background:#dce9ea}.brand-kicker{font-size:.72rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}.brand-title{font-size:.92rem;font-weight:800}.nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.nav button{border:0;background:transparent;color:var(--muted);padding:8px 9px;border-radius:9px;font-size:.78rem;font-weight:850}.nav button:hover,.nav button.active{background:var(--accent-soft);color:var(--accent-dark)}.nav-btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:8px 11px;font-weight:800;font-size:.82rem}.nav-btn.coa{background:var(--accent);border-color:var(--accent);color:#fff}.nav-btn:hover{border-color:#b7cacc}.progress-track{height:4px;background:#e7eeee}.progress-fill{height:100%;width:0;background:var(--accent);transition:width .25s ease}
+main{max-width:var(--max);margin:auto;padding:27px 20px 54px}.intro{display:flex;justify-content:space-between;gap:18px;align-items:flex-end;margin-bottom:19px}.eyebrow{font-size:.74rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}h1{font-size:clamp(2rem,4vw,3.35rem);letter-spacing:-.045em;line-height:1.04;margin:8px 0 9px}.intro p{margin:0;color:var(--muted);max-width:760px}.status{min-width:220px;text-align:right}.status strong{display:block;color:var(--accent-dark);font-size:1.05rem}.status span{font-size:.82rem;color:var(--muted)}
+.start-card{max-width:920px;margin:24px auto 0;background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}.start-head{padding:22px 24px 18px;border-bottom:1px solid var(--line)}.start-head h1{font-size:clamp(2rem,5vw,3.1rem);margin-bottom:8px}.start-body{padding:22px 24px}.context-box{border-left:5px solid var(--accent);background:var(--surface2);border-radius:12px;padding:16px 17px;margin-bottom:14px}.context-box p{margin:0 0 10px}.context-box p:last-child{margin-bottom:0}.supplies-note{background:var(--gold-soft);color:#645133;border:1px solid #eadbbc;border-radius:12px;padding:14px 15px;margin-top:14px}.supplies-note strong{color:#574527}.start-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.start-item{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff}.start-item strong{display:block;font-size:.86rem;margin-bottom:3px}.start-item span{font-size:.8rem;color:var(--muted)}.start-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}.start-actions p{margin:0;color:var(--muted);font-size:.8rem;max-width:570px}.student-info{margin-bottom:16px;border:1px solid var(--line);border-radius:14px;padding:15px 16px;background:#fff}.student-info-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-end;margin-bottom:10px}.student-info-head strong{font-size:.9rem}.student-info-head span{font-size:.74rem;color:var(--muted)}.student-info-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:10px}.student-field label{display:block;font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px}.student-field input{width:100%;border:1px solid #cbd8da;background:#fff;border-radius:9px;padding:9px 10px;color:var(--ink)}.student-field input:focus{outline:2px solid #c9dadd;outline-offset:1px;border-color:var(--accent)}.student-error{display:none;margin-top:9px;padding:9px 10px;border-radius:9px;background:var(--bad-soft);color:#714343;font-size:.78rem;font-weight:700}.student-error.show{display:block}.student-record{margin-bottom:15px;border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:13px;background:var(--surface2);padding:13px 14px}.student-record-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:var(--accent);margin-bottom:8px}.student-record-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:10px}.student-record-item span{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted)}.student-record-item strong{display:block;margin-top:2px;font-size:.92rem;color:var(--ink)}
+.stage{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:18px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.panel-head{padding:17px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2{margin:0;font-size:1.05rem}.micro{font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}.panel-body{padding:18px}.step-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:16px}.step{border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center;font-size:.72rem;font-weight:850;color:var(--muted);background:var(--surface2)}.step.active{background:var(--accent-soft);border-color:#c4d8db;color:var(--accent-dark)}
+.tx-card{border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:14px;padding:15px 16px;background:var(--surface2);margin-bottom:16px}.tx-date{font-size:.74rem;font-weight:900;text-transform:uppercase;letter-spacing:.09em;color:var(--accent)}.tx-text{font-size:1.05rem;font-weight:750;margin:5px 0 0}.helper-row{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:0 0 10px}.helper-row strong{font-size:.88rem}.helper-row span{font-size:.78rem;color:var(--muted)}
+.builder-table{border:1px solid var(--line);border-radius:13px;overflow:hidden}.builder-head,.builder-row{display:grid;grid-template-columns:minmax(160px,1fr) 72px 112px 112px}.builder-head{background:#eef3f4;font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:#52676d}.builder-head div,.builder-row>div{padding:9px;border-right:1px solid var(--line)}.builder-head div:last-child,.builder-row>div:last-child{border-right:0}.builder-row{border-top:1px solid var(--line);align-items:center}.builder-row:first-of-type{border-top:0}.builder-row select,.builder-row input{width:100%;border:1px solid #cbd8da;background:#fff;border-radius:8px;padding:8px 9px;color:var(--ink)}.builder-row .pr input{text-align:center}.builder-row .money input{text-align:right}.entry-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.mini-btn{border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--accent-dark);padding:8px 10px;font-weight:800;font-size:.8rem}.explanation{margin-top:13px}.explanation label{display:block;font-size:.78rem;font-weight:850;margin-bottom:5px}.explanation input{width:100%;border:1px solid #cbd8da;border-radius:9px;padding:9px 10px}.not-graded{font-size:.72rem;color:var(--muted);margin-top:5px}.balance-strip{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:12px;padding:10px 12px;border-radius:10px;background:#f5f8f8;border:1px solid var(--line);font-size:.82rem}.balance-strip strong{color:var(--accent-dark)}
+.feedback{margin-top:14px;border:1px dashed #b9c9cc;border-radius:12px;padding:12px;background:#fbfdfd;color:var(--muted);font-size:.83rem}.feedback strong{color:var(--ink)}.feedback.good{border-style:solid;border-color:#c9ddcf;background:var(--good-soft);color:#42614c}.feedback.bad{border-style:solid;border-color:#ead0d0;background:var(--bad-soft);color:#714343}.action-row{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:15px}.primary,.secondary,.disabled{border:0;border-radius:10px;padding:10px 13px;font-weight:850}.primary{background:var(--accent);color:#fff}.secondary{background:var(--accent-soft);color:var(--accent-dark)}.disabled{background:#edf1f1;color:#94a3a6;cursor:not-allowed}.small-note{font-size:.74rem;color:var(--muted);max-width:360px}
+.journal-title{text-align:center;padding:17px 18px 0}.journal-title .business{font-size:.96rem;font-weight:900;letter-spacing:.08em}.journal-title h2{font-size:1.25rem;margin:2px 0}.journal-title .ref{font-size:.78rem;color:var(--muted);font-weight:800}.journal-wrap{overflow-x:auto;padding:14px 16px 17px}.journal{width:100%;border-collapse:collapse;min-width:650px;background:#fff}.journal th,.journal td{border:1px solid #cbd6d8;padding:8px 9px;vertical-align:middle}.journal th{background:#eef3f4;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:#52676d}.journal th:nth-child(1),.journal td:nth-child(1){width:92px}.journal th:nth-child(3),.journal td:nth-child(3){width:70px;text-align:center}.journal th:nth-child(4),.journal th:nth-child(5),.journal td:nth-child(4),.journal td:nth-child(5){width:118px;text-align:right}.debit-line{font-weight:800}.credit-line{padding-left:36px!important;font-weight:800}.description-line{padding-left:64px!important;color:var(--muted);font-style:italic;font-size:.86rem}.blank-row td{height:26px;background:#fafcfc;color:#90a0a3}.running-note{margin:0 16px 16px;padding:11px 12px;border-radius:10px;background:var(--accent-soft);color:var(--accent-dark);font-size:.8rem}.running-note strong{display:block;margin-bottom:2px}
+.summary-card{max-width:940px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}.summary-head{padding:22px 24px;border-bottom:1px solid var(--line);text-align:center}.summary-head h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:7px}.summary-head p{margin:0;color:var(--muted)}.summary-body{padding:22px 24px}.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{border:1px solid var(--line);border-radius:13px;padding:13px;background:var(--surface2)}.metric span{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:var(--muted)}.metric strong{display:block;font-size:1.45rem;color:var(--accent-dark);margin-top:3px}.review-list{margin-top:15px;border:1px solid var(--line);border-radius:13px;overflow:hidden}.review-item{padding:11px 12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;font-size:.84rem}.review-item:first-child{border-top:0}.summary-end{margin-top:16px;padding:14px 15px;border-radius:12px;background:var(--accent-soft);color:var(--accent-dark);font-weight:750}.summary-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:17px}.complete-journal{margin-top:22px}.complete-journal h3{margin:0 0 5px}.complete-journal p{margin:0 0 10px;color:var(--muted);font-size:.84rem}
+.modal{display:none;position:fixed;inset:0;z-index:60;background:rgba(25,39,43,.42);padding:18px;align-items:center;justify-content:center}.modal.open{display:flex}.modal-card{width:min(860px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:18px;border:1px solid var(--line);box-shadow:0 25px 70px rgba(28,48,53,.24)}.modal-head{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:15px 17px;display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:2}.modal-head h3{margin:0}.close{border:1px solid var(--line);background:#fff;border-radius:9px;width:36px;height:36px;font-weight:900}.modal-body{padding:17px}.coa-intro{color:var(--muted);font-size:.88rem;margin-bottom:13px}.coa-table{width:100%;border-collapse:collapse}.coa-table th,.coa-table td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left}.coa-table th{background:#eef3f4;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:#52676d}.coa-table td:first-child{font-weight:900;color:var(--accent-dark);width:115px}.coa-tip{margin-top:13px;padding:11px 12px;border-radius:10px;background:var(--gold-soft);color:#665233;font-size:.82rem}.footer{width:100%;padding:13px 28px 16px;color:var(--muted);border-top:1px solid var(--line);font-size:.78rem;display:flex;justify-content:space-between;align-items:center;gap:24px;background:rgba(248,251,251,.72)}.footer-copy{max-width:680px;font-weight:750;line-height:1.55}.footer-nav{display:flex;gap:8px;margin-left:auto}.footer-link{min-width:136px;min-height:64px;display:inline-flex;align-items:center;justify-content:center;text-align:center;border:1px solid #cfdcde;background:#fff;color:#111;border-radius:10px;padding:9px 12px;font-size:.8rem;font-weight:900;line-height:1.45}.footer-link.back{background:var(--accent-soft);color:var(--accent-dark)}.footer-link:hover{border-color:#b7cacc;background:#f8fbfb}.footer-link.back:hover{background:#dce9ea}
+@media(max-width:900px){.stage{grid-template-columns:1fr}.journal-panel{order:2}.work-panel{order:1}.status{text-align:left;min-width:0}.intro{align-items:flex-start;flex-direction:column}.summary-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){main{padding:19px 12px 42px}.topbar-inner{padding:10px 12px;align-items:flex-start;flex-direction:column}.brand-area{width:100%}.nav{justify-content:flex-start;width:100%}.nav button{padding:7px 8px}.start-card{margin-top:8px}.start-head,.start-body{padding-left:17px;padding-right:17px}.start-grid{grid-template-columns:1fr}.student-info-grid,.student-record-grid{grid-template-columns:1fr}.student-info-head{align-items:flex-start;flex-direction:column;gap:2px}.intro{margin-bottom:14px}.intro h1{font-size:2.25rem}.panel-head{padding:14px}.panel-body{padding:14px}.step-strip{grid-template-columns:1fr 1fr}.helper-row{align-items:flex-start;flex-direction:column;gap:2px}.builder-table{border:0;overflow:visible;background:transparent}.builder-head{display:none}.builder-row{display:grid;grid-template-columns:58px minmax(0,1fr) minmax(0,1fr);gap:7px;border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:9px;background:#fff}.builder-row>div{padding:0;border:0}.builder-row>div:first-child{grid-column:1/-1}.builder-row>div:first-child:before{content:"Account Title";display:block;font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted);margin-bottom:4px}.builder-row .pr:before{content:"PR"}.builder-row .money.debit:before{content:"Debit"}.builder-row .money.credit:before{content:"Credit"}.builder-row .pr:before,.builder-row .money:before{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.05em;font-weight:900;color:var(--muted);margin-bottom:4px}.builder-row .pr{grid-column:1}.builder-row .money.debit{grid-column:2}.builder-row .money.credit{grid-column:3}.balance-strip{align-items:flex-start;flex-direction:column;gap:4px}.summary-grid{grid-template-columns:1fr 1fr}.journal-wrap{padding-left:10px;padding-right:10px}.footer{padding:16px 12px;flex-direction:column;align-items:flex-start;gap:12px}.footer-copy{max-width:none}.footer-nav{width:100%;margin-left:0;flex-direction:column}.footer-link{width:100%;min-height:52px}.review-item{flex-direction:column;gap:3px}}
+@media print{.topbar,.footer,.summary-actions,.running-note{display:none!important}body{background:#fff}.summary-card{box-shadow:none;border:0}.summary-body{padding:10px}.journal-wrap{overflow:visible}.journal{min-width:0;font-size:10px}}
+
+/* Activity 06.1 shell — aligned with the ACCTNG 1 Challenge family */
+body{background:#f4f3ee}
+.shell{min-height:100vh;display:flex;flex-direction:column}
+.top-actions{padding:14px 12px 0;display:flex;gap:8px;align-items:center;position:relative;z-index:45}
+.top-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--accent-dark);font-size:.83rem;font-weight:850;box-shadow:0 8px 20px rgba(39,57,61,.05)}
+.top-btn:hover{background:#f7fbfb}
+main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
+.identity-card{width:min(920px,100%);margin:-11px auto 24px;background:var(--surface);border:1px solid #d1dadb;border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.identity-head{padding:45px 48px 24px}
+.course-line{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:.88rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#38565e;margin-bottom:24px;white-space:nowrap}
+.activity-strip{display:flex;align-items:center;gap:10px;min-height:46px;border:1px solid #d3d8d6;border-left:5px solid var(--accent);border-radius:11px;background:#fbfbf9;padding:9px 14px}
+.activity-code{color:var(--accent);font-size:.78rem;font-weight:900;letter-spacing:.085em;white-space:nowrap}
+.activity-title{font-size:.88rem;font-weight:900;color:#10191c}
+.activity-meta{margin:14px 5px 0;color:var(--muted);font-size:.82rem;font-weight:700}
+.identity-card .progress-track{height:4px;background:#e7eeee}
+.identity-card .progress-fill{height:100%;width:0;background:var(--accent);transition:width .25s ease}
+.start-card{max-width:none;margin:0;background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible}
+.start-head{padding:22px 48px 18px;border-top:1px solid #edf1f1;border-bottom:1px solid var(--line)}
+.start-body{padding:22px 48px 38px}
+.activity-screen-spacer{height:0}
+.summary-actions .primary{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.footer{border-top:1px solid #dce3e4;background:rgba(248,250,249,.88);padding:13px 28px 16px}
+.footer-link{min-width:138px;min-height:56px}
+.footer-link.back{background:var(--accent-soft);color:var(--accent-dark)}
+@media(max-width:760px){
+  .top-actions{padding:10px 10px 0}
+  main{padding:12px 10px 32px}
+  .identity-card{margin-top:0;border-radius:15px}
+  .identity-head{padding:28px 22px 18px}
+  .course-line{font-size:.69rem;letter-spacing:.13em;white-space:normal;line-height:1.55;margin-bottom:18px}
+  .activity-strip{align-items:flex-start;flex-direction:column;gap:2px;padding:10px 12px}
+  .activity-code,.activity-title{font-size:.77rem}
+  .activity-meta{font-size:.76rem;margin-top:10px}
+  .start-head,.start-body{padding-left:22px;padding-right:22px}
+  .start-body{padding-bottom:28px}
+}
+@media print{.top-actions,.identity-head{display:none!important}.identity-card{border:0;box-shadow:none;margin:0;max-width:none}.identity-card .progress-track{display:none!important}}
+
+</style>
+</head>
+<body>
+<div class="shell">
+<div class="top-actions">
+  <a class="top-btn" href="index.html">Home</a>
+  <a class="top-btn" href="activities.html">← Back to Activities</a>
+</div>
+
+<main>
+  <section class="identity-card" aria-label="Activity identity">
+    <div class="identity-head">
+      <div class="course-line">ACCTNG 1 · FUNDAMENTALS OF ACCOUNTANCY, BUSINESS, AND MANAGEMENT 1</div>
+      <div class="activity-strip">
+        <span class="activity-code">ACTIVITY 06.1</span>
+        <span class="activity-title">Building the General Journal</span>
+      </div>
+      <div class="activity-meta">Power Laundry · Journalizing Business Transactions</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <section id="startScreen" class="start-card" data-top-section="overview">
+    <div class="start-head">
+      <div class="eyebrow">Activity 06.1 · Power Laundry</div>
+      <h1>Build the accounting record.</h1>
+      <p style="margin:0;color:var(--muted)">Work through 15 transactions, one at a time, and prepare a complete General Journal.</p>
+    </div>
+    <div class="start-body" id="instructionsAnchor">
+      <div class="student-info" aria-labelledby="studentInfoTitle">
+        <div class="student-info-head"><strong id="studentInfoTitle">Student Information</strong><span>Required for your activity summary and proof of attempt.</span></div>
+        <div class="student-info-grid">
+          <div class="student-field"><label for="studentName">Name</label><input id="studentName" type="text" autocomplete="name" placeholder="Last name, First name M." required></div>
+          <div class="student-field"><label for="studentSection">Section</label><input id="studentSection" type="text" placeholder="e.g., BSBA-1E" required></div>
+          <div class="student-field"><label for="studentDate">Date</label><input id="studentDate" type="date" required></div>
+        </div>
+        <div class="student-error" id="studentInfoError">Please complete your name, section, and date before starting the activity.</div>
+      </div>
+      <div class="context-box">
+        <p><strong>Power Laundry</strong> is a service business that provides laundry and related services to its customers. During the period, the business receives investments, earns service revenue, purchases assets and supplies, pays expenses and obligations, collects amounts from customers, and records owner withdrawals.</p>
+        <p>Your task is to analyze each transaction and record it properly in the <strong>General Journal</strong> using the accounts provided in the <strong>Chart of Accounts</strong>. Complete the Date, Particulars, PR, Debit, and Credit information for each entry.</p>
+      </div>
+      <div class="supplies-note"><strong>A note on supplies:</strong> Supplies purchased for future use are recorded first as <strong>Laundry Supplies</strong>, an asset, rather than <strong>Laundry Supplies Expense</strong>. Both accounts appear in the Chart of Accounts, but their distinction becomes more important when adjusting entries are introduced later.</div>
+      <div class="start-grid">
+        <div class="start-item"><strong>15 transactions per attempt</strong><span>The initial investment always comes first. The remaining transactions, dates, and amounts vary by attempt.</span></div>
+        <div class="start-item"><strong>4 compound entries</strong><span>They are not identified for you. Add another account line only when the transaction requires it.</span></div>
+        <div class="start-item"><strong>PR is part of the skill</strong><span>Use the account number shown in the Chart of Accounts. The activity will not fill it in for you.</span></div>
+        <div class="start-item"><strong>No adjusting entries yet</strong><span>This activity focuses only on regular service-business transactions within the current coverage.</span></div>
+      </div>
+      <div class="coa-tip"><strong>COA reminder:</strong> The Chart of Accounts in this activity may differ slightly from earlier examples. Businesses may add, remove, or revise accounts based on their recording needs.</div>
+      <div class="start-actions">
+        <p>First-attempt accuracy is recorded separately from completed correctness. You may revise an incorrect entry until it is ready to be added to the journal.</p>
+        <div><button class="secondary" type="button" onclick="openModal('coaModal')">View COA</button> <button class="primary" type="button" onclick="startActivity()">Start Activity →</button></div>
+      </div>
+    </div>
+  </section>
+  </section>
+
+  <section id="activityScreen" class="hidden">
+    <section class="intro">
+      <div>
+        <div class="eyebrow">One transaction at a time · build the actual record</div>
+        <h1>Prepare the General Journal.</h1>
+        <p>Journalize each transaction accurately. Refer to the Chart of Accounts when needed, complete the PR, check the entry, then add the accepted entry to your running General Journal.</p>
+      </div>
+      <div class="status"><strong id="transactionStatus">Transaction 01 of 15</strong><span id="completionStatus">0 entries added · 0% complete</span></div>
+    </section>
+
+    <section class="stage">
+      <div class="panel work-panel" id="journalizeAnchor">
+        <div class="panel-head">
+          <div><div class="micro">Current Transaction</div><h2>Journalize before you move on.</h2></div>
+          <button class="nav-btn coa" type="button" onclick="openModal('coaModal')">COA ↗</button>
+        </div>
+        <div class="panel-body">
+          <div class="step-strip"><div class="step active">1 · Read</div><div class="step active">2 · Journalize</div><div class="step active">3 · PR</div><div class="step" id="stepAdd">4 · Add to Journal</div></div>
+          <div class="tx-card"><div class="tx-date" id="txDate"></div><p class="tx-text" id="txText"></p></div>
+          <div class="helper-row"><strong>Construct the journal entry</strong><span>Use + Add account line for compound entries.</span></div>
+          <div class="builder-table" id="builderTable"><div class="builder-head"><div>Particulars</div><div>PR</div><div>Debit</div><div>Credit</div></div><div id="builderRows"></div></div>
+          <div class="entry-tools"><button class="mini-btn" type="button" onclick="addBuilderRow()">＋ Add account line</button><button class="mini-btn" type="button" onclick="removeBuilderRow()">Remove last line</button></div>
+          <div class="explanation"><label for="explanationInput">Explanation</label><input id="explanationInput" placeholder="Write a short explanation for the entry…"><div class="not-graded">The explanation should be meaningful, but exact wording is not graded word-for-word.</div></div>
+          <div class="balance-strip"><span>Debit total: <strong id="debitTotal">₱0.00</strong></span><span>Credit total: <strong id="creditTotal">₱0.00</strong></span><span><strong id="balanceState">Not yet balanced</strong></span></div>
+          <div class="feedback" id="feedback"><strong>Ready when you are.</strong> Analyze the transaction, prepare the entry, and check your work.</div>
+          <div class="action-row"><div class="small-note">An accepted entry becomes part of the General Journal. If an entry needs revision, first-attempt accuracy is still recorded.</div><div><button class="secondary" type="button" onclick="checkEntry()">Check Entry</button> <button class="disabled" id="addJournalBtn" type="button" disabled onclick="addToJournal()">Add to General Journal →</button></div></div>
+        </div>
+      </div>
+
+      <div class="panel journal-panel" id="runningAnchor">
+        <div class="journal-title"><div class="business">POWER LAUNDRY</div><h2>GENERAL JOURNAL</h2><div class="ref">GJ-01 · Running Activity Record</div></div>
+        <div class="journal-wrap"><table class="journal"><thead><tr><th>Date</th><th>Particulars</th><th>PR</th><th>Debit</th><th>Credit</th></tr></thead><tbody id="journalBody"><tr class="blank-row"><td></td><td>Your completed entries will appear here in chronological order.</td><td></td><td></td><td></td></tr><tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+        <div class="running-note"><strong>Keep the journal in view.</strong> You are not answering 15 separate questions. You are building one chronological accounting record.</div>
+      </div>
+    </section>
+  </section>
+
+  <section id="summaryScreen" class="summary-card hidden" data-top-section="summary">
+    <div class="summary-head"><div class="eyebrow">Activity Complete</div><h1>Your General Journal is complete.</h1><p>Review your accuracy, the entries that needed revision, and the complete record you prepared.</p></div>
+    <div class="summary-body">
+      <div class="student-record" aria-label="Student attempt details">
+        <div class="student-record-title">Student Attempt Record</div>
+        <div class="student-record-grid">
+          <div class="student-record-item"><span>Name</span><strong id="summaryStudentName">—</strong></div>
+          <div class="student-record-item"><span>Section</span><strong id="summaryStudentSection">—</strong></div>
+          <div class="student-record-item"><span>Date</span><strong id="summaryStudentDate">—</strong></div>
+        </div>
+      </div>
+      <div class="summary-grid"><div class="metric"><span>Transactions</span><strong>15</strong></div><div class="metric"><span>Completed Correctly</span><strong id="metricCompleted">15 / 15</strong></div><div class="metric"><span>First-Attempt Accuracy</span><strong id="metricFirst">—</strong></div><div class="metric"><span>Entries Revised</span><strong id="metricRevised">—</strong></div></div>
+      <div id="reviewArea"></div>
+      <div class="summary-end">You have completed the General Journal. The next step in the accounting cycle is to transfer the journal information to the individual accounts in the <strong>General Ledger</strong>.</div>
+      <div class="summary-actions"><button class="secondary" type="button" onclick="window.print()">Print / Save Summary</button><button class="secondary" type="button" onclick="newAttempt()">Start New Attempt</button><a class="primary" href="module07.html">Continue to Module 07 →</a></div>
+      <div class="complete-journal"><h3>Complete General Journal</h3><p>This is the accounting record produced during this attempt.</p><div class="journal-wrap" style="padding:0"><table class="journal"><thead><tr><th>Date</th><th>Particulars</th><th>PR</th><th>Debit</th><th>Credit</th></tr></thead><tbody id="summaryJournalBody"></tbody></table></div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-copy">For educational use only. Please do not reproduce, redistribute, or share these materials without permission. © 2026 ave.guz</div>
+  <nav class="footer-nav" aria-label="Activity navigation">
+    <a class="footer-link back" href="activities.html">← Back to<br>Activities</a>
+    <a class="footer-link" href="module06.html">Review Module 06<br>Journalizing</a>
+  </nav>
+</footer>
+</div>
+
+<div class="modal" id="coaModal" onclick="backdropClose(event,'coaModal')">
+  <div class="modal-card">
+    <div class="modal-head"><div><div class="micro">Reference</div><h3>Power Laundry · Chart of Accounts</h3></div><button class="close" type="button" onclick="closeModal('coaModal')">×</button></div>
+    <div class="modal-body">
+      <p class="coa-intro">Use the account titles and numbers below when preparing the General Journal. The PR column uses the corresponding account number.</p>
+      <table class="coa-table"><thead><tr><th>Account No.</th><th>Account Title</th><th>Classification</th></tr></thead><tbody id="coaBody"></tbody></table>
+      <div class="coa-tip"><strong>Supplies reminder:</strong> purchases of supplies for future use are recorded as <strong>Laundry Supplies (108)</strong> in this activity, not Laundry Supplies Expense.</div>
+      <div class="coa-tip"><strong>PR reminder:</strong> use the account number assigned in the Chart of Accounts. Example: Cash → 101.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const COA=[
+  {no:'101',title:'Cash',class:'Asset'},
+  {no:'106',title:'Accounts Receivable',class:'Asset'},
+  {no:'108',title:'Laundry Supplies',class:'Asset'},
+  {no:'109',title:'Prepaid Rent',class:'Asset'},
+  {no:'115',title:'Laundry Equipment',class:'Asset'},
+  {no:'201',title:'Accounts Payable',class:'Liability'},
+  {no:'210',title:'Notes Payable',class:'Liability'},
+  {no:'240',title:'Unearned Service Revenue',class:'Liability'},
+  {no:'301',title:'Owner, Capital',class:"Owner's Equity"},
+  {no:'302',title:'Owner, Withdrawals',class:"Owner's Equity"},
+  {no:'401',title:'Service Revenue',class:'Revenue'},
+  {no:'501',title:'Salaries Expense',class:'Expense'},
+  {no:'502',title:'Rent Expense',class:'Expense'},
+  {no:'503',title:'Utilities Expense',class:'Expense'},
+  {no:'504',title:'Laundry Supplies Expense',class:'Expense'},
+  {no:'505',title:'Repairs and Maintenance Expense',class:'Expense'},
+  {no:'506',title:'Advertising Expense',class:'Expense'}
+];
+const ACCOUNT=Object.fromEntries(COA.map(a=>[a.title,a]));
+const fmt=n=>'₱'+Number(n).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});
+const money=n=>'₱'+Number(n).toLocaleString('en-PH');
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+const amt=a=>pick(a);
+const entry=(account,debit=0,credit=0)=>({account,pr:ACCOUNT[account].no,debit,credit});
+let uidCounter=0;
+const makeTx=(text,entries,meta={},dependsOn=[])=>({id:'T'+(++uidCounter),text,entries,meta,dependsOn,date:null,attempted:false,firstCorrect:null,issues:[],accepted:false,explanation:''});
+
+function initialInvestment(){const a=amt([120000,150000,180000,200000]);return makeTx(`The owner started Power Laundry by investing ${money(a)} cash in the business.`,[entry('Cash',a,0),entry('Owner, Capital',0,a)],{kind:'initial',compound:false});}
+function cashRevenue(){const a=amt([9500,12000,13500,15000,18500,21000]);const w=pick([`Power Laundry received ${money(a)} cash for laundry services provided to customers.`,`Power Laundry earned ${money(a)} cash from laundry services completed during the day.`,`Customers paid ${money(a)} cash for laundry services completed by Power Laundry.`]);return makeTx(w,[entry('Cash',a,0),entry('Service Revenue',0,a)],{kind:'cash-revenue',compound:false});}
+function arFamily(){const sale=amt([12000,14000,16000,18000,22000]);const collect=pick([Math.round(sale*.4/500)*500,Math.round(sale*.5/500)*500,Math.round(sale*.6/500)*500]);const a=makeTx(pick([`Power Laundry provided ${money(sale)} of laundry services on account to a customer.`,`Power Laundry completed laundry services worth ${money(sale)} for a customer who will pay later.`,`Power Laundry billed a customer ${money(sale)} for laundry services already completed.`]),[entry('Accounts Receivable',sale,0),entry('Service Revenue',0,sale)],{kind:'ar-create',compound:false});const b=makeTx(pick([`Power Laundry collected ${money(collect)} from a customer on account.`,`Power Laundry received ${money(collect)} as partial payment from a customer with an outstanding account.`,`A customer paid ${money(collect)} toward an existing amount owed to Power Laundry.`]),[entry('Cash',collect,0),entry('Accounts Receivable',0,collect)],{kind:'ar-collect',compound:false},[a.id]);return[a,b];}
+function apFamily(){const purchase=amt([7000,8000,9000,10500,12000]);const pay=pick([Math.round(purchase*.4/500)*500,Math.round(purchase*.5/500)*500,Math.round(purchase*.6/500)*500]);const a=makeTx(pick([`Power Laundry purchased ${money(purchase)} of laundry supplies on account.`,`Power Laundry acquired laundry supplies worth ${money(purchase)} from a supplier on account.`,`Laundry supplies costing ${money(purchase)} were purchased on account for future use.`]),[entry('Laundry Supplies',purchase,0),entry('Accounts Payable',0,purchase)],{kind:'ap-create',compound:false});const b=makeTx(pick([`Power Laundry paid ${money(pay)} as partial payment of the amount owed to the supplier.`,`Power Laundry paid ${money(pay)} toward its outstanding Accounts Payable.`,`Power Laundry made a ${money(pay)} partial payment on its account with the supplier.`]),[entry('Accounts Payable',pay,0),entry('Cash',0,pay)],{kind:'ap-pay',compound:false},[a.id]);return[a,b];}
+function expenseTx(){const builders=[
+()=>{const a=amt([6000,6500,7500,8000,9000]);return makeTx(`Power Laundry paid ${money(a)} for salaries of laundry personnel.`,[entry('Salaries Expense',a,0),entry('Cash',0,a)],{kind:'expense',compound:false});},
+()=>{const a=amt([8000,9000,10000,12000]);return makeTx(`Power Laundry paid ${money(a)} for the current month's rent.`,[entry('Rent Expense',a,0),entry('Cash',0,a)],{kind:'expense',compound:false});},
+()=>{const a=amt([2800,3200,3600,4100,4500]);return makeTx(`Power Laundry paid ${money(a)} for electricity and water used during the month.`,[entry('Utilities Expense',a,0),entry('Cash',0,a)],{kind:'expense',compound:false});},
+()=>{const a=amt([2000,2500,3000,3500]);return makeTx(`Power Laundry paid ${money(a)} for advertising services already received.`,[entry('Advertising Expense',a,0),entry('Cash',0,a)],{kind:'expense',compound:false});},
+()=>{const a=amt([3000,3600,4200,5000]);return makeTx(`Power Laundry paid ${money(a)} for repairs and maintenance performed on its laundry equipment.`,[entry('Repairs and Maintenance Expense',a,0),entry('Cash',0,a)],{kind:'expense',compound:false});}
+];return pick(builders)();}
+function withdrawalTx(){const a=amt([3000,3500,4500,5000,6000]);return makeTx(pick([`The owner withdrew ${money(a)} cash from Power Laundry for personal use.`,`The owner took ${money(a)} cash from the business for personal use.`]),[entry('Owner, Withdrawals',a,0),entry('Cash',0,a)],{kind:'withdrawal',compound:false});}
+function fillerTx(){const builders=[
+()=>{const a=amt([3500,4200,5000,6500]);return makeTx(`Power Laundry purchased ${money(a)} of laundry supplies for cash for future operations.`,[entry('Laundry Supplies',a,0),entry('Cash',0,a)],{kind:'supplies-cash',compound:false});},
+()=>{const a=amt([24000,28000,32000,35000]);return makeTx(`Power Laundry purchased laundry equipment for ${money(a)} cash.`,[entry('Laundry Equipment',a,0),entry('Cash',0,a)],{kind:'equipment-cash',compound:false});},
+()=>cashRevenue()
+];return pick(builders)();}
+function standaloneSpecial(){const builders=[
+()=>{const a=amt([18000,21000,24000,27000]);return makeTx(`Power Laundry paid ${money(a)} in advance for rent covering future months.`,[entry('Prepaid Rent',a,0),entry('Cash',0,a)],{kind:'prepaid',compound:false});},
+()=>{const a=amt([7000,8000,10000,12000]);return makeTx(`Power Laundry received ${money(a)} cash from a customer in advance for laundry services to be performed later.`,[entry('Cash',a,0),entry('Unearned Service Revenue',0,a)],{kind:'unearned',compound:false});},
+()=>{const a=amt([35000,40000,50000,60000]);return makeTx(`Power Laundry borrowed ${money(a)} cash from a bank and signed a promissory note.`,[entry('Cash',a,0),entry('Notes Payable',0,a)],{kind:'note-borrow',compound:false});}
+];return pick(builders)();}
+function noteFamily(){const principal=amt([40000,50000,60000]);const pay=pick([10000,15000,20000].filter(x=>x<principal));const a=makeTx(`Power Laundry borrowed ${money(principal)} cash from a bank and signed a promissory note.`,[entry('Cash',principal,0),entry('Notes Payable',0,principal)],{kind:'note-borrow',compound:false});const b=makeTx(`Power Laundry paid ${money(pay)} of the principal on the existing Notes Payable.`,[entry('Notes Payable',pay,0),entry('Cash',0,pay)],{kind:'note-pay',compound:false},[a.id]);return[a,b];}
+function compoundAcquisition(){const builders=[
+()=>{const total=amt([36000,40000,45000,50000]);const cash=amt([10000,15000,20000]);const bal=total-cash;return makeTx(`Power Laundry purchased laundry equipment costing ${money(total)}, paying ${money(cash)} cash and agreeing to pay the ${money(bal)} balance later.`,[entry('Laundry Equipment',total,0),entry('Cash',0,cash),entry('Accounts Payable',0,bal)],{kind:'compound-acquisition',compound:true});},
+()=>{const total=amt([8000,9000,10000,12000]);const cash=amt([3000,4000,5000]);const bal=total-cash;return makeTx(`Power Laundry purchased ${money(total)} of laundry supplies, paying ${money(cash)} cash and purchasing the remaining ${money(bal)} on account.`,[entry('Laundry Supplies',total,0),entry('Cash',0,cash),entry('Accounts Payable',0,bal)],{kind:'compound-acquisition',compound:true});},
+()=>{const supplies=amt([4000,5000,6000]);const equip=amt([18000,20000,24000,26000]);const total=supplies+equip;return makeTx(`Power Laundry purchased ${money(supplies)} of laundry supplies and laundry equipment worth ${money(equip)} for cash.`,[entry('Laundry Supplies',supplies,0),entry('Laundry Equipment',equip,0),entry('Cash',0,total)],{kind:'compound-acquisition',compound:true});},
+()=>{const total=amt([40000,45000,50000]);const cash=amt([10000,15000]);const note=total-cash;return makeTx(`Power Laundry acquired laundry equipment costing ${money(total)}, paying ${money(cash)} cash and signing a promissory note for ${money(note)}.`,[entry('Laundry Equipment',total,0),entry('Cash',0,cash),entry('Notes Payable',0,note)],{kind:'compound-acquisition',compound:true});}
+];return pick(builders)();}
+function compoundRevenue(arDependency){const builders=[
+()=>{const total=amt([16000,18000,20000,24000]);const cash=amt([8000,10000,12000]);const receivable=total-cash;return makeTx(`Power Laundry provided ${money(total)} of laundry services, receiving ${money(cash)} cash and billing the customer for the remaining ${money(receivable)}.`,[entry('Cash',cash,0),entry('Accounts Receivable',receivable,0),entry('Service Revenue',0,total)],{kind:'compound-revenue',compound:true});},
+()=>{const service=amt([9000,11000,13000]);const advance=amt([3000,4000,5000]);const total=service+advance;return makeTx(`Power Laundry received ${money(total)} cash from customers, consisting of ${money(service)} for services performed today and ${money(advance)} in advance for services to be performed later.`,[entry('Cash',total,0),entry('Service Revenue',0,service),entry('Unearned Service Revenue',0,advance)],{kind:'compound-revenue',compound:true});},
+()=>{const collect=amt([4000,5000,6000]);const service=amt([6500,7000,8500]);const total=collect+service;return makeTx(`Power Laundry received ${money(total)} cash from a customer, consisting of ${money(collect)} collected from an existing receivable and ${money(service)} for laundry services performed today.`,[entry('Cash',total,0),entry('Accounts Receivable',0,collect),entry('Service Revenue',0,service)],{kind:'compound-revenue',compound:true},[arDependency]);}
+];return pick(builders)();}
+function compoundExpense(){const builders=[
+()=>{const sal=amt([6000,7000,8000]);const util=amt([2500,3000,3500]);const total=sal+util;return makeTx(`Power Laundry paid ${money(sal)} for salaries and ${money(util)} for utilities in one cash payment.`,[entry('Salaries Expense',sal,0),entry('Utilities Expense',util,0),entry('Cash',0,total)],{kind:'compound-expense',compound:true});},
+()=>{const rent=amt([8000,9000,10000]);const ad=amt([2000,2500,3000]);const total=rent+ad;return makeTx(`Power Laundry paid ${money(rent)} for current-month rent and ${money(ad)} for advertising services in one cash payment.`,[entry('Rent Expense',rent,0),entry('Advertising Expense',ad,0),entry('Cash',0,total)],{kind:'compound-expense',compound:true});},
+()=>{const rep=amt([3000,4000,4500]);const util=amt([2500,3000,3500]);const total=rep+util;return makeTx(`Power Laundry paid ${money(rep)} for equipment repairs and ${money(util)} for current utilities in one cash payment.`,[entry('Repairs and Maintenance Expense',rep,0),entry('Utilities Expense',util,0),entry('Cash',0,total)],{kind:'compound-expense',compound:true});}
+];return pick(builders)();}
+function compoundOwner(suppliesDependency){const builders=[
+()=>{const cash=amt([15000,20000,25000]);const equip=amt([25000,30000,35000]);const total=cash+equip;return makeTx(`The owner made an additional investment consisting of ${money(cash)} cash and laundry equipment worth ${money(equip)}.`,[entry('Cash',cash,0),entry('Laundry Equipment',equip,0),entry('Owner, Capital',0,total)],{kind:'compound-owner',compound:true});},
+()=>{const cash=amt([2500,3000,3500]);const supplies=amt([1000,1500,2000]);const total=cash+supplies;return makeTx(`The owner withdrew ${money(cash)} cash and ${money(supplies)} of laundry supplies from the business for personal use.`,[entry('Owner, Withdrawals',total,0),entry('Cash',0,cash),entry('Laundry Supplies',0,supplies)],{kind:'compound-owner',compound:true},[suppliesDependency]);}
+];return pick(builders)();}
+
+function randomizedTopological(items){const remaining=[...items],ordered=[];const done=new Set();while(remaining.length){const available=remaining.filter(t=>t.dependsOn.every(d=>done.has(d)));if(!available.length){return shuffle(items)}const chosen=pick(available);ordered.push(chosen);done.add(chosen.id);remaining.splice(remaining.indexOf(chosen),1)}return ordered;}
+function randomDates(count){const days=shuffle(Array.from({length:29},(_,i)=>i+2)).slice(0,count).sort((a,b)=>a-b);return days.map(d=>`Jan. ${String(d).padStart(2,'0')}, 2026`)}
+function buildAttempt(){uidCounter=0;const initial=initialInvestment();const ar=arFamily();const ap=apFamily();const compounds=[compoundAcquisition(),compoundRevenue(ar[0].id),compoundExpense(),compoundOwner(ap[0].id)];let extras=[cashRevenue(),expenseTx(),expenseTx(),withdrawalTx()];let special;if(Math.random()<.35){special=noteFamily();extras=extras.concat(special)}else{special=[standaloneSpecial(),fillerTx()];extras=extras.concat(special)}let rest=[...ar,...ap,...compounds,...extras];while(rest.length>14)rest.pop();while(rest.length<14)rest.push(fillerTx());rest=randomizedTopological(rest);const all=[initial,...rest];const dates=randomDates(all.length);all.forEach((t,i)=>t.date=dates[i]);return all;}
+
+let attempt=[];let currentIndex=0;let completed=[];let rowCount=2;let studentInfo={name:'',section:'',date:''};
+function setTopNav(id){document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));const btn=document.getElementById(id);if(btn)btn.classList.add('active')}
+function goTopSection(which){
+  if(which==='overview'){setTopNav('navOverview');const start=document.getElementById('startScreen'),activity=document.getElementById('activityScreen'),summary=document.getElementById('summaryScreen');const target=!start.classList.contains('hidden')?start:!activity.classList.contains('hidden')?activity:summary;target.scrollIntoView({behavior:'smooth',block:'start'});return}
+  if(which==='instructions'){setTopNav('navInstructions');document.getElementById('startScreen').classList.contains('hidden')?document.getElementById('activityScreen').scrollIntoView({behavior:'smooth',block:'start'}):document.getElementById('instructionsAnchor').scrollIntoView({behavior:'smooth',block:'start'});return}
+  if(which==='journalize'){setTopNav('navJournalize');const el=document.getElementById('journalizeAnchor');(el&&!document.getElementById('activityScreen').classList.contains('hidden')?el:document.getElementById('startScreen')).scrollIntoView({behavior:'smooth',block:'start'});return}
+  if(which==='running'){setTopNav('navRunning');const el=document.getElementById('runningAnchor');(el&&!document.getElementById('activityScreen').classList.contains('hidden')?el:document.getElementById('startScreen')).scrollIntoView({behavior:'smooth',block:'start'});return}
+  if(which==='summary'){setTopNav('navSummary');const s=document.getElementById('summaryScreen');(!s.classList.contains('hidden')?s:document.getElementById('startScreen')).scrollIntoView({behavior:'smooth',block:'start'});return}
+}
+function openModal(id){document.getElementById(id).classList.add('open')}
+function closeModal(id){document.getElementById(id).classList.remove('open');if(!document.getElementById('summaryScreen').classList.contains('hidden'))setTopNav('navSummary');else if(!document.getElementById('activityScreen').classList.contains('hidden'))setTopNav('navJournalize');else setTopNav('navOverview')}
+function backdropClose(e,id){if(e.target.id===id)closeModal(id)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'))});
+function renderCOA(){document.getElementById('coaBody').innerHTML=COA.map(a=>`<tr><td>${a.no}</td><td>${a.title}</td><td>${a.class}</td></tr>`).join('')}
+function accountOptions(){return `<option value="">Select account…</option>`+COA.map(a=>`<option value="${a.title}">${a.title}</option>`).join('')}
+function addBuilderRow(){rowCount++;renderBuilderRows(true)}
+function removeBuilderRow(){if(rowCount<=2)return;rowCount--;renderBuilderRows(true)}
+function captureRows(){return Array.from(document.querySelectorAll('.builder-row')).map(r=>({account:r.querySelector('.acct').value,pr:r.querySelector('.pr-input').value,debit:r.querySelector('.debit-input').value,credit:r.querySelector('.credit-input').value}))}
+function renderBuilderRows(preserve=false){const existing=preserve?captureRows():[];const host=document.getElementById('builderRows');host.innerHTML='';for(let i=0;i<rowCount;i++){const old=existing[i]||{};const div=document.createElement('div');div.className='builder-row';div.innerHTML=`<div><select class="acct" aria-label="Account title">${accountOptions()}</select></div><div class="pr"><input class="pr-input" inputmode="numeric" placeholder="___" aria-label="PR"></div><div class="money debit"><input class="debit-input" inputmode="decimal" placeholder="0.00" aria-label="Debit amount"></div><div class="money credit"><input class="credit-input" inputmode="decimal" placeholder="0.00" aria-label="Credit amount"></div>`;host.appendChild(div);div.querySelector('.acct').value=old.account||'';div.querySelector('.pr-input').value=old.pr||'';div.querySelector('.debit-input').value=old.debit||'';div.querySelector('.credit-input').value=old.credit||'';div.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',updateTotals));}updateTotals();}
+function numberVal(v){if(v===null||v===undefined||v==='')return 0;return Number(String(v).replace(/[₱,\s]/g,''))||0}
+function updateTotals(){const rows=captureRows();const d=rows.reduce((s,r)=>s+numberVal(r.debit),0),c=rows.reduce((s,r)=>s+numberVal(r.credit),0);document.getElementById('debitTotal').textContent=fmt(d);document.getElementById('creditTotal').textContent=fmt(c);document.getElementById('balanceState').textContent=(d>0&&Math.abs(d-c)<.005)?'Balanced':'Not yet balanced'}
+function formatStudentDate(value){if(!value)return '—';const [y,m,d]=value.split('-').map(Number);if(!y||!m||!d)return value;return new Date(y,m-1,d).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'2-digit'})}
+function captureStudentInfo(){const name=document.getElementById('studentName').value.trim(),section=document.getElementById('studentSection').value.trim(),date=document.getElementById('studentDate').value;const error=document.getElementById('studentInfoError');if(!name||!section||!date){error.classList.add('show');return false}error.classList.remove('show');studentInfo={name,section,date};return true}
+function startActivity(){if(!captureStudentInfo())return;attempt=buildAttempt();currentIndex=0;completed=[];document.getElementById('startScreen').classList.add('hidden');document.getElementById('summaryScreen').classList.add('hidden');document.getElementById('activityScreen').classList.remove('hidden');setTopNav('navJournalize');renderJournal();loadTransaction();window.scrollTo({top:0,behavior:'smooth'})}
+function loadTransaction(){const t=attempt[currentIndex];rowCount=2;renderBuilderRows(false);document.getElementById('explanationInput').value='';document.getElementById('txDate').textContent=`${t.date} · Transaction ${String(currentIndex+1).padStart(2,'0')}`;document.getElementById('txText').textContent=t.text;document.getElementById('transactionStatus').textContent=`Transaction ${String(currentIndex+1).padStart(2,'0')} of 15`;document.getElementById('completionStatus').textContent=`${completed.length} ${completed.length===1?'entry':'entries'} added · ${Math.round(completed.length/15*100)}% complete`;document.getElementById('progressFill').style.width=`${completed.length/15*100}%`;setFeedback('neutral','Ready when you are.','Analyze the transaction, prepare the entry, and check your work.');setAccepted(false);}
+function setFeedback(type,title,text){const el=document.getElementById('feedback');el.className='feedback'+(type==='good'?' good':type==='bad'?' bad':'');el.innerHTML=`<strong>${title}</strong> ${text}`}
+function setAccepted(ok){const b=document.getElementById('addJournalBtn');b.disabled=!ok;b.className=ok?'primary':'disabled';document.getElementById('stepAdd').classList.toggle('active',ok)}
+function normalizeStudentRows(){return captureRows().filter(r=>r.account||r.pr||numberVal(r.debit)||numberVal(r.credit)).map(r=>({account:r.account,pr:String(r.pr).trim(),debit:numberVal(r.debit),credit:numberVal(r.credit)}))}
+function checkEntry(){const t=attempt[currentIndex];const rows=normalizeStudentRows();const explanation=document.getElementById('explanationInput').value.trim();const issues=[];const d=rows.reduce((s,r)=>s+r.debit,0),c=rows.reduce((s,r)=>s+r.credit,0);if(!rows.length)issues.push('account selection');if(!(d>0&&Math.abs(d-c)<.005))issues.push('debit and credit balance');const expectedAccounts=new Set(t.entries.map(e=>e.account));const actualAccounts=new Set(rows.map(r=>r.account).filter(Boolean));if(rows.length!==t.entries.length)issues.push('number of account lines');if(expectedAccounts.size!==actualAccounts.size||[...expectedAccounts].some(a=>!actualAccounts.has(a)))issues.push('account title selection');else{
+    const byAccount=Object.fromEntries(rows.map(r=>[r.account,r]));
+    if(t.entries.some(e=>{const r=byAccount[e.account];return !r||Math.abs(r.debit-e.debit)>.005||Math.abs(r.credit-e.credit)>.005}))issues.push('debit / credit placement or amount');
+    if(t.entries.some(e=>{const r=byAccount[e.account];return !r||r.pr!==e.pr}))issues.push('PR reference');
+  }
+if(explanation.length<6)issues.push('brief explanation');
+const unique=[...new Set(issues)];if(!t.attempted){t.attempted=true;t.firstCorrect=unique.length===0;}if(unique.length){t.issues=[...new Set([...t.issues,...unique])];setAccepted(false);setFeedback('bad','Entry needs revision.',`Review: ${unique.join('; ')}. The complete answer is not shown so you can correct the entry yourself.`);return}
+t.explanation=explanation;t.studentRows=rows;setAccepted(true);setFeedback('good','Entry accepted.','Your journal entry is correct. Add it to the General Journal when you are ready.');}
+function addToJournal(){const t=attempt[currentIndex];if(!t.studentRows)return;t.accepted=true;completed.push(t);renderJournal();if(currentIndex===attempt.length-1){finishActivity();return}currentIndex++;loadTransaction();window.scrollTo({top:0,behavior:'smooth'})}
+function journalRowsHtml(records){if(!records.length)return `<tr class="blank-row"><td></td><td>Your completed entries will appear here in chronological order.</td><td></td><td></td><td></td></tr><tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr>`;let html='';records.forEach((t,idx)=>{const debits=t.entries.filter(e=>e.debit>0),credits=t.entries.filter(e=>e.credit>0);const ordered=[...debits,...credits];ordered.forEach((e,i)=>{const isCredit=e.credit>0;html+=`<tr><td>${i===0?t.date:''}</td><td class="${isCredit?'credit-line':'debit-line'}">${e.account}</td><td>${e.pr}</td><td>${e.debit?fmt(e.debit):''}</td><td>${e.credit?fmt(e.credit):''}</td></tr>`});html+=`<tr><td></td><td class="description-line">${escapeHtml(t.explanation||'To record the transaction.')}</td><td></td><td></td><td></td></tr>`;if(idx<records.length-1)html+=`<tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr>`});return html;}
+function renderJournal(){document.getElementById('journalBody').innerHTML=journalRowsHtml(completed)}
+function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function finishActivity(){document.getElementById('progressFill').style.width='100%';document.getElementById('activityScreen').classList.add('hidden');document.getElementById('summaryScreen').classList.remove('hidden');setTopNav('navSummary');document.getElementById('summaryStudentName').textContent=studentInfo.name||'—';document.getElementById('summaryStudentSection').textContent=studentInfo.section||'—';document.getElementById('summaryStudentDate').textContent=formatStudentDate(studentInfo.date);const first=completed.filter(t=>t.firstCorrect).length;const revised=15-first;document.getElementById('metricCompleted').textContent='15 / 15';document.getElementById('metricFirst').textContent=`${first} / 15`;document.getElementById('metricRevised').textContent=String(revised);const reviews=completed.map((t,i)=>({n:i+1,t})).filter(x=>!x.t.firstCorrect);document.getElementById('reviewArea').innerHTML=reviews.length?`<div class="review-list">${reviews.map(x=>`<div class="review-item"><strong>Transaction ${String(x.n).padStart(2,'0')}</strong><span>Review focus: ${x.t.issues.join('; ')}</span></div>`).join('')}</div>`:`<div class="summary-end" style="background:var(--good-soft);color:#42614c">All 15 entries were correct on the first check.</div>`;document.getElementById('summaryJournalBody').innerHTML=journalRowsHtml(completed);window.scrollTo({top:0,behavior:'smooth'})}
+function newAttempt(){attempt=[];completed=[];currentIndex=0;document.getElementById('summaryScreen').classList.add('hidden');document.getElementById('activityScreen').classList.add('hidden');document.getElementById('startScreen').classList.remove('hidden');document.getElementById('progressFill').style.width='0';setTopNav('navOverview');window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('#studentName,#studentSection,#studentDate').forEach(el=>el.addEventListener('input',()=>document.getElementById('studentInfoError').classList.remove('show')));
+renderCOA();
+</script>
+</body>
+</html>

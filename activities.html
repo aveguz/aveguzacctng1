@@ -1,43 +1,346 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Activities | ACCTNG 1</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="page-header">
-      <nav class="topbar">
-        <div class="brand">ACCTNG 1</div>
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="modules.html">Modules</a>
-          <a href="activities.html">Activities</a>
-          <a href="challenges.html">Challenges</a>
-        </div>
-      </nav>
-    </header>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Activities | ACCTNG 1 Learning Hub</title>
+  <style>
+    :root{
+      --bg:#edf4f5;
+      --surface:#ffffff;
+      --ink:#173038;
+      --muted:#627880;
+      --line:#d4e0e2;
+      --teal:#2f6f73;
+      --teal-dark:#245a5e;
+      --teal-soft:#e7f1f1;
+      --teal-line:#9fc4c6;
+      --coming:#eef2f3;
+      --coming-text:#809399;
+      --shadow:0 10px 26px rgba(23,48,56,.055);
+      --radius:20px;
+    }
 
-    <main class="container page-content">
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+    }
+
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+
+    .site-header{
+      background:#fff;
+      border-bottom:1px solid var(--line);
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:28px;
+      padding:0 38px;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:max-content;
+    }
+    .brand-mark{
+      width:46px;
+      height:46px;
+      border-radius:16px;
+      background:#3f7076;
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-size:15px;
+      font-weight:900;
+      letter-spacing:.04em;
+    }
+    .brand-name{
+      font-size:14px;
+      font-weight:900;
+      letter-spacing:.16em;
+      color:#33555e;
+      line-height:1.2;
+    }
+    .brand-sub{
+      margin-top:5px;
+      color:#6f8389;
+      font-size:13px;
+      font-weight:750;
+    }
+
+    .main-nav{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .main-nav a{
+      color:#65777d;
+      font-size:14px;
+      font-weight:850;
+      letter-spacing:.035em;
+      padding:11px 12px;
+      border-radius:12px;
+    }
+    .main-nav a:hover{background:#f2f6f6;color:#385861}
+    .main-nav a.active{
+      background:var(--teal-soft);
+      color:#294e55;
+    }
+    .main-nav a.disabled{
+      color:#bdc7ca;
+      pointer-events:none;
+    }
+
+    .page{
+      max-width:1360px;
+      margin:0 auto;
+      padding:18px 38px 42px;
+    }
+
+    .hero{
+      padding:0 0 26px;
+    }
+    .hero h1{
+      margin:0;
+      font-size:clamp(54px,7vw,88px);
+      line-height:1;
+      letter-spacing:-.055em;
+      font-weight:850;
+      color:#1b3037;
+    }
+    .hero p{
+      margin:12px 0 0;
+      max-width:900px;
+      color:#5e747b;
+      font-size:18px;
+      line-height:1.65;
+    }
+
+    .activity-list{
+      display:grid;
+      gap:16px;
+    }
+
+    .activity-card{
+      position:relative;
+      display:grid;
+      grid-template-columns:84px minmax(0,1fr) auto;
+      align-items:center;
+      gap:24px;
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:30px 26px;
+      box-shadow:var(--shadow);
+    }
+    .activity-card.available{
+      border-color:var(--teal-line);
+    }
+
+    .activity-number{
+      width:70px;
+      min-height:70px;
+      border-radius:18px;
+      display:grid;
+      place-items:center;
+      padding:8px;
+      text-align:center;
+      background:var(--teal);
+      color:#fff;
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:.02em;
+      line-height:1.1;
+    }
+    .activity-card.coming .activity-number{
+      background:#eef3f4;
+      color:#789097;
+    }
+
+    .activity-meta{
+      color:var(--teal-dark);
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      margin-bottom:12px;
+    }
+    .activity-card.coming .activity-meta{color:#84989e}
+
+    .activity-title{
+      margin:0;
+      font-size:27px;
+      line-height:1.15;
+      letter-spacing:-.02em;
+      color:#142f38;
+    }
+    .activity-desc{
+      margin:14px 0 0;
+      max-width:850px;
+      color:#60777e;
+      font-size:16px;
+      line-height:1.65;
+    }
+    .activity-status{
+      margin-top:10px;
+      display:flex;
+      align-items:center;
+      gap:9px;
+      color:#365f63;
+      font-size:14px;
+      font-weight:850;
+    }
+    .status-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--teal);
+      flex:0 0 auto;
+    }
+
+    .open-btn,
+    .coming-btn{
+      min-width:178px;
+      padding:14px 17px;
+      border-radius:13px;
+      text-align:center;
+      font-size:14px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .open-btn{
+      color:#fff;
+      background:var(--teal);
+      box-shadow:0 7px 14px rgba(47,111,115,.14);
+    }
+    .open-btn:hover{background:var(--teal-dark)}
+    .coming-btn{
+      background:var(--coming);
+      color:var(--coming-text);
+      border:1px solid #d8e1e3;
+    }
+
+    .footer{
+      margin-top:26px;
+      padding:24px 2px 0;
+      border-top:1px solid rgba(147,168,173,.45);
+      display:flex;
+      justify-content:space-between;
+      gap:22px;
+      color:#6b8188;
+      font-size:13px;
+      line-height:1.6;
+    }
+    .footer strong{color:#48666d}
+
+    @media (max-width:880px){
+      .site-header{
+        position:static;
+        padding:14px 18px;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+      .main-nav{width:100%;overflow:auto;flex-wrap:nowrap;padding-bottom:2px}
+      .main-nav a{white-space:nowrap}
+      .page{padding:22px 18px 32px}
+      .activity-card{
+        grid-template-columns:66px minmax(0,1fr);
+        padding:24px 20px;
+      }
+      .activity-number{width:60px;min-height:60px;border-radius:16px;font-size:16px}
+      .activity-card .open-btn,
+      .activity-card .coming-btn{
+        grid-column:1 / -1;
+        width:100%;
+        min-width:0;
+      }
+      .footer{flex-direction:column}
+    }
+
+    @media (max-width:540px){
+      .brand-mark{width:42px;height:42px;border-radius:14px}
+      .brand-name{font-size:13px}
+      .brand-sub{font-size:12px}
+      .hero h1{font-size:58px}
+      .hero p{font-size:16px}
+      .activity-card{grid-template-columns:1fr;gap:16px}
+      .activity-number{width:64px}
+      .activity-title{font-size:24px}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="ACCTNG 1 Learning Hub home">
+      <span class="brand-mark">AG</span>
+      <span>
+        <span class="brand-name">AVE GUZMAN</span>
+        <span class="brand-sub">ACCTNG 1 LEARNING HUB</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">HOME</a>
+      <a href="modules.html">MODULES</a>
+      <a class="active" href="activities.html" aria-current="page">ACTIVITIES</a>
+      <a href="challenges.html">CHALLENGES</a>
+      <a class="disabled" href="#">RESOURCES</a>
+      <a href="about.html">ABOUT</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="hero">
       <h1>Activities</h1>
-      <div class="list-box">
-        <div class="list-item">
-          <h3>Activity 1: Identify the Accounts</h3>
-          <p>Classify business items as assets, liabilities, or equity.</p>
+      <p>
+        Apply what you have learned through guided accounting tasks that focus on performing the actual process. Activities are designed to help you build complete accounting records, review mistakes, and strengthen the skills introduced in the related modules.
+      </p>
+    </section>
+
+    <section class="activity-list" aria-label="Available ACCTNG 1 activities">
+      <article class="activity-card available">
+        <div class="activity-number">06.1</div>
+        <div class="activity-copy">
+          <div class="activity-meta">ACTIVITY 06.1 · AVAILABLE</div>
+          <h2 class="activity-title">Building the General Journal</h2>
+          <p class="activity-desc">
+            Journalize 15 Power Laundry business transactions one at a time, use the Chart of Accounts when needed, enter the proper PR references, and build a complete General Journal. Review your first-attempt accuracy and completed journal at the end of each attempt.
+          </p>
+          <div class="activity-status"><span class="status-dot"></span>Interactive skill-building activity ready</div>
         </div>
-        <div class="list-item">
-          <h3>Activity 2: Journal Entry Practice</h3>
-          <p>Write entries for common transactions and check for accuracy.</p>
+        <a class="open-btn" href="activity06-1.html">OPEN ACTIVITY →</a>
+      </article>
+
+      <article class="activity-card coming">
+        <div class="activity-number">+</div>
+        <div class="activity-copy">
+          <div class="activity-meta">MORE ACTIVITIES</div>
+          <h2 class="activity-title">Additional skill-building activities are coming</h2>
+          <p class="activity-desc">
+            New activities will be added as they are developed for the earlier and succeeding modules. Each activity will be linked to the module where the skill is introduced or practiced.
+          </p>
         </div>
-        <div class="list-item">
-          <h3>Activity 3: T-Account Review</h3>
-          <p>Balance and summarize account information using ledger formats.</p>
-        </div>
-      </div>
-    </main>
-    <footer style="padding:18px 24px;text-align:center;color:var(--muted);font-size:.85rem;border-top:1px solid var(--border);">
-      For educational use only. Please do not reproduce, redistribute, or share these materials without permission. © 2026 ave.guz
+        <span class="coming-btn">COMING SOON</span>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <div><strong>ACCTNG 1 Learning Hub</strong><br>Fundamentals of Accountancy, Business, and Management 1</div>
+      <div>For educational use only. Please do not reproduce, redistribute, or share these materials without permission. © 2026 ave.guz</div>
     </footer>
-  </body>
+  </main>
+</body>
 </html>
