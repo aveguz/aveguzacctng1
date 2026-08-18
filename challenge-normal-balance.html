@@ -77,6 +77,48 @@
       margin-bottom: 24px;
     }
 
+    .challenge-summary {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 14px 0 22px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .challenge-summary-label {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .challenge-summary-title {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .result-challenge-summary {
+      margin: 0 0 12px;
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .result-challenge-summary span {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
     .eyebrow {
       color: var(--accent);
       font-size: 12px;
@@ -757,6 +799,7 @@
     <section id="infoScreen" class="center-screen">
       <div class="card">
         <div class="brand">ACCTNG 1 · Fundamentals of Accountancy, Business, and Management 1</div>
+        <div class="challenge-summary"><span class="challenge-summary-label">Challenge 01</span><span class="challenge-summary-title">Normal Balance: Left or Right?</span></div>
         <div class="eyebrow">Normal Balance Practice</div>
         <h1>LEFT or RIGHT?</h1>
         <p class="muted">
@@ -894,7 +937,7 @@
         <div class="result-top">
           <div>
             <div class="eyebrow">Assessment Summary</div>
-            <div class="brand" style="margin:6px 0 12px;">ACCTNG 1 · Fundamentals of Accountancy, Business, and Management 1</div>
+            <div class="result-challenge-summary"><span>ACCTNG 1 · Challenge 01</span> · Normal Balance: Left or Right?</div>
             <h2 id="resultLevel">Completed</h2>
             <p class="muted">This summary records your performance for this attempt.</p>
           </div>
