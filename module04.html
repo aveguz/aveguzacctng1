@@ -173,6 +173,14 @@ h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em;margin:7px 0 10px}
 @media(max-width:980px){.hero{grid-template-columns:1fr}.outcome-grid{grid-template-columns:repeat(2,1fr)}.map-grid{grid-template-columns:repeat(2,1fr)}.motion-grid,.account-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.topbar-inner{flex-direction:column;align-items:flex-start;padding-top:54px}.home-link{position:absolute;top:10px;left:20px}.nav{justify-content:flex-start}.context-grid,.story-intro,.recall-grid,.routine,.motion-grid,.account-grid,.effect-grid,.bridge-sequence{grid-template-columns:1fr}.effect-op,.bridge-arrow{display:none}.outcome-grid,.map-grid{grid-template-columns:1fr}.tx-card{grid-template-columns:52px 1fr}.tx-card .badge{grid-column:2}.shift-row{grid-template-columns:1fr}.footer{flex-direction:column;align-items:flex-start;gap:10px}.footer-nav{width:100%;flex-direction:column}.footer-nav button{width:100%;max-width:none}}
 </style>
+<style>
+.topbar-inner,main,.footer{max-width:1180px}
+.home-link{font-size:.78rem;font-weight:850;padding:10px 13px;border-radius:11px}
+.footer{width:100%;padding:12px 18px 18px;background:#f4f8f8;border-top:1px solid #e2eaeb;gap:18px}
+.footer-nav{display:flex;gap:8px;align-items:stretch}
+.footer-nav button,.footer-nav a{min-height:44px;border-radius:10px;padding:10px 13px}
+@media(max-width:760px){.topbar-inner{padding-top:54px}.home-link{position:absolute;top:10px;left:20px}.footer{padding:12px 14px 16px}.footer-nav{width:100%;flex-direction:column}.footer-nav button,.footer-nav a{width:100%}}
+</style>
 </head>
 <body>
 <div class="shell">
@@ -200,13 +208,6 @@ h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em;margin:7px 0 10px}
       <p class="lead">This module introduces the course flow, the learning sequence, and the foundation for how to move through the learning hub with confidence.</p>
       <div class="actions"><button class="btn" data-go="context">Begin Lesson →</button><button class="btn secondary" data-go="map">View Lesson Map</button></div>
 
-      <div class="use-notice" aria-label="Use notice">
-        <strong>Use Notice</strong>
-        <p>
-          For educational use only. Please do not reproduce, redistribute, or share these materials without permission. © 2026 ave.guz
-        </p>
-        <div class="notice-mark">ave.guz · 2026</div>
-      </div>
     </div>
     <div class="panel">
       <div class="hero-eq">
