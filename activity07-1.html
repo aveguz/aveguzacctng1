@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACCTNG 1 | Activity 07.1 · Posting from the General Journal</title>
+<style>
+:root{
+  --bg:#f3f7f7;--surface:#ffffff;--surface2:#f8fbfb;--ink:#203136;--muted:#687b80;
+  --line:#d7e2e3;--accent:#3f6870;--accent-dark:#31535a;--accent-soft:#e8f1f2;
+  --gold:#87683b;--gold-soft:#f7f1e5;--good:#4e775f;--good-soft:#edf5ef;
+  --bad:#8a4f4f;--bad-soft:#fbefef;--shadow:0 10px 28px rgba(33,55,60,.075);
+  --radius:18px;--max:1180px
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);line-height:1.55}button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}.hidden{display:none!important}
+.shell{min-height:100vh;display:flex;flex-direction:column}.top-actions{padding:14px 12px 0;display:flex;gap:8px;align-items:center;position:relative;z-index:45}.top-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--accent-dark);font-size:.83rem;font-weight:850;box-shadow:0 8px 20px rgba(39,57,61,.05)}.top-btn:hover{background:#f7fbfb}
+main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
+.identity-card{width:min(920px,100%);margin:-11px auto 24px;background:var(--surface);border:1px solid #d1dadb;border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.identity-head{padding:45px 48px 24px}.course-line{font-size:.88rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#38565e;margin-bottom:24px;white-space:nowrap}
+.activity-strip{display:flex;align-items:center;gap:10px;min-height:46px;border:1px solid #d3d8d6;border-left:5px solid var(--accent);border-radius:11px;background:#fbfbf9;padding:9px 14px}
+.activity-code{color:var(--accent);font-size:.78rem;font-weight:900;letter-spacing:.085em;white-space:nowrap}.activity-title{font-size:.88rem;font-weight:900;color:#10191c}.activity-meta{margin:14px 5px 0;color:var(--muted);font-size:.82rem;font-weight:700}
+.progress-track{height:4px;background:#e7eeee}.progress-fill{height:100%;width:0;background:var(--accent);transition:width .25s ease}
+.start-card{max-width:none;margin:0;background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible}
+.start-head{padding:22px 48px 18px;border-top:1px solid #edf1f1;border-bottom:1px solid var(--line)}.start-head h1{font-size:clamp(2rem,5vw,3.1rem);margin-bottom:8px}
+.start-body{padding:22px 48px 38px}
+.eyebrow{font-size:.74rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}h1{font-size:clamp(2rem,4vw,3.35rem);letter-spacing:-.045em;line-height:1.04;margin:8px 0 9px}
+.intro{display:flex;justify-content:space-between;gap:18px;align-items:flex-end;margin-bottom:19px}.intro p{margin:0;color:var(--muted);max-width:760px}
+.status{min-width:220px;text-align:right}.status strong{display:block;color:var(--accent-dark);font-size:1.05rem}.status span{font-size:.82rem;color:var(--muted)}
+.context-box{border-left:5px solid var(--accent);background:var(--surface2);border-radius:12px;padding:16px 17px;margin-bottom:14px}.context-box p{margin:0 0 10px}.context-box p:last-child{margin-bottom:0}
+.supplies-note{background:var(--gold-soft);color:#645133;border:1px solid #eadbbc;border-radius:12px;padding:14px 15px;margin-top:14px}.supplies-note strong{color:#574527}
+.start-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.start-item{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff}.start-item strong{display:block;font-size:.86rem;margin-bottom:3px}.start-item span{font-size:.8rem;color:var(--muted)}
+.start-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}.start-actions p{margin:0;color:var(--muted);font-size:.8rem;max-width:570px}
+.primary,.secondary,.disabled{border:0;border-radius:10px;padding:10px 13px;font-weight:850}.primary{background:var(--accent);color:#fff}.secondary{background:var(--accent-soft);color:var(--accent-dark)}.disabled{background:#edf1f1;color:#94a3a6;cursor:not-allowed}.small-note{font-size:.74rem;color:var(--muted);max-width:360px}
+.stage{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:18px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.panel-head{padding:17px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2{margin:0;font-size:1.05rem}.micro{font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}.panel-body{padding:18px}
+.step-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:16px}.step{border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center;font-size:.72rem;font-weight:850;color:var(--muted);background:var(--surface2)}.step.active{background:var(--accent-soft);border-color:#c4d8db;color:var(--accent-dark)}
+.tx-card{border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:14px;padding:15px 16px;background:var(--surface2);margin-bottom:16px}.tx-date{font-size:.74rem;font-weight:900;text-transform:uppercase;letter-spacing:.09em;color:var(--accent)}.tx-text{font-size:1.05rem;font-weight:750;margin:5px 0 0}
+.helper-row{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:0 0 10px}.helper-row strong{font-size:.88rem}.helper-row span{font-size:.78rem;color:var(--muted)}
+.builder-table{border:1px solid var(--line);border-radius:13px;overflow:hidden}.builder-head,.builder-row{display:grid;grid-template-columns:minmax(160px,1fr) 72px 112px 112px}.builder-head{background:#eef3f4;font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:#52676d}.builder-head div,.builder-row>div{padding:9px;border-right:1px solid var(--line)}.builder-head div:last-child,.builder-row>div:last-child{border-right:0}.builder-row{border-top:1px solid var(--line);align-items:center}.builder-row:first-of-type{border-top:0}.builder-row select,.builder-row input{width:100%;border:1px solid #cbd8da;background:#fff;border-radius:8px;padding:8px 9px;color:var(--ink)}.builder-row .pr input{text-align:center}.builder-row .money input{text-align:right}
+.entry-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.mini-btn{border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--accent-dark);padding:8px 10px;font-weight:800;font-size:.8rem}
+.feedback{margin-top:14px;border:1px dashed #b9c9cc;border-radius:12px;padding:12px;background:#fbfdfd;color:var(--muted);font-size:.83rem}.feedback strong{color:var(--ink)}.feedback.good{border-style:solid;border-color:#c9ddcf;background:var(--good-soft);color:#42614c}.feedback.bad{border-style:solid;border-color:#ead0d0;background:var(--bad-soft);color:#714343}
+.action-row{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:15px}
+.journal-title{text-align:center;padding:17px 18px 0}.journal-title .business{font-size:.96rem;font-weight:900;letter-spacing:.08em}.journal-title h2{font-size:1.25rem;margin:2px 0}.journal-title .ref{font-size:.78rem;color:var(--muted);font-weight:800}
+.journal-wrap{overflow-x:auto;padding:14px 16px 17px}.journal{width:100%;border-collapse:collapse;min-width:650px;background:#fff}.journal th,.journal td{border:1px solid #cbd6d8;padding:8px 9px;vertical-align:middle}.journal th{background:#eef3f4;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:#52676d}.journal th:nth-child(1),.journal td:nth-child(1){width:92px}.journal th:nth-child(3),.journal td:nth-child(3){width:70px;text-align:center}.journal th:nth-child(4),.journal th:nth-child(5),.journal td:nth-child(4),.journal td:nth-child(5){width:118px;text-align:right}.debit-line{font-weight:800}.credit-line{padding-left:36px!important;font-weight:800}.description-line{padding-left:64px!important;color:var(--muted);font-style:italic;font-size:.86rem}.blank-row td{height:26px;background:#fafcfc;color:#90a0a3}
+.running-note{margin:0 16px 16px;padding:11px 12px;border-radius:10px;background:var(--accent-soft);color:var(--accent-dark);font-size:.8rem}.running-note strong{display:block;margin-bottom:2px}
+.summary-card{max-width:940px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}.summary-head{padding:22px 24px;border-bottom:1px solid var(--line);text-align:center}.summary-head h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:7px}.summary-head p{margin:0;color:var(--muted)}.summary-body{padding:22px 24px}
+.student-record{margin-bottom:14px;border:1px solid var(--line);border-radius:13px;background:#f9fbfb;padding:14px 15px}.student-record-title{font-size:.82rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}.student-record-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.student-record-item{border:1px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff}.student-record-item span{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:900}.student-record-item strong{display:block;font-size:.9rem;margin-top:3px}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{border:1px solid var(--line);border-radius:13px;padding:13px;background:var(--surface2)}.metric span{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:var(--muted)}.metric strong{display:block;font-size:1.45rem;color:var(--accent-dark);margin-top:3px}
+.summary-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:17px}.summary-actions .primary{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+.results-wrap{margin-top:20px}.results-wrap h3{margin:0 0 4px}.results-wrap>p{margin:0 0 11px;color:var(--muted);font-size:.84rem}.tx-results{border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.tx-result-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 13px;border-top:1px solid var(--line);font-size:.84rem}.tx-result-item:first-child{border-top:0}.tx-result-item .tx-label{display:flex;align-items:center;gap:10px;min-width:0}.tx-result-item .tx-num{font-weight:900;color:var(--accent-dark);white-space:nowrap}.tx-result-item .tx-desc{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tx-status{display:inline-flex;align-items:center;justify-content:center;padding:4px 9px;border-radius:999px;font-size:.68rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}.tx-status.ok{background:var(--good-soft);color:#42614c}.tx-status.revised{background:var(--bad-soft);color:#714343}
+.next-wrap{margin-top:22px;padding-top:19px;border-top:1px solid var(--line)}.next-wrap h2{font-size:1.18rem;margin:4px 0 5px;letter-spacing:-.015em}.next-intro{margin:0 0 12px;color:var(--muted);font-size:.83rem}
+.recommended{position:relative;border:1px solid #aac6cb;border-radius:15px;background:linear-gradient(180deg,#edf5f6 0%,#e7f0f1 100%);padding:17px 17px 16px;overflow:hidden}.recommended:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent)}.badge{display:inline-flex;padding:4px 7px;border:1px solid #cadcde;border-radius:999px;background:#fff;color:var(--accent-dark);font-size:.61rem;font-weight:950;letter-spacing:.07em;text-transform:uppercase}.recommended h3{font-size:1.22rem;margin:9px 0 4px}.recommended p{margin:0;color:#52686e;font-size:.82rem;max-width:690px}
+.module-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;margin-top:12px;padding:0 16px;border-radius:10px;background:var(--accent);color:#fff;font-size:.84rem;font-weight:900;text-decoration:none;box-shadow:0 7px 16px rgba(49,83,90,.17)}
+.continuity{margin-top:12px;padding:10px 11px;border-radius:10px;background:var(--gold-soft);color:#665233;font-size:.74rem}
+.modal{display:none;position:fixed;inset:0;z-index:60;background:rgba(25,39,43,.42);padding:18px;align-items:center;justify-content:center}.modal.open{display:flex}.modal-card{width:min(860px,100%);max-height:88vh;overflow:auto;background:#fff;border-radius:18px;border:1px solid var(--line);box-shadow:0 25px 70px rgba(28,48,53,.24)}.modal-head{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);padding:15px 17px;display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:2}.modal-head h3{margin:0}.close{border:1px solid var(--line);background:#fff;border-radius:9px;width:36px;height:36px;font-weight:900}.modal-body{padding:17px}
+.coa-intro{color:var(--muted);font-size:.88rem;margin-bottom:13px}.coa-table{width:100%;border-collapse:collapse}.coa-table th,.coa-table td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left}.coa-table th{background:#eef3f4;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:#52676d}.coa-table td:first-child{font-weight:900;color:var(--accent-dark);width:115px}.coa-tip{margin-top:13px;padding:11px 12px;border-radius:10px;background:var(--gold-soft);color:#665233;font-size:.82rem}
+.footer{width:100%;padding:13px 28px 16px;color:var(--muted);border-top:1px solid var(--line);font-size:.78rem;display:flex;justify-content:space-between;align-items:center;gap:24px;background:rgba(248,251,251,.72)}.footer-copy{max-width:680px;font-weight:750;line-height:1.55}.footer-nav{display:flex;gap:8px;margin-left:auto}.footer-link{min-width:136px;min-height:64px;display:inline-flex;align-items:center;justify-content:center;text-align:center;border:1px solid #cfdcde;background:#fff;color:#111;border-radius:10px;padding:9px 12px;font-size:.8rem;font-weight:900;line-height:1.45}.footer-link.back{background:var(--accent-soft);color:var(--accent-dark)}.footer-link:hover{border-color:#b7cacc;background:#f8fbfb}.footer-link.back:hover{background:#dce9ea}
+@media(max-width:900px){.stage{grid-template-columns:1fr}.journal-panel{order:2}.work-panel{order:1}.status{text-align:left;min-width:0}.intro{align-items:flex-start;flex-direction:column}.summary-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){main{padding:19px 12px 42px}.top-actions{padding:10px 10px 0;flex-direction:column}.identity-card{margin-top:0;border-radius:15px}.identity-head{padding:28px 22px 18px}.course-line{font-size:.69rem;letter-spacing:.13em;white-space:normal;line-height:1.55;margin-bottom:18px}.activity-strip{align-items:flex-start;flex-direction:column;gap:2px;padding:10px 12px}.activity-code,.activity-title{font-size:.77rem}.activity-meta{font-size:.76rem;margin-top:10px}.start-head,.start-body{padding-left:22px;padding-right:22px}.start-body{padding-bottom:28px}.step-strip{grid-template-columns:1fr}.intro{margin-bottom:14px}.panel-head{padding:14px}.panel-body{padding:14px}.helper-row{align-items:flex-start;flex-direction:column;gap:2px}.builder-table{border:0;overflow:visible;background:transparent}.builder-head{display:none}.builder-row{display:grid;grid-template-columns:58px minmax(0,1fr) minmax(0,1fr);gap:7px;border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:9px;background:#fff}.builder-row>div{padding:0;border:0}.builder-row .pr{grid-column:1}.builder-row .money.debit{grid-column:2}.builder-row .money.credit{grid-column:3}.summary-grid{grid-template-columns:1fr 1fr}.journal-wrap{padding-left:10px;padding-right:10px}.footer{padding:16px 12px;flex-direction:column;align-items:flex-start;gap:12px}.footer-copy{max-width:none}.footer-nav{width:100%;margin-left:0;flex-direction:column}.footer-link{min-width:auto;min-height:auto}}
+@media print{.top-actions,.identity-head{display:none!important}.identity-card{border:0;box-shadow:none;margin:0;max-width:none}.identity-card .progress-track{display:none!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+<div class="top-actions">
+  <a class="top-btn" href="index.html">Home</a>
+  <a class="top-btn" href="activities.html">← Back to Activities</a>
+</div>
+
+<main>
+  <section class="identity-card" aria-label="Activity identity">
+    <div class="identity-head">
+      <div class="course-line">ACCTNG 1 · FUNDAMENTALS OF ACCOUNTANCY, BUSINESS, AND MANAGEMENT 1</div>
+      <div class="activity-strip">
+        <span class="activity-code">ACTIVITY 07.1</span>
+        <span class="activity-title">Posting from the General Journal</span>
+      </div>
+      <div class="activity-meta">Power Laundry · Use your completed General Journal as the source record</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+    <section id="startScreen" class="start-card" data-top-section="overview">
+      <div class="start-head">
+        <div class="eyebrow">Activity 07.1 · Power Laundry</div>
+        <h1>Post the journal to the ledger.</h1>
+        <p style="margin:0;color:var(--muted)">Use the running General Journal produced in Activity 06.1 as the source for posting entries to the General Ledger accounts.</p>
+      </div>
+      <div class="start-body" id="instructionsAnchor">
+        <div class="context-box">
+          <p><strong>Activity 06.1</strong> gave you a complete General Journal. In this activity, you will use that journal as the source record and post each entry to the correct ledger account.</p>
+          <p>The objective is not to re-create the journal. Instead, you will read each entry, identify the correct account, and transfer the debit or credit to the proper side of the ledger account using the proper reference.</p>
+        </div>
+
+        <div class="start-grid">
+          <div class="start-item"><strong>Use the saved journal</strong><span>The program pulls your completed General Journal from Activity 06.1.</span></div>
+          <div class="start-item"><strong>Post each entry</strong><span>Transfer the debit or credit to the correct ledger account using the proper side and amount.</span></div>
+          <div class="start-item"><strong>Account details matter</strong><span>Use the account title, PR, and amount from the journal entry exactly as recorded.</span></div>
+          <div class="start-item"><strong>Trace to the source</strong><span>Each posting references the General Journal entry it came from.</span></div>
+        </div>
+
+        <div class="supplies-note"><strong>Important:</strong> This activity continues directly from Activity 06.1. Finish and save your General Journal in Activity 06.1 before opening this page.</div>
+
+        <div class="start-actions">
+          <p>Load your saved General Journal to begin the posting activity.</p>
+          <div>
+            <button class="secondary" type="button" id="loadJournalBtn" onclick="loadSavedJournal()">Load Saved General Journal</button>
+            <button class="primary" type="button" id="startBtn" style="display:none" onclick="startPosting()">Start Posting →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <section id="activityScreen" class="hidden">
+    <section class="intro">
+      <div>
+        <div class="eyebrow">Posting practice · based on your running journal</div>
+        <h1>Post from the General Journal.</h1>
+        <p>Read each journal entry, select the account involved, and post the debit or credit to the ledger account.</p>
+      </div>
+      <div class="status"><strong id="transactionStatus">Entry 01 of 15</strong><span id="completionStatus">0 posted · 0% complete</span></div>
+    </section>
+
+    <section class="stage">
+      <div class="panel work-panel" id="journalizeAnchor">
+        <div class="panel-head">
+          <div><div class="micro">Posting Source</div><h2>General Journal entry</h2></div>
+          <button class="secondary" type="button" onclick="openModal('coaModal')" style="padding:8px 11px;font-size:.82rem">COA ↗</button>
+        </div>
+        <div class="panel-body">
+          <div class="step-strip">
+            <div class="step active">1 · Read</div>
+            <div class="step" id="stepPost">2 · Post to Ledger</div>
+          </div>
+          <div class="tx-card">
+            <div class="tx-date" id="txDate"></div>
+            <p class="tx-text" id="txText"></p>
+          </div>
+
+          <div class="helper-row"><strong>Select the account to post</strong><span>Use the account from the journal entry.</span></div>
+
+          <div class="builder-table" id="builderTable">
+            <div class="builder-head"><div>Account</div><div>PR</div><div>Debit</div><div>Credit</div></div>
+            <div id="builderRows"></div>
+          </div>
+
+          <div class="entry-tools">
+            <button class="mini-btn" type="button" onclick="checkEntry()">Check Entry</button>
+            <button class="disabled" id="postBtn" type="button" disabled onclick="postEntry()">Post to Ledger →</button>
+          </div>
+
+          <div class="feedback" id="feedback"><strong>Ready when you are.</strong> Read the journal entry and prepare the posting.</div>
+        </div>
+      </div>
+
+      <div class="panel journal-panel" id="runningAnchor">
+        <div class="journal-title"><div class="business">POWER LAUNDRY</div><h2>GENERAL JOURNAL</h2><div class="ref">GJ-01 · Source</div></div>
+        <div class="journal-wrap"><table class="journal"><thead><tr><th>Date</th><th>Particulars</th><th>PR</th><th>Debit</th><th>Credit</th></tr></thead><tbody id="journalBody"><tr class="blank-row"><td></td><td>Load the saved journal to begin.</td><td></td><td></td><td></td></tr></tbody></table></div>
+        <div class="running-note"><strong>Use this as your source.</strong> Every posting must match an entry shown here.</div>
+      </div>
+    </section>
+  </section>
+
+  <section id="summaryScreen" class="summary-card hidden" data-top-section="summary">
+    <div class="summary-head"><div class="eyebrow">Activity Complete</div><h1>Your posting practice is complete.</h1><p>Review the postings prepared from your General Journal and continue to the next step.</p></div>
+    <div class="summary-body">
+      <div class="student-record" aria-label="Student attempt details">
+        <div class="student-record-title">Student Attempt Record</div>
+        <div class="student-record-grid">
+          <div class="student-record-item"><span>Name</span><strong id="summaryStudentName">—</strong></div>
+          <div class="student-record-item"><span>Section</span><strong id="summaryStudentSection">—</strong></div>
+          <div class="student-record-item"><span>Date</span><strong id="summaryStudentDate">—</strong></div>
+        </div>
+      </div>
+      <div class="summary-grid"><div class="metric"><span>Journal Entries</span><strong id="metricEntries">15</strong></div><div class="metric"><span>Posted Correctly</span><strong id="metricCompleted">15 / 15</strong></div><div class="metric"><span>First-Attempt Accuracy</span><strong id="metricFirst">—</strong></div><div class="metric"><span>Entries Revised</span><strong id="metricRevised">—</strong></div></div>
+
+      <div class="results-wrap">
+        <h3>Posting Results</h3>
+        <p>Outcome of each journal entry as you posted it to the ledger.</p>
+        <div class="tx-results" id="txResultsArea"></div>
+      </div>
+
+      <section class="next-wrap">
+        <div class="eyebrow">What comes next?</div>
+        <h2>From the journal to the ledger balances</h2>
+        <p class="next-intro">You have transferred the records from the journal into individual accounts. The next step is to determine account balances and prepare the Trial Balance.</p>
+        <div class="recommended">
+          <span class="badge">Recommended Next Step</span>
+          <h3>Module 07 · General Ledger</h3>
+          <p>Continue with posting, footing ledger accounts, and preparing balances for the Trial Balance.</p>
+          <a class="module-btn" href="module07.html">Continue to Module 07 →</a>
+        </div>
+        <div class="continuity">This activity uses your completed General Journal from Activity 06.1 as the source for posting. The journal entries become the basis for account-by-account ledger records.</div>
+      </section>
+
+      <div class="summary-actions"><button class="secondary" type="button" onclick="window.print()">Print / Save Summary</button><button class="secondary" type="button" onclick="newAttempt()">Start New Posting Attempt</button><a class="primary" href="module07.html">Continue to Module 07 →</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-copy">For educational use only. Please do not reproduce, redistribute, or share these materials without permission. © 2026 ave.guz</div>
+  <nav class="footer-nav" aria-label="Activity navigation">
+    <a class="footer-link back" href="activities.html">← Back to<br>Activities</a>
+    <a class="footer-link" href="module07.html">Review Module 07<br>General Ledger</a>
+  </nav>
+</footer>
+</div>
+
+<div class="modal" id="coaModal" onclick="backdropClose(event,'coaModal')">
+  <div class="modal-card">
+    <div class="modal-head"><div><div class="micro">Reference</div><h3>Power Laundry · Chart of Accounts</h3></div><button class="close" type="button" onclick="closeModal('coaModal')">×</button></div>
+    <div class="modal-body">
+      <p class="coa-intro">Use the account titles and numbers below when posting the General Journal entries.</p>
+      <table class="coa-table"><thead><tr><th>Account No.</th><th>Account Title</th><th>Classification</th></tr></thead><tbody id="coaBody"></tbody></table>
+      <div class="coa-tip"><strong>Posting reference:</strong> Use the account number shown in the Chart of Accounts. Example: Cash → 101.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const JOURNAL_STORAGE_KEY='power_laundry_last_general_journal';const COA=[{no:'101',title:'Cash',class:'Asset'},{no:'106',title:'Accounts Receivable',class:'Asset'},{no:'108',title:'Laundry Supplies',class:'Asset'},{no:'109',title:'Prepaid Rent',class:'Asset'},{no:'115',title:'Laundry Equipment',class:'Asset'},{no:'201',title:'Accounts Payable',class:'Liability'},{no:'210',title:'Notes Payable',class:'Liability'},{no:'240',title:'Unearned Service Revenue',class:'Liability'},{no:'301',title:'Owner, Capital',class:"Owner's Equity"},{no:'302',title:'Owner, Withdrawals',class:"Owner's Equity"},{no:'401',title:'Service Revenue',class:'Revenue'},{no:'501',title:'Salaries Expense',class:'Expense'},{no:'502',title:'Rent Expense',class:'Expense'},{no:'503',title:'Utilities Expense',class:'Expense'},{no:'504',title:'Laundry Supplies Expense',class:'Expense'},{no:'505',title:'Repairs and Maintenance Expense',class:'Expense'},{no:'506',title:'Advertising Expense',class:'Expense'}];const fmt=n=>'₱'+Number(n).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});const accountMap=Object.fromEntries(COA.map(a=>[a.title,a]));let journalData=[],currentIndex=0,postingHistory=[],journalMetadata={};function openModal(id){document.getElementById(id).classList.add('open')}function closeModal(id){document.getElementById(id).classList.remove('open')}function backdropClose(e,id){if(e.target.id===id)closeModal(id)}document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'))});function renderCOA(){document.getElementById('coaBody').innerHTML=COA.map(a=>`<tr><td>${a.no}</td><td>${a.title}</td><td>${a.class}</td></tr>`).join('')}function loadSavedJournal(){try{const raw=JSON.parse(localStorage.getItem(JOURNAL_STORAGE_KEY)||'null');if(!raw||!Array.isArray(raw.journal)||!raw.journal.length){alert('No saved General Journal found. Please complete Activity 06.1 first.');return false}journalMetadata={name:raw.studentName||'—',section:raw.studentSection||'—',date:raw.studentDate||'—',attemptCode:raw.attemptCode||''};journalData=raw.journal.map((entry,idx)=>({id:`J${idx+1}`,date:entry.date||'',explanation:entry.explanation||'',entries:entry.entries||[]}));renderJournal();document.getElementById('loadJournalBtn').style.display='none';document.getElementById('startBtn').style.display='inline-flex';return true}catch(e){console.error(e);alert('Unable to load journal.');return false}}function startPosting(){document.getElementById('startScreen').classList.add('hidden');document.getElementById('activityScreen').classList.remove('hidden');document.getElementById('progressFill').style.width='0%';currentIndex=0;postingHistory=[];loadEntry();window.scrollTo({top:0,behavior:'smooth'})}function renderJournal(){const body=document.getElementById('journalBody');if(!journalData.length){body.innerHTML='<tr class="blank-row"><td></td><td>Saved journal will appear here.</td><td></td><td></td><td></td></tr>';return}let html='';journalData.forEach((entry,idx)=>{const debits=entry.entries.filter(e=>Number(e.debit)>0),credits=entry.entries.filter(e=>Number(e.credit)>0),ordered=[...debits,...credits];ordered.forEach((line,lineIndex)=>{const isCredit=Number(line.credit)>0;html+=`<tr><td>${lineIndex===0?entry.date:''}</td><td class="${isCredit?'credit-line':'debit-line'}">${line.account}</td><td>${line.pr}</td><td>${line.debit?fmt(line.debit):''}</td><td>${line.credit?fmt(line.credit):''}</td></tr>`});html+=`<tr><td></td><td class="description-line">${entry.explanation}</td><td></td><td></td><td></td></tr>`;if(idx<journalData.length-1)html+='<tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr>'});body.innerHTML=html}function loadEntry(){if(currentIndex>=journalData.length){finishActivity();return}const entry=journalData[currentIndex];document.getElementById('txDate').textContent=entry.date;document.getElementById('txText').textContent=entry.explanation;document.getElementById('transactionStatus').textContent=`Entry ${String(currentIndex+1).padStart(2,'0')} of ${journalData.length}`;document.getElementById('completionStatus').textContent=`${postingHistory.length} posted · ${Math.round((postingHistory.length/journalData.length)*100)}% complete`;document.getElementById('progressFill').style.width=`${(postingHistory.length/journalData.length)*100}%`;renderBuilder(entry.entries);setFeedback('neutral','Ready when you are.','Analyze the journal entry and prepare the posting.')}function renderBuilder(lines){const host=document.getElementById('builderRows');host.innerHTML='';lines.forEach(line=>{const div=document.createElement('div');div.className='builder-row';div.innerHTML=`<div><select class="acct" aria-label="Account"><option value="">Select account…</option>${COA.map(a=>`<option value="${a.title}">${a.title}</option>`).join('')}</select></div><div class="pr"><input class="pr-input" inputmode="numeric" placeholder="___"></div><div class="money debit"><input class="debit-input" inputmode="decimal" placeholder="0.00"></div><div class="money credit"><input class="credit-input" inputmode="decimal" placeholder="0.00"></div>`;div.querySelector('.acct').value=line.account;div.querySelector('.pr-input').value=line.pr;div.querySelector('.debit-input').value=line.debit||'';div.querySelector('.credit-input').value=line.credit||'';host.appendChild(div)})}function captureRows(){return Array.from(document.querySelectorAll('.builder-row')).map(r=>({account:r.querySelector('.acct').value,pr:r.querySelector('.pr-input').value.trim(),debit:Number(r.querySelector('.debit-input').value)||0,credit:Number(r.querySelector('.credit-input').value)||0}))}function setFeedback(type,title,text){const el=document.getElementById('feedback');el.className='feedback'+(type==='good'?' good':type==='bad'?' bad':'');el.innerHTML=`<strong>${title}</strong> ${text}`}function setAccepted(ok){const b=document.getElementById('postBtn');b.disabled=!ok;b.className=ok?'primary':'disabled';document.getElementById('stepPost').classList.toggle('active',ok)}function checkEntry(){const entry=journalData[currentIndex],rows=captureRows();let issues=[];const expectedSet=new Set(entry.entries.map(e=>e.account));const actualSet=new Set(rows.map(r=>r.account).filter(Boolean));if(!rows.length||rows.every(r=>!r.account))issues.push('account selection');if(rows.length!==entry.entries.length)issues.push('number of lines');if(expectedSet.size!==actualSet.size||[...expectedSet].some(a=>!actualSet.has(a)))issues.push('account match');else{const byAcct=Object.fromEntries(rows.map(r=>[r.account,r]));entry.entries.forEach(e=>{const r=byAcct[e.account];if(!r||Math.abs(r.debit-e.debit)>.01||Math.abs(r.credit-e.credit)>.01)issues.push(`${e.account} debit/credit`);if(r&&r.pr!==e.pr)issues.push(`${e.account} PR`)})}if(issues.length){setAccepted(false);setFeedback('bad','Entry needs revision.',`Review: ${[...new Set(issues)].join('; ')}`);return}setAccepted(true);setFeedback('good','Entry accepted.','Your posting matches the journal entry. Click Post to Ledger.')}function postEntry(){const entry=journalData[currentIndex];postingHistory.push({...entry,timestamp:new Date().toISOString()});currentIndex++;loadEntry();window.scrollTo({top:0,behavior:'smooth'})}function finishActivity(){document.getElementById('activityScreen').classList.add('hidden');document.getElementById('summaryScreen').classList.remove('hidden');document.getElementById('summaryStudentName').textContent=journalMetadata.name;document.getElementById('summaryStudentSection').textContent=journalMetadata.section;document.getElementById('summaryStudentDate').textContent=journalMetadata.date;document.getElementById('metricEntries').textContent=String(journalData.length);document.getElementById('metricCompleted').textContent=`${postingHistory.length} / ${journalData.length}`;document.getElementById('metricFirst').textContent=`${Math.round((postingHistory.length/journalData.length)*100)}%`;document.getElementById('metricRevised').textContent=String(journalData.length-postingHistory.length);document.getElementById('txResultsArea').innerHTML=postingHistory.map((item,i)=>`<div class="tx-result-item"><div class="tx-label"><span class="tx-num">Entry ${String(i+1).padStart(2,'0')}</span><span class="tx-desc">${item.explanation}</span></div><span class="tx-status ok">Posted</span></div>`).join('');document.getElementById('progressFill').style.width='100%';window.scrollTo({top:0,behavior:'smooth'})}function newAttempt(){currentIndex=0;postingHistory=[];journalData=[];document.getElementById('summaryScreen').classList.add('hidden');document.getElementById('activityScreen').classList.add('hidden');document.getElementById('startScreen').classList.remove('hidden');document.getElementById('loadJournalBtn').style.display='inline-flex';document.getElementById('startBtn').style.display='none';document.getElementById('progressFill').style.width='0%';window.scrollTo({top:0,behavior:'smooth'})}renderCOA();
+</script>
+</body>
+</html>

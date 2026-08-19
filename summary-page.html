@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activity Summary | ACCTNG 1</title>
+<style>
+:root{
+  --bg:#f4f3ee;--surface:#fff;--surface-2:#f8fbfb;--ink:#203136;--muted:#687b80;
+  --line:#d7e2e3;--accent:#3f6870;--accent-dark:#31535a;--accent-soft:#e8f1f2;
+  --gold-soft:#f7f1e5;--good-soft:#edf5ef;--bad-soft:#fbefef;--shadow:0 10px 28px rgba(33,55,60,.075);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);line-height:1.55}
+button{font:inherit;cursor:pointer}a{text-decoration:none;color:inherit}
+.shell{min-height:100vh;display:flex;flex-direction:column}
+.top-actions{padding:14px 12px 0;display:flex;gap:8px;max-width:980px;width:100%;margin:auto}
+.top-btn,.summary-actions button,.summary-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--accent-dark);font-size:.83rem;font-weight:850}
+.top-btn:hover,.summary-actions button:hover,.summary-actions a:hover{background:#f7fbfb}
+main{width:min(980px,calc(100% - 40px));margin:24px auto 54px;flex:1}
+.summary-card{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}
+.summary-head{padding:30px 28px 24px;border-bottom:1px solid var(--line);text-align:center}
+.eyebrow{font-size:.74rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1,h2,h3,p{margin-top:0}.summary-head h1{font-size:clamp(2rem,4vw,3rem);line-height:1.04;letter-spacing:-.045em;margin:8px 0 7px}.summary-head p{margin:0;color:var(--muted)}
+.summary-body{padding:24px 28px}.student-record{border:1px solid var(--line);border-radius:14px;padding:15px 16px;background:#fff}.student-record-title{margin-bottom:11px;font-size:.9rem;font-weight:900}.student-record-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.student-record-item{border:1px solid var(--line);border-radius:10px;padding:10px 11px;background:var(--surface-2)}.student-record-item span{display:block;color:var(--muted);font-size:.68rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.student-record-item strong,.attempt-code{display:block;margin-top:3px;font-size:.86rem;overflow-wrap:anywhere}.attempt-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent-dark);font-weight:800}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.metric{border:1px solid var(--line);border-radius:13px;padding:13px;background:var(--surface-2)}.metric span{display:block;color:var(--muted);font-size:.7rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.metric strong{display:block;margin-top:3px;color:var(--accent-dark);font-size:1.45rem}
+.attempt-progress{margin-top:22px}.attempt-progress-title{margin-bottom:10px;color:var(--accent);font-size:.74rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase}.attempt-progress-list{display:grid;gap:8px}.attempt-progress-row{display:grid;grid-template-columns:minmax(90px,1fr) auto minmax(150px,auto);gap:12px;align-items:center;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);font-size:.84rem}.attempt-progress-score{font-weight:850;white-space:nowrap}.attempt-progress-time{color:var(--muted);font-size:.78rem;text-align:right}
+.results-wrap{margin-top:22px}.results-wrap h3,.complete-journal h3{margin:0 0 5px}.results-wrap>p,.complete-journal>p{margin:0 0 11px;color:var(--muted);font-size:.84rem}.tx-results{border:1px solid var(--line);border-radius:13px;overflow:hidden}.tx-result-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 13px;border-top:1px solid var(--line);font-size:.84rem}.tx-result-item:first-child{border-top:0}.tx-label{display:flex;align-items:center;gap:10px;min-width:0}.tx-num{font-weight:900;color:var(--accent-dark);white-space:nowrap}.tx-desc{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tx-status{display:inline-flex;padding:4px 9px;border-radius:999px;font-size:.68rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}.tx-status.ok{background:var(--good-soft);color:#42614c}.tx-status.revised{background:var(--bad-soft);color:#714343}.tx-issue{margin-top:2px;color:#8a4f4f;font-size:.75rem}
+.complete-journal{margin-top:22px}.journal-wrap{overflow-x:auto}.journal{width:100%;min-width:650px;border-collapse:collapse;background:#fff}.journal th,.journal td{border:1px solid #cbd6d8;padding:8px 9px;vertical-align:middle}.journal th{background:#eef3f4;color:#52676d;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase}.journal th:nth-child(1),.journal td:nth-child(1){width:92px}.journal th:nth-child(3),.journal td:nth-child(3){width:70px;text-align:center}.journal th:nth-child(4),.journal th:nth-child(5),.journal td:nth-child(4),.journal td:nth-child(5){width:118px;text-align:right}.debit-line{font-weight:800}.credit-line{padding-left:36px!important;font-weight:800}.description-line{padding-left:64px!important;color:var(--muted);font-style:italic;font-size:.86rem}
+.next-wrap{margin-top:22px;padding-top:19px;border-top:1px solid var(--line)}.next-wrap h2{font-size:1.18rem;margin:4px 0 5px}.next-intro{margin:0 0 12px;color:var(--muted);font-size:.83rem}.recommended{border-left:5px solid var(--accent);border:1px solid #aac6cb;border-left-width:5px;border-radius:15px;background:linear-gradient(180deg,#edf5f6,#e7f0f1);padding:17px}.badge{display:inline-flex;padding:4px 7px;border:1px solid #cadcde;border-radius:999px;background:#fff;color:var(--accent-dark);font-size:.61rem;font-weight:950;letter-spacing:.07em;text-transform:uppercase}.recommended h3{font-size:1.22rem;margin:9px 0 4px}.recommended p{margin:0;color:#52686e;font-size:.82rem;max-width:690px}.module-btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;margin-top:12px;padding:0 16px;border-radius:10px;background:var(--accent);color:#fff;font-size:.84rem;font-weight:900}.continuity{margin-top:12px;padding:10px 11px;border-radius:10px;background:var(--gold-soft);color:#665233;font-size:.74rem}
+.summary-actions{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-top:20px}.summary-actions .primary,.module-btn{border-color:var(--accent);background:var(--accent);color:#fff}.footer{padding:13px 28px 16px;border-top:1px solid var(--line);color:var(--muted);font-size:.78rem;text-align:center}
+@media(max-width:760px){main{width:min(100% - 20px,980px);margin-top:12px}.top-actions{padding:10px 10px 0}.summary-head,.summary-body{padding-left:17px;padding-right:17px}.student-record-grid,.summary-grid{grid-template-columns:1fr 1fr}.attempt-progress-row{grid-template-columns:1fr auto}.attempt-progress-time{grid-column:1/-1;text-align:left}.tx-result-item{flex-direction:column;align-items:flex-start;gap:4px}.tx-desc{white-space:normal}.next-wrap h2{font-size:1.02rem}.recommended h3{font-size:1rem}.recommended p{font-size:.78rem}.module-btn{width:100%}.footer{padding:16px 12px}}
+@media(max-width:480px){.student-record-grid,.summary-grid{grid-template-columns:1fr}.summary-actions>*{width:100%}}
+@media print{body{background:#fff}.top-actions,.summary-actions,.footer{display:none!important}main{width:100%;margin:0}.summary-card{border:0;box-shadow:none}.summary-body{padding:10px}.journal-wrap{overflow:visible}.journal{min-width:0;font-size:10px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top-actions"><a class="top-btn" href="activities.html">← Back to Activities</a></div>
+  <main>
+    <section class="summary-card" aria-labelledby="summaryTitle">
+      <header class="summary-head"><div class="eyebrow">Activity Complete</div><h1 id="summaryTitle">Your General Journal is complete.</h1><p>Review your accuracy, the entries that needed revision, and the complete record you prepared.</p></header>
+      <div class="summary-body">
+        <section class="student-record" aria-label="Student attempt details"><div class="student-record-title">Student Attempt Record</div><div class="student-record-grid" id="studentRecord"></div></section>
+        <div class="summary-grid" id="metrics"></div>
+        <section class="attempt-progress"><div class="attempt-progress-title">Score Progress by Attempt</div><div id="attemptProgressList" class="attempt-progress-list"></div></section>
+        <section class="results-wrap"><h3>Transaction Results</h3><p>Outcome of each transaction for this attempt, in the order they were journalized.</p><div class="tx-results" id="txResultsArea"></div></section>
+        <section class="complete-journal"><h3>Complete General Journal</h3><p>This is the accounting record produced during this attempt.</p><div class="journal-wrap"><table class="journal"><thead><tr><th>Date</th><th>Particulars</th><th>PR</th><th>Debit</th><th>Credit</th></tr></thead><tbody id="summaryJournalBody"></tbody></table></div></section>
+        <section class="next-wrap"><div class="eyebrow">What comes next?</div><h2>From General Journal to General Ledger</h2><p class="next-intro">You have recorded the transactions chronologically. The next step is to organize those entries by account.</p><div class="recommended"><span class="badge">Recommended Next Step</span><h3 id="nextModuleTitle"></h3><p id="nextModuleDescription"></p><a class="module-btn" id="nextModuleLink">Continue to the next module →</a></div><div class="continuity">The next module continues from this activity: the journal entries you just prepared become the source for posting to the General Ledger.</div></section>
+        <div class="summary-actions"><button type="button" onclick="window.print()">Print / Save Summary</button><a class="primary" id="nextModuleAction">Continue to the next module →</a></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">For educational use only. Please do not reproduce, redistribute, or share these materials without permission.</footer>
+</div>
+<script>
+const summaryData={
+  student:{name:'Student Name',section:'Section',date:'Jan. 01, 2026',attemptNumber:1,attemptCode:'GJ-ABC123',timeSpent:'12 min 34 sec'},
+  metrics:{transactions:'15',completed:'15 / 15',firstAttempt:'12 / 15',revised:'3'},
+  attempts:[{score:'12 / 15 · 80%',time:'Jan. 01, 2026 · 12 min 34 sec'}],
+  results:[{description:'The owner started Power Laundry by investing cash in the business.',status:'Correct · First Attempt',correct:true},{description:'Power Laundry purchased laundry supplies on account.',status:'Revised',correct:false,issue:'debit / credit placement or amount'}],
+  journal:[{date:'Jan. 01, 2026',account:'Cash',pr:'101',debit:'₱120,000.00',credit:''},{date:'',account:'Owner, Capital',pr:'301',debit:'',credit:'₱120,000.00'},{date:'',account:'To record the initial investment.',pr:'',debit:'',credit:'',description:true}],
+  nextModule:{title:'Module 07 · General Ledger',description:'Learn how the journal entries you just prepared are posted to individual ledger accounts, how ledger formats work, and how account balances are determined.',href:'module07.html'}
+};
+const escapeHtml=value=>String(value??'').replace(/[&<>'"]/g,character=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[character]));
+document.getElementById('studentRecord').innerHTML=Object.entries({'Name':summaryData.student.name,'Section':summaryData.student.section,'Date':summaryData.student.date,'Attempt No.':summaryData.student.attemptNumber,'Attempt Code':summaryData.student.attemptCode,'Time Spent':summaryData.student.timeSpent}).map(([label,value])=>`<div class="student-record-item"><span>${label}</span><strong class="${label==='Attempt Code'?'attempt-code':''}">${escapeHtml(value)}</strong></div>`).join('');
+document.getElementById('metrics').innerHTML=Object.entries({'Transactions':summaryData.metrics.transactions,'Completed Correctly':summaryData.metrics.completed,'First-Attempt Accuracy':summaryData.metrics.firstAttempt,'Entries Revised':summaryData.metrics.revised}).map(([label,value])=>`<div class="metric"><span>${label}</span><strong>${escapeHtml(value)}</strong></div>`).join('');
+document.getElementById('attemptProgressList').innerHTML=summaryData.attempts.map((item,index)=>`<div class="attempt-progress-row"><span>Attempt ${index+1}</span><span class="attempt-progress-score">${escapeHtml(item.score)}</span><span class="attempt-progress-time">${escapeHtml(item.time)}</span></div>`).join('');
+document.getElementById('txResultsArea').innerHTML=summaryData.results.map((item,index)=>`<div class="tx-result-item"><div class="tx-label"><span class="tx-num">Tx ${String(index+1).padStart(2,'0')}</span><span class="tx-desc">${escapeHtml(item.description)}</span></div><div><span class="tx-status ${item.correct?'ok':'revised'}">${escapeHtml(item.status)}</span>${item.issue?`<div class="tx-issue">${escapeHtml(item.issue)}</div>`:''}</div></div>`).join('');
+document.getElementById('summaryJournalBody').innerHTML=summaryData.journal.map(row=>`<tr><td>${escapeHtml(row.date)}</td><td class="${row.description?'description-line':row.credit?'credit-line':'debit-line'}">${escapeHtml(row.account)}</td><td>${escapeHtml(row.pr)}</td><td>${escapeHtml(row.debit)}</td><td>${escapeHtml(row.credit)}</td></tr>`).join('');
+document.getElementById('nextModuleTitle').textContent=summaryData.nextModule.title;document.getElementById('nextModuleDescription').textContent=summaryData.nextModule.description;document.querySelectorAll('#nextModuleLink,#nextModuleAction').forEach(link=>link.href=summaryData.nextModule.href);
+</script>
+</body>
+</html>

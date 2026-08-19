@@ -232,7 +232,7 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
         <div class="continuity">Module 07 continues from this activity: the journal entries you just prepared become the source for posting to the General Ledger.</div>
       </section>
 
-      <div class="summary-actions"><button class="secondary" type="button" onclick="window.print()">Print / Save Summary</button><button class="secondary" type="button" onclick="newAttempt()">Start New Attempt</button><a class="primary" href="module07.html">Continue to Module 07 →</a></div>
+      <div class="summary-actions"><button class="secondary" type="button" onclick="window.print()">Print / Save Summary</button><button class="secondary" type="button" onclick="newAttempt()">Start New Attempt</button><a class="primary" href="activity07-1.html">Continue to Activity 07.1 →</a></div>
     </div>
   </section>
 </main>
@@ -380,7 +380,27 @@ function addToJournal(){const t=attempt[currentIndex];if(!t.studentRows)return;t
 function journalRowsHtml(records){if(!records.length)return `<tr class="blank-row"><td></td><td>Your completed entries will appear here in chronological order.</td><td></td><td></td><td></td></tr><tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr><tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr>`;let html='';records.forEach((t,idx)=>{const debits=t.entries.filter(e=>e.debit>0),credits=t.entries.filter(e=>e.credit>0);const ordered=[...debits,...credits];ordered.forEach((e,i)=>{const isCredit=e.credit>0;html+=`<tr><td>${i===0?t.date:''}</td><td class="${isCredit?'credit-line':'debit-line'}">${e.account}</td><td>${e.pr}</td><td>${e.debit?fmt(e.debit):''}</td><td>${e.credit?fmt(e.credit):''}</td></tr>`});html+=`<tr><td></td><td class="description-line">${escapeHtml(t.explanation||'To record the transaction.')}</td><td></td><td></td><td></td></tr>`;if(idx<records.length-1)html+=`<tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr>`});return html;}
 function renderJournal(){document.getElementById('journalBody').innerHTML=journalRowsHtml(completed)}
 function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-function finishActivity(){const elapsed=Date.now()-activityStart;const first=completed.filter(t=>t.firstCorrect).length;const history=getActivityHistory();const record={score:first,percentage:Math.round(first/15*100),elapsed,when:new Date().toISOString(),attemptCode};history.push(record);localStorage.setItem(activityHistoryKey(),JSON.stringify(history));document.getElementById('progressFill').style.width='100%';document.getElementById('activityScreen').classList.add('hidden');document.getElementById('summaryScreen').classList.remove('hidden');setTopNav('navSummary');document.getElementById('summaryStudentName').textContent=studentInfo.name||'—';document.getElementById('summaryStudentSection').textContent=studentInfo.section||'—';document.getElementById('summaryStudentDate').textContent=formatStudentDate(studentInfo.date);document.getElementById('summaryAttemptNumber').textContent=activityAttemptNumber;document.getElementById('summaryAttemptCode').textContent=attemptCode;document.getElementById('summaryTimeSpent').textContent=formatElapsed(elapsed);const revised=15-first;document.getElementById('metricCompleted').textContent='15 / 15';document.getElementById('metricFirst').textContent=`${first} / 15`;document.getElementById('metricRevised').textContent=String(revised);
+function saveGeneralJournal(){const snapshot={
+  activity:'06.1',
+  attemptCode,
+  studentName:studentInfo.name,
+  studentSection:studentInfo.section,
+  studentDate:studentInfo.date,
+  savedAt:new Date().toISOString(),
+  journal: completed.map(t => ({
+    date: t.date,
+    explanation: t.explanation || 'To record the transaction.',
+    entries: t.entries.map(e => ({
+      account: e.account,
+      pr: e.pr,
+      debit: e.debit,
+      credit: e.credit
+    }))
+  }))
+};
+localStorage.setItem('power_laundry_last_general_journal', JSON.stringify(snapshot));
+return snapshot;}
+function finishActivity(){const elapsed=Date.now()-activityStart;const first=completed.filter(t=>t.firstCorrect).length;const history=getActivityHistory();const record={score:first,percentage:Math.round(first/15*100),elapsed,when:new Date().toISOString(),attemptCode};history.push(record);localStorage.setItem(activityHistoryKey(),JSON.stringify(history));saveGeneralJournal();document.getElementById('progressFill').style.width='100%';document.getElementById('activityScreen').classList.add('hidden');document.getElementById('summaryScreen').classList.remove('hidden');setTopNav('navSummary');document.getElementById('summaryStudentName').textContent=studentInfo.name||'—';document.getElementById('summaryStudentSection').textContent=studentInfo.section||'—';document.getElementById('summaryStudentDate').textContent=formatStudentDate(studentInfo.date);document.getElementById('summaryAttemptNumber').textContent=activityAttemptNumber;document.getElementById('summaryAttemptCode').textContent=attemptCode;document.getElementById('summaryTimeSpent').textContent=formatElapsed(elapsed);const revised=15-first;document.getElementById('metricCompleted').textContent='15 / 15';document.getElementById('metricFirst').textContent=`${first} / 15`;document.getElementById('metricRevised').textContent=String(revised);
 document.getElementById('txResultsArea').innerHTML=completed.map((t,i)=>{const ok=t.firstCorrect;return `<div class="tx-result-item"><div class="tx-label"><span class="tx-num">Tx ${String(i+1).padStart(2,'0')}</span><span class="tx-desc">${escapeHtml(t.text)}</span></div><div><span class="tx-status ${ok?'ok':'revised'}">${ok?'Correct · First Attempt':'Revised'}</span>${ok?'':`<div class="tx-issue">${escapeHtml(t.issues.join('; '))}</div>`}</div></div>`}).join('');
 document.getElementById('summaryJournalBody').innerHTML=journalRowsHtml(completed);const progressList=document.getElementById('attemptProgressList');progressList.innerHTML='';history.forEach((item,index)=>{const row=document.createElement('div');row.className='attempt-progress-row';row.innerHTML=`<span>Attempt ${index+1}</span><span class="attempt-progress-score">${item.score} / 15 · ${item.percentage}%</span><span class="attempt-progress-time">${new Date(item.when).toLocaleDateString()} · ${formatElapsed(item.elapsed)}</span>`;progressList.appendChild(row)});window.scrollTo({top:0,behavior:'smooth'})}
 function newAttempt(){attempt=[];completed=[];currentIndex=0;document.getElementById('summaryScreen').classList.add('hidden');document.getElementById('activityScreen').classList.add('hidden');document.getElementById('startScreen').classList.remove('hidden');document.getElementById('progressFill').style.width='0';setTopNav('navOverview');window.scrollTo({top:0,behavior:'smooth'})}
