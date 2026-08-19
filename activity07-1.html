@@ -324,6 +324,8 @@ startPosting=function(){const source=journalData;journalData=source.flatMap((tra
 const lineLoadEntry=loadEntry;loadEntry=function(){lineLoadEntry();if(currentIndex<journalData.length)setAccepted(false)};
 function renderAccumulatedPostings(){const host=document.getElementById('runningLedgerList'),accounts=Object.keys(footingLedger).sort((a,b)=>Number(a)-Number(b));host.innerHTML=accounts.length?accounts.map(no=>`<div class="ledger-card">${footingLedgerMarkup(footingLedger[no],true)}</div>`).join(''):'<div class="feedback" style="margin:0"><strong>No postings yet.</strong> Accepted lines will accumulate here by ledger account.</div>'}
 const linePostEntry=postEntry;postEntry=function(){linePostEntry();renderAccumulatedPostings()};
+function formatAmountInput(input){const digits=String(input.value||'').replace(/[^0-9]/g,'');input.value=digits?'₱'+Number(digits).toLocaleString('en-PH',{maximumFractionDigits:0}):'';try{input.setSelectionRange(input.value.length,input.value.length)}catch(e){}}
+['lineAmount','footDebit','footCredit','footBalance'].forEach(id=>{const input=document.getElementById(id);input.addEventListener('input',()=>formatAmountInput(input));input.addEventListener('blur',()=>formatAmountInput(input))});
 </script>
 </body>
 </html>
