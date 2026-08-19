@@ -105,6 +105,12 @@ input:focus,select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(47,1
 .breakdown{margin-top:24px;border:1px solid var(--border);border-radius:12px;overflow:hidden;text-align:left}
 .break-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:13px 15px;border-top:1px solid var(--border)}
 .break-row:first-child{border-top:0}
+.attempt-progress{margin-top:24px;text-align:left}
+.attempt-progress-title{margin:0 0 10px;color:var(--amber);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.attempt-progress-list{display:grid;gap:8px}
+.attempt-progress-row{display:grid;grid-template-columns:minmax(90px,1fr) auto minmax(110px,auto);gap:12px;align-items:center;padding:11px 15px;border:1px solid var(--border);border-radius:10px;background:var(--soft);font-size:14px}
+.attempt-progress-score{font-weight:800;white-space:nowrap}
+.attempt-progress-date{color:var(--muted);font-size:12px;text-align:right}
 .encourage{margin:24px auto 0;max-width:680px;padding:18px;background:#fff7e9;border:1px solid #e5c892;border-radius:12px;color:#6f501d;font-weight:750;line-height:1.6}
 .hub-nav{display:flex;gap:8px;position:fixed;top:14px;left:16px;z-index:300}
 .hub-return-link{display:inline-block;margin-bottom:20px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:var(--soft);text-decoration:none;color:var(--teal);font-weight:800;font-size:12px}
@@ -113,6 +119,7 @@ footer{margin-top:auto;padding:16px 28px 24px;display:flex;justify-content:space
 @media(max-width:720px){
   .topbar{padding:18px 18px 6px}.screen{width:min(100% - 20px,940px);margin-top:12px}.card,.question-card{padding:24px 18px}
   .form-grid,.guide-grid,.rule-strip,.answers,.entry-builder,.totals,.summary-grid{grid-template-columns:1fr}
+  .attempt-progress-row{grid-template-columns:1fr auto}.attempt-progress-date{grid-column:1 / -1;text-align:left}
   .status-grid{grid-template-columns:1fr 1fr}.entry-row-form{grid-template-columns:1fr 1fr auto}.transaction{font-size:16px}
   .challenge-summary{gap:5px}.challenge-summary-title{font-size:12px}.hub-nav{position:static;margin:12px 0 0 12px}.hub-return-link{margin-bottom:0}footer{padding:14px 18px 20px;flex-direction:column}
 }
@@ -224,6 +231,11 @@ footer{margin-top:auto;padding:16px 28px 24px;display:flex;justify-content:space
       <div class="break-row"><span>Level 2 · Build the Entry</span><strong id="level2Score"></strong></div>
       <div class="break-row"><span>Compound Entry Items</span><strong id="compoundScore"></strong></div>
       <div class="break-row"><span>Best Score</span><strong id="sumBest"></strong></div>
+    </div>
+
+    <div class="attempt-progress">
+      <div class="attempt-progress-title">Score Progress by Attempt</div>
+      <div id="attemptProgressList" class="attempt-progress-list"></div>
     </div>
 
     <div id="encourage" class="encourage"></div>
@@ -445,7 +457,7 @@ function next(){
 function fmtTime(ms){let s=Math.floor(ms/1000),m=Math.floor(s/60);s%=60;return `${m} min ${String(s).padStart(2,"0")} sec`}
 function finish(){
   const elapsed=Date.now()-startTime,now=new Date(),history=getHistory(),attemptNo=history.length+1;
-  const record={score,code:attemptCode,when:now.toISOString(),elapsed};
+  const record={score,percentage:Math.round(score/20*100),code:attemptCode,when:now.toISOString(),elapsed};
   history.push(record);localStorage.setItem(historyKey(),JSON.stringify(history));
   const best=Math.max(...history.map(x=>x.score)),pct=Math.round(score/20*100);
   $("resultPercent").textContent=pct+"%";$("resultRaw").textContent=score+"/20";
@@ -459,6 +471,13 @@ function finish(){
   $("sumName").textContent=$("studentName").value.trim();$("sumEmail").textContent=$("studentEmail").value.trim();$("sumSection").textContent=$("studentSection").value.trim();$("sumDate").textContent=$("studentDate").value;
   $("sumAttempt").textContent=attemptNo;$("sumCode").textContent=attemptCode;$("sumTime").textContent=fmtTime(elapsed);$("sumCompleted").textContent=now.toLocaleString();
   $("level1Score").textContent=breakdown.l1+"/10";$("level2Score").textContent=breakdown.l2+"/10";$("compoundScore").textContent=breakdown.compound+"/5";$("sumBest").textContent=best+"/20";
+  const progressList=$("attemptProgressList");progressList.innerHTML="";
+  history.forEach((item,index)=>{
+    const row=document.createElement("div");row.className="attempt-progress-row";
+    const time=item.elapsed==null?"Time unavailable":fmtTime(item.elapsed);
+    row.innerHTML=`<span>Attempt ${index+1}</span><span class="attempt-progress-score">${item.score}/20 · ${item.percentage??Math.round(item.score/20*100)}%</span><span class="attempt-progress-date">${new Date(item.when).toLocaleDateString()} · ${time}</span>`;
+    progressList.appendChild(row);
+  });
   refreshStatus();show("resultScreen")
 }
 

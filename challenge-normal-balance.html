@@ -688,6 +688,38 @@
       white-space: nowrap;
     }
 
+    .attempt-progress {
+      margin-top: 26px;
+    }
+
+    .attempt-progress-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .attempt-progress-row {
+      display: grid;
+      grid-template-columns: minmax(90px, 1fr) auto minmax(110px, auto);
+      gap: 14px;
+      align-items: center;
+      padding: 11px 0;
+      border-bottom: 1px solid #eceeec;
+      font-size: 14px;
+    }
+
+    .attempt-progress-row:last-child { border-bottom: 0; }
+
+    .attempt-progress-score {
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .attempt-progress-date {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
+    }
+
     .encouragement {
       margin-top: 24px;
       padding: 18px 20px;
@@ -760,6 +792,8 @@
       .assessment-header .secondary { margin-top: 14px; }
       .score-badge { width: 130px; height: 130px; }
       .result-top { justify-items: start; }
+      .attempt-progress-row { grid-template-columns: 1fr auto; }
+      .attempt-progress-date { grid-column: 1 / -1; text-align: left; }
       .button-row, .result-actions { flex-direction: column; }
       .button-row button, .result-actions button { width: 100%; }
       .hub-nav { position: static; margin: 12px 0 0 12px; }
@@ -998,6 +1032,11 @@
         <div class="breakdown">
           <div class="eyebrow">Competency Breakdown</div>
           <div id="breakdownRows"></div>
+        </div>
+
+        <div class="attempt-progress">
+          <div class="eyebrow">Score Progress by Attempt</div>
+          <div id="attemptProgressList" class="attempt-progress-list"></div>
         </div>
 
         <div class="encouragement">
@@ -1725,7 +1764,7 @@
     }
 
     function defaultHistory() {
-      return { completedAttempts: 0, bestScore: null, bestTimeMs: null, name: "", email: "", section: "" };
+      return { completedAttempts: 0, bestScore: null, bestTimeMs: null, name: "", email: "", section: "", attempts: [] };
     }
 
     function loadHistory() {
@@ -2046,11 +2085,20 @@
       history.name = student.name;
       history.email = student.email;
       history.section = student.section;
+      history.attempts = Array.isArray(history.attempts) ? history.attempts : [];
 
       if (history.bestScore === null || score > history.bestScore || (score === history.bestScore && (history.bestTimeMs === null || elapsed < history.bestTimeMs))) {
         history.bestScore = score;
         history.bestTimeMs = elapsed;
       }
+
+      history.attempts.push({
+        attemptNumber: history.completedAttempts,
+        score,
+        percentage: Math.round((score / 20) * 100),
+        elapsed,
+        completedAt: new Date(assessmentEnd).toISOString()
+      });
 
       saveHistory(history);
       resultCommitted = true;
@@ -2098,6 +2146,17 @@
 
         row.append(text, scoreCell);
         breakdownRows.appendChild(row);
+      });
+
+      const attemptProgressList = document.getElementById("attemptProgressList");
+      attemptProgressList.innerHTML = "";
+      const attempts = Array.isArray(history.attempts) ? history.attempts : [];
+      attempts.forEach(attemptRecord => {
+        const row = document.createElement("div");
+        row.className = "attempt-progress-row";
+        const time = attemptRecord.elapsed == null ? "Time unavailable" : formatElapsed(attemptRecord.elapsed);
+        row.innerHTML = `<span>Attempt ${attemptRecord.attemptNumber}</span><span class="attempt-progress-score">${attemptRecord.score} / 20 · ${attemptRecord.percentage}%</span><span class="attempt-progress-date">${new Date(attemptRecord.completedAt).toLocaleDateString()} · ${time}</span>`;
+        attemptProgressList.appendChild(row);
       });
 
       showOnly(resultsScreen);
