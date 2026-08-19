@@ -383,6 +383,7 @@ function escapeHtml(s){return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':
 function saveGeneralJournal(){const snapshot={
   activity:'06.1',
   attemptCode,
+  attemptNumber:activityAttemptNumber,
   studentName:studentInfo.name,
   studentSection:studentInfo.section,
   studentDate:studentInfo.date,
