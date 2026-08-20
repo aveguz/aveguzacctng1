@@ -40,6 +40,9 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
 .feedback{margin-top:14px;border:1px dashed #b9c9cc;border-radius:12px;padding:12px;background:#fbfdfd;color:var(--muted);font-size:.83rem}.feedback strong{color:var(--ink)}.feedback.good{border-style:solid;border-color:#c9ddcf;background:var(--good-soft);color:#42614c}.feedback.bad{border-style:solid;border-color:#ead0d0;background:var(--bad-soft);color:#714343}
 .action-row{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-top:15px}
 .journal-title{text-align:center;padding:17px 18px 0}.journal-title .business{font-size:.96rem;font-weight:900;letter-spacing:.08em}.journal-title h2{font-size:1.25rem;margin:2px 0}.journal-title .ref{font-size:.78rem;color:var(--muted);font-weight:800}
+.posting-hero{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px}.posting-hero h2{margin:0;font-size:clamp(2.1rem,4vw,3rem);letter-spacing:-.05em;font-weight:900;color:#203136}.posting-count{display:inline-flex;align-items:center;justify-content:center;background:#edf5f4;border:1px solid #bed0d1;border-radius:999px;padding:6px 12px;color:#31535a;font-size:.72rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase}.posting-card{background:var(--surface);border:1px solid #d4dfe0;border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.posting-header{padding:28px 28px 14px}.posting-header h3{margin:0 0 8px;font-size:1.7rem;letter-spacing:-.04em}.posting-header p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.5}.posting-body{padding:0 28px 24px}.posting-form{display:grid;gap:14px}.label-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field-wrap{display:flex;flex-direction:column;gap:8px}.field-wrap label{font-size:.72rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#597377}.field-wrap input,.field-wrap select{width:100%;border:1px solid #c8d9da;border-radius:10px;padding:13px 14px;background:#fff;color:#203136;font:inherit;font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}.field-wrap input::placeholder{color:#8aa1a5}.field-wrap .mini-value{background:#f7f9fa;border:1px solid #d4dfe0;border-radius:10px;padding:12px 14px;color:#43575d;font-weight:800}.field-wrap textarea{width:100%;min-height:62px;resize:vertical;border:1px solid #c8d9da;border-radius:10px;padding:12px 14px;background:#fff;color:#203136;font:inherit}.amount-side{display:grid;grid-template-columns:1.2fr 1fr;gap:14px}.amount-side .field-wrap{min-width:0}.side-choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}.side-choice button{padding:12px 10px;border-radius:10px;border:1px solid #c7d5d7;background:#f4f8f8;color:#547077;font-weight:900}.side-choice button.active{background:var(--accent-soft);border-color:#bad0d4;color:var(--accent-dark)}
+.notice{margin-top:4px;border:1px dashed #b9c9cc;border-radius:12px;padding:12px 13px;color:#4f6468;background:#fafdfd}.notice strong{color:#203136}.posting-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}.posting-actions button{padding:12px 16px;border-radius:10px;border:1px solid #c3d5d7;background:#fff;color:#203136;font-weight:900}.posting-actions .highlight{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 10px 18px rgba(49,83,90,.18)}
+.preview-note{margin-top:12px;padding:16px 18px;background:#f6f9f9;border:1px solid var(--line);border-radius:12px;color:#587073;font-size:.9rem;line-height:1.5}.preview-note strong{color:#203136;display:block;margin-bottom:4px}.ledger-preview{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}.ledger-preview h4{margin:0 0 10px;font-size:1.1rem}.ledger-preview .muted-copy{color:var(--muted);font-size:.9rem;margin:0}.ledger-preview .empty-state{margin-top:14px;border:1px dashed #becbd0;border-radius:12px;padding:12px 13px;color:#5e757a;background:#f8fbfb}
 .journal-wrap{overflow:auto;max-height:calc(100vh - 190px);padding:14px 16px 17px}.journal{width:100%;border-collapse:collapse;min-width:650px;background:#fff}.journal th,.journal td{border:1px solid #cbd6d8;padding:8px 9px;vertical-align:middle}.journal th{position:sticky;top:0;z-index:1;background:#eef3f4;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:#52676d}.journal th:nth-child(1),.journal td:nth-child(1){width:92px}.journal th:nth-child(3),.journal td:nth-child(3){width:70px;text-align:center}.journal th:nth-child(4),.journal th:nth-child(5),.journal td:nth-child(4),.journal td:nth-child(5){width:118px;text-align:right}.debit-line{font-weight:800}.credit-line{padding-left:36px!important;font-weight:800}.description-line{padding-left:64px!important;color:var(--muted);font-style:italic;font-size:.86rem}.blank-row td{height:26px;background:#fafcfc;color:#90a0a3}.journal tr.active-source td{background:var(--gold-soft);border-top-color:#dfc895;border-bottom-color:#dfc895}.journal tr.active-source td:first-child{box-shadow:inset 4px 0 0 #b58b4d}.journal tr.active-source td:nth-child(2){color:var(--accent-dark)}
 .running-note{margin:0 16px 16px;padding:11px 12px;border-radius:10px;background:var(--accent-soft);color:var(--accent-dark);font-size:.8rem}.running-note strong{display:block;margin-bottom:2px}
 .summary-card{max-width:940px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}.summary-head{padding:22px 24px;border-bottom:1px solid var(--line);text-align:center}.summary-head h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:7px}.summary-head p{margin:0;color:var(--muted)}.summary-body{padding:22px 24px}
@@ -135,51 +138,74 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
     <section class="intro">
       <div>
         <div class="eyebrow">Posting practice · based on your running journal</div>
-        <h1>Post from the General Journal.</h1>
-        <p>Read each journal entry, select the account involved, and post the debit or credit to the ledger account.</p>
+        <h1>Build the General Ledger</h1>
       </div>
-      <div class="status"><strong id="transactionStatus">Entry 01 of 15</strong><span id="completionStatus">0 posted · 0% complete</span></div>
+      <div class="status"><strong id="transactionStatus">1 of 34</strong><span id="completionStatus">0 posted</span></div>
     </section>
 
     <section class="stage">
-      <div class="panel work-panel" id="journalizeAnchor">
-        <div class="panel-head">
-          <div><div class="micro">Posting Source</div><h2>General Journal entry</h2></div>
-          <button class="secondary" type="button" onclick="openModal('coaModal')" style="padding:8px 11px;font-size:.82rem">COA ↗</button>
+      <div class="panel work-panel posting-card" id="journalizeAnchor">
+        <div class="posting-header">
+          <h3>Highlighted journal line <span id="journalLineLabel">1 of 34</span></h3>
+          <p>Select the ledger account from the COA, then transfer the remaining information accurately.<br>The journal PR is your account-number cue. Date uses a compact selector, and Amount formats automatically.</p>
         </div>
-        <div class="panel-body">
-          <div class="step-strip">
-            <div class="step active">1 · Read</div>
-            <div class="step" id="stepPost">2 · Post to Ledger</div>
-          </div>
-          <div class="tx-card">
-            <div class="tx-date" id="txDate"></div>
-            <p class="tx-text" id="txText"></p>
+
+        <div class="posting-body">
+          <div class="posting-form">
+            <div class="field-wrap">
+              <label for="lineAccount">Ledger Account · Chart of Accounts</label>
+              <select id="lineAccount"><option value="">Choose an account...</option></select>
+            </div>
+
+            <div class="label-stack">
+              <div class="field-wrap">
+                <label for="lineDate">Date</label>
+                <select id="lineDate"><option value="">Choose date...</option></select>
+              </div>
+              <div class="field-wrap">
+                <label for="lineRef">F / Ref.</label>
+                <div class="mini-value" id="lineRefPreview">e.g., GJ-01</div>
+              </div>
+            </div>
+
+            <div class="field-wrap">
+              <label for="lineParticulars">Particulars</label>
+              <input id="lineParticulars" placeholder="Short description..."></input>
+            </div>
+
+            <div class="amount-side">
+              <div class="field-wrap">
+                <label for="lineAmount">Amount</label>
+                <input class="amount-input" id="lineAmount" inputmode="numeric" placeholder="₱0">
+              </div>
+              <div class="field-wrap">
+                <label>Side</label>
+                <div class="side-choice">
+                  <button id="lineDebit" type="button" onclick="chooseLineSide('Debit')">Debit</button>
+                  <button id="lineCredit" type="button" onclick="chooseLineSide('Credit')">Credit</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="notice" id="feedback"><strong>Ready.</strong> Select the ledger account and transfer the highlighted journal line.</div>
+
+            <div class="posting-actions">
+              <button class="secondary" type="button" onclick="showFootingHint()">Show Hint</button>
+              <button class="secondary" type="button" onclick="openModal('coaModal')">Chart of Accounts</button>
+              <button class="highlight" type="button" id="postBtn" onclick="checkEntry()">Check Posting</button>
+            </div>
           </div>
 
-          <div class="line-posting-form">
-            <div class="field full"><label for="lineAccount">Ledger Account · Chart of Accounts</label><select id="lineAccount"><option value="">Choose an account…</option></select></div>
-            <div class="field"><label for="lineDate">Date</label><select id="lineDate"><option value="">Choose date…</option></select></div>
-            <div class="field"><label for="lineRef">F / Ref.</label><input id="lineRef" placeholder="e.g., GJ-01" autocomplete="off"></div>
-            <div class="field full"><label for="lineParticulars">Particulars</label><input id="lineParticulars" placeholder="Short description…"></div>
-            <div class="field"><label for="lineAmount">Amount</label><input class="amount-input" id="lineAmount" inputmode="numeric" placeholder="₱0"></div>
-            <div class="field"><label>Side</label><div class="side-choice"><button id="lineDebit" type="button" onclick="chooseLineSide('Debit')">Debit</button><button id="lineCredit" type="button" onclick="chooseLineSide('Credit')">Credit</button></div></div>
+          <div class="preview-note">
+            <strong>Choose a ledger account to preview its T-form ledger.</strong>
+            Successful postings stay here and accumulate throughout the activity.
           </div>
 
-          <div class="helper-row"><strong>Select the account to post</strong><span>Use the account from the journal entry.</span></div>
-
-          <div class="builder-table" id="builderTable">
-            <div class="builder-head"><div>Account</div><div>PR</div><div>Debit</div><div>Credit</div></div>
-            <div id="builderRows"></div>
+          <div class="ledger-preview">
+            <h4>Affected T-form Ledgers</h4>
+            <p class="muted-copy">Running</p>
+            <div class="empty-state" id="runningLedgerList">No postings yet. Each affected account will remain visible here as its ledger grows.</div>
           </div>
-
-          <div class="entry-tools">
-            <button class="mini-btn" type="button" onclick="checkEntry()">Check Entry</button>
-            <button class="disabled" id="postBtn" type="button" disabled onclick="postEntry()">Post to Ledger →</button>
-          </div>
-
-          <div class="feedback" id="feedback"><strong>Ready when you are.</strong> Read the journal entry and prepare the posting.</div>
-          <div class="accumulated-postings"><h3>Accumulated Postings</h3><div class="running-ledger-list" id="runningLedgerList"><div class="feedback" style="margin:0"><strong>No postings yet.</strong> Accepted lines will accumulate here by ledger account.</div></div></div>
         </div>
       </div>
 
