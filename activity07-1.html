@@ -62,6 +62,15 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
 @media(max-width:900px){.stage{grid-template-columns:1fr}.journal-panel{order:1;position:static;max-height:none;overflow:visible}.work-panel{order:2}.journal-wrap{max-height:none}.status{text-align:left;min-width:0}.intro{align-items:flex-start;flex-direction:column}.summary-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){main{padding:19px 12px 42px}.top-actions{padding:10px 10px 0;flex-direction:column}.identity-card{margin-top:0;border-radius:15px}.identity-head{padding:28px 22px 18px}.course-line{font-size:.69rem;letter-spacing:.13em;white-space:normal;line-height:1.55;margin-bottom:18px}.activity-strip{align-items:flex-start;flex-direction:column;gap:2px;padding:10px 12px}.activity-code,.activity-title{font-size:.77rem}.activity-meta{font-size:.76rem;margin-top:10px}.start-head,.start-body{padding-left:22px;padding-right:22px}.start-body{padding-bottom:28px}.step-strip{grid-template-columns:1fr}.intro{margin-bottom:14px}.panel-head{padding:14px}.panel-body{padding:14px}.helper-row{align-items:flex-start;flex-direction:column;gap:2px}.builder-table{border:0;overflow:visible;background:transparent}.builder-head{display:none}.builder-row{display:grid;grid-template-columns:58px minmax(0,1fr) minmax(0,1fr);gap:7px;border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:9px;background:#fff}.builder-row>div{padding:0;border:0}.builder-row .pr{grid-column:1}.builder-row .money.debit{grid-column:2}.builder-row .money.credit{grid-column:3}.summary-grid{grid-template-columns:1fr 1fr}.journal-wrap{padding-left:10px;padding-right:10px}.footer{padding:16px 12px;flex-direction:column;align-items:flex-start;gap:12px}.footer-copy{max-width:none}.footer-nav{width:100%;margin-left:0;flex-direction:column}.footer-link{min-width:auto;min-height:auto}}
 @media print{.top-actions,.identity-head{display:none!important}.identity-card{border:0;box-shadow:none;margin:0;max-width:none}.identity-card .progress-track{display:none!important}}
+/* Posting screen type scale */
+.intro h1{font-size:clamp(1.6rem,3vw,2.35rem);line-height:1.08}
+.posting-card .posting-header h3{font-size:1.28rem;letter-spacing:-.02em}
+.posting-card .posting-header p{font-size:.86rem;line-height:1.45}
+.posting-card .field-wrap label{letter-spacing:.08em}
+.posting-card .field-wrap input,.posting-card .field-wrap select{font-size:.95rem}
+.posting-card .posting-actions button{font-size:.88rem}
+.posting-card .notice,.posting-card .preview-note,.posting-card .ledger-preview .muted-copy,.posting-card .ledger-preview .empty-state{font-size:.84rem}
+.posting-card .ledger-preview h4{font-size:1.05rem}
 </style>
 </head>
 <body>
