@@ -208,6 +208,7 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
         </div>
       </div>
       <div class="summary-grid"><div class="metric"><span>Transactions</span><strong>15</strong></div><div class="metric"><span>Completed Correctly</span><strong id="metricCompleted">15 / 15</strong></div><div class="metric"><span>First-Attempt Accuracy</span><strong id="metricFirst">—</strong></div><div class="metric"><span>Entries Revised</span><strong id="metricRevised">—</strong></div></div>
+      <div class="feedback hidden" id="trackingStatus" role="status"></div>
 
       <section class="attempt-progress"><div class="attempt-progress-title">Score Progress by Attempt</div><div id="attemptProgressList" class="attempt-progress-list"></div></section>
 
@@ -411,10 +412,26 @@ renderCOA();
 <script type="module">
 import { getSession, requireUser, request } from './auth.js';
 
-window.recordActivityAttempt = async ({ attemptNumber, score, maxScore, durationSeconds, attemptCode }) => {
+const pendingAttemptKey = 'power_laundry_pending_activity06_1_attempt';
+
+function setTrackingStatus(type, message) {
+  const status = document.getElementById('trackingStatus');
+  if (!status) return;
+  status.className = `feedback ${type === 'saved' ? 'good' : type === 'error' ? 'bad' : ''}`;
+  status.textContent = message;
+}
+
+async function syncActivityAttempt() {
+  let pending;
+  try { pending = JSON.parse(localStorage.getItem(pendingAttemptKey) || 'null'); } catch { pending = null; }
+  if (!pending) return;
+
   const user = await requireUser();
   const session = getSession();
-  if (!user || !session?.access_token) return;
+  if (!user || !session?.access_token) {
+    setTrackingStatus('error', 'Attempt tracking is waiting for you to sign in.');
+    return;
+  }
 
   try {
     await request('/rest/v1/activity_attempts', {
@@ -423,17 +440,27 @@ window.recordActivityAttempt = async ({ attemptNumber, score, maxScore, duration
       body: JSON.stringify({
         user_id: user.id,
         activity_id: '06.1',
-        attempt_number: attemptNumber,
-        score,
-        max_score: maxScore,
-        duration_seconds: durationSeconds,
-        details: { attempt_code: attemptCode }
+        attempt_number: pending.attemptNumber,
+        score: pending.score,
+        max_score: pending.maxScore,
+        duration_seconds: pending.durationSeconds,
+        details: { attempt_code: pending.attemptCode }
       })
     }, session.access_token);
+    localStorage.removeItem(pendingAttemptKey);
+    setTrackingStatus('saved', 'This completed attempt was saved to your learning record.');
   } catch (error) {
+    setTrackingStatus('error', `Attempt tracking could not be saved: ${error.message}`);
     console.warn('Activity attempt tracking could not be saved.', error);
   }
+}
+
+window.recordActivityAttempt = async payload => {
+  localStorage.setItem(pendingAttemptKey, JSON.stringify(payload));
+  await syncActivityAttempt();
 };
+
+syncActivityAttempt();
 </script>
 </body>
 </html>
