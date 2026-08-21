@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ACCTNG 1 | Activity 07.1 · Posting from the General Journal</title>
+<title>ACCTNG 1 | Activity 07.1 · Posting to the Ledger</title>
 <style>
 :root{
   --bg:#f3f7f7;--surface:#ffffff;--surface2:#f8fbfb;--ink:#203136;--muted:#687b80;
@@ -172,7 +172,7 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
                 <select id="lineDate"><option value="">Choose date...</option></select>
               </div>
               <div class="field-wrap">
-                <label for="lineRef">F / Ref.</label>
+                <label for="lineRefPreview">F / Ref.</label>
                 <div class="mini-value" id="lineRefPreview">e.g., GJ-01</div>
               </div>
             </div>
@@ -309,63 +309,703 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
 </div>
 
 <script>
-const JOURNAL_STORAGE_KEY='power_laundry_last_general_journal';const COA=[{no:'101',title:'Cash',class:'Asset'},{no:'106',title:'Accounts Receivable',class:'Asset'},{no:'108',title:'Laundry Supplies',class:'Asset'},{no:'109',title:'Prepaid Rent',class:'Asset'},{no:'115',title:'Laundry Equipment',class:'Asset'},{no:'201',title:'Accounts Payable',class:'Liability'},{no:'210',title:'Notes Payable',class:'Liability'},{no:'240',title:'Unearned Service Revenue',class:'Liability'},{no:'301',title:'Owner, Capital',class:"Owner's Equity"},{no:'302',title:'Owner, Withdrawals',class:"Owner's Equity"},{no:'401',title:'Service Revenue',class:'Revenue'},{no:'501',title:'Salaries Expense',class:'Expense'},{no:'502',title:'Rent Expense',class:'Expense'},{no:'503',title:'Utilities Expense',class:'Expense'},{no:'504',title:'Laundry Supplies Expense',class:'Expense'},{no:'505',title:'Repairs and Maintenance Expense',class:'Expense'},{no:'506',title:'Advertising Expense',class:'Expense'}];const fmt=n=>'₱'+Number(n).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});const accountMap=Object.fromEntries(COA.map(a=>[a.title,a]));let journalData=[],displayJournalData=[],currentIndex=0,postingHistory=[],journalMetadata={};function escapeHtml(value){return String(value ?? '').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[ch] || ch));}function setFeedback(type,title,text){const el=document.getElementById('feedback');if(!el)return;el.className='feedback'+(type==='good'?' good':type==='bad'?' bad':'');el.innerHTML=`<strong>${title}</strong> ${text}`;}function setAccepted(ok){const postBtn=document.getElementById('postBtn');if(postBtn){postBtn.disabled=!ok;postBtn.className=ok?'primary':'disabled';}}function renderBuilder(entries=[]){const host=document.getElementById('builderRows');if(!host)return;host.innerHTML='';entries.forEach((entry,index)=>{const row=document.createElement('div');row.className='builder-row';row.innerHTML=`<div><span>${escapeHtml(entry.account || '')}</span></div><div class="pr"><span>${escapeHtml(entry.pr || '')}</span></div><div class="money debit"><span>${entry.debit ? fmt(entry.debit) : ''}</span></div><div class="money credit"><span>${entry.credit ? fmt(entry.credit) : ''}</span></div>`;host.appendChild(row);});}function openModal(id){document.getElementById(id).classList.add('open')}function closeModal(id){document.getElementById(id).classList.remove('open')}function backdropClose(e,id){if(e.target.id===id)closeModal(id)}document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.open').forEach(m=>m.classList.remove('open'))});function renderCOA(){document.getElementById('coaBody').innerHTML=COA.map(a=>`<tr><td>${a.no}</td><td>${a.title}</td><td>${a.class}</td></tr>`).join('')}function loadSavedJournal(){try{const raw=JSON.parse(localStorage.getItem(JOURNAL_STORAGE_KEY)||'null');if(!raw||!Array.isArray(raw.journal)||!raw.journal.length){alert('No saved General Journal found. Please complete Activity 06.1 first.');return false}journalMetadata={name:raw.studentName||'—',section:raw.studentSection||'—',date:raw.studentDate||'—',attemptCode:raw.attemptCode||''};journalData=raw.journal.map((entry,idx)=>({id:`J${idx+1}`,date:entry.date||'',explanation:entry.explanation||'',entries:entry.entries||[]}));renderJournal();document.getElementById('loadJournalBtn').style.display='none';document.getElementById('startBtn').style.display='inline-flex';return true}catch(e){console.error(e);alert('Unable to load journal.');return false}}function startPosting(){document.getElementById('startScreen').classList.add('hidden');document.getElementById('activityScreen').classList.remove('hidden');document.getElementById('progressFill').style.width='0%';currentIndex=0;postingHistory=[];loadEntry();window.scrollTo({top:0,behavior:'smooth'})}function renderJournal(){const body=document.getElementById('journalBody');if(!journalData.length){body.innerHTML='<tr class="blank-row"><td></td><td>Saved journal will appear here.</td><td></td><td></td><td></td></tr>';return}let html='';journalData.forEach((entry,idx)=>{const debits=entry.entries.filter(e=>Number(e.debit)>0),credits=entry.entries.filter(e=>Number(e.credit)>0),ordered=[...debits,...credits];ordered.forEach((line,lineIndex)=>{const isCredit=Number(line.credit)>0;html+=`<tr><td>${lineIndex===0?entry.date:''}</td><td class="${isCredit?'credit-line':'debit-line'}">${line.account}</td><td>${line.pr}</td><td>${line.debit?fmt(line.debit):''}</td><td>${line.credit?fmt(line.credit):''}</td></tr>`});html+=`<tr><td></td><td class="description-line">${entry.explanation}</td><td></td><td></td><td></td></tr>`;if(idx<journalData.length-1)html+='<tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr>'});body.innerHTML=html}function loadEntry(){if(currentIndex>=journalData.length){finishActivity();return}const entry=journalData[currentIndex];document.getElementById('txDate').textContent=entry.date;document.getElementById('txText').textContent=entry.explanation;document.getElementById('transactionStatus').textContent=`Entry ${String(currentIndex+1).padStart(2,'0')} of ${journalData.length}`;document.getElementById('completionStatus').textContent=`${postingHistory.length} posted · ${Math.round((postingHistory.length/journalData.length)*100)}% complete`;document.getElementById('progressFill').style.width=`${(postingHistory.length/journalData.length)*100}%`;renderBuilder(entry.entries);setFeedback('neutral','Ready when you are.','Analyze the journal entry and prepare the posting.')}function renderBuilder(lines){const host=document.getElementById('builderRows');host.innerHTML='';lines.forEach(line=>{const div=document.createElement('div');div.className='builder-row';div.innerHTML=`<div><select class="acct" aria-label="Account"><option value="">Select account…</option>${COA.map(a=>`<option value="${a.title}">${a.title}</option>`).join('')}</select></div><div class="pr"><input class="pr-input" inputmode="numeric" placeholder="___"></div><div class="money debit"><input class="debit-input" inputmode="decimal" placeholder="0.00"></div><div class="money credit"><input class="credit-input" inputmode="decimal" placeholder="0.00"></div>`;div.querySelector('.acct').value=line.account;div.querySelector('.pr-input').value=line.pr;div.querySelector('.debit-input').value=line.debit||'';div.querySelector('.credit-input').value=line.credit||'';host.appendChild(div)})}function captureRows(){return Array.from(document.querySelectorAll('.builder-row')).map(r=>({account:r.querySelector('.acct').value,pr:r.querySelector('.pr-input').value.trim(),debit:Number(r.querySelector('.debit-input').value)||0,credit:Number(r.querySelector('.credit-input').value)||0}))}function setFeedback(type,title,text){const el=document.getElementById('feedback');el.className='feedback'+(type==='good'?' good':type==='bad'?' bad':'');el.innerHTML=`<strong>${title}</strong> ${text}`}function setAccepted(ok){const b=document.getElementById('postBtn');b.disabled=!ok;b.className=ok?'primary':'disabled';document.getElementById('stepPost').classList.toggle('active',ok)}function checkEntry(){const entry=journalData[currentIndex],rows=captureRows();let issues=[];const expectedSet=new Set(entry.entries.map(e=>e.account));const actualSet=new Set(rows.map(r=>r.account).filter(Boolean));if(!rows.length||rows.every(r=>!r.account))issues.push('account selection');if(rows.length!==entry.entries.length)issues.push('number of lines');if(expectedSet.size!==actualSet.size||[...expectedSet].some(a=>!actualSet.has(a)))issues.push('account match');else{const byAcct=Object.fromEntries(rows.map(r=>[r.account,r]));entry.entries.forEach(e=>{const r=byAcct[e.account];if(!r||Math.abs(r.debit-e.debit)>.01||Math.abs(r.credit-e.credit)>.01)issues.push(`${e.account} debit/credit`);if(r&&r.pr!==e.pr)issues.push(`${e.account} PR`)})}if(issues.length){setAccepted(false);setFeedback('bad','Entry needs revision.',`Review: ${[...new Set(issues)].join('; ')}`);return}setAccepted(true);setFeedback('good','Entry accepted.','Your posting matches the journal entry. Click Post to Ledger.')}function postEntry(){const entry=journalData[currentIndex];postingHistory.push({...entry,timestamp:new Date().toISOString()});currentIndex++;loadEntry();window.scrollTo({top:0,behavior:'smooth'})}function finishActivity(){document.getElementById('activityScreen').classList.add('hidden');document.getElementById('summaryScreen').classList.remove('hidden');document.getElementById('summaryStudentName').textContent=journalMetadata.name;document.getElementById('summaryStudentSection').textContent=journalMetadata.section;document.getElementById('summaryStudentDate').textContent=journalMetadata.date;document.getElementById('metricEntries').textContent=String(journalData.length);document.getElementById('metricCompleted').textContent=`${postingHistory.length} / ${journalData.length}`;document.getElementById('metricFirst').textContent=`${Math.round((postingHistory.length/journalData.length)*100)}%`;document.getElementById('metricRevised').textContent=String(journalData.length-postingHistory.length);document.getElementById('txResultsArea').innerHTML=postingHistory.map((item,i)=>`<div class="tx-result-item"><div class="tx-label"><span class="tx-num">Entry ${String(i+1).padStart(2,'0')}</span><span class="tx-desc">${item.explanation}</span></div><span class="tx-status ok">Posted</span></div>`).join('');document.getElementById('progressFill').style.width='100%';window.scrollTo({top:0,behavior:'smooth'})}function newAttempt(){currentIndex=0;postingHistory=[];journalData=[];document.getElementById('summaryScreen').classList.add('hidden');document.getElementById('activityScreen').classList.add('hidden');document.getElementById('startScreen').classList.remove('hidden');document.getElementById('loadJournalBtn').style.display='inline-flex';document.getElementById('startBtn').style.display='none';document.getElementById('progressFill').style.width='0%';window.scrollTo({top:0,behavior:'smooth'})}renderCOA();
-function sanitizeSavedJournalText(value){const text=String(value ?? '').trim();if(!text)return '';if(/^#attachment:/i.test(text)||/^Pasted text/i.test(text))return '';return text}function normalizeSavedJournalSnapshot(raw){if(!raw||!Array.isArray(raw.journal)||!raw.journal.length)return null;const studentName=raw.studentName||raw.student?.name||'—';const studentSection=raw.studentSection||raw.student?.section||'—';const studentDate=raw.studentDate||raw.student?.date||'—';const attemptNumber=raw.attemptNumber ?? raw.student?.attemptNumber ?? '—';const attemptCode=raw.attemptCode || raw.student?.attemptCode || '—';const normalized={...raw,activity:raw.activity||'06.1',studentName,studentSection,studentDate,attemptNumber,attemptCode,savedAt:raw.savedAt||new Date().toISOString(),journal:(raw.journal||[]).map(entry=>({...entry,explanation:sanitizeSavedJournalText(entry.explanation),entries:(entry.entries||[]).map(line=>({...line,account:line.account||'',pr:String(line.pr ?? '').trim(),debit:Number(line.debit)||0,credit:Number(line.credit)||0}))}))};return normalized}
-function readSavedJournalSnapshot(){try{return normalizeSavedJournalSnapshot(JSON.parse(localStorage.getItem(JOURNAL_STORAGE_KEY)||'null'))}catch(e){return null}}
-function renderSourceRecord(raw){if(!raw||!Array.isArray(raw.journal)||!raw.journal.length)return;document.getElementById('sourceStudentName').textContent=raw.studentName||'—';document.getElementById('sourceStudentSection').textContent=raw.studentSection||'—';document.getElementById('sourceStudentDate').textContent=raw.studentDate||'—';document.getElementById('sourceAttemptNumber').textContent=raw.attemptNumber||'—';document.getElementById('sourceAttemptCode').textContent=raw.attemptCode||'—';document.getElementById('sourceRecord').classList.remove('hidden')}
-function loadSavedJournal(){const raw=readSavedJournalSnapshot();if(!raw||!Array.isArray(raw.journal)||!raw.journal.length){alert('No saved General Journal found. Please complete Activity 06.1 first.');return false}renderSourceRecord(raw);journalMetadata={name:raw.studentName||'—',section:raw.studentSection||'—',date:raw.studentDate||'—',attemptCode:raw.attemptCode||'',attemptNumber:raw.attemptNumber||'—',savedAt:raw.savedAt||''};displayJournalData=raw.journal.map((entry,idx)=>({id:`J${idx+1}`,date:entry.date||'',explanation:sanitizeSavedJournalText(entry.explanation)||'To record the transaction.',entries:(entry.entries||[]).map(line=>({...line,account:line.account||'',pr:String(line.pr ?? '').trim(),debit:Number(line.debit)||0,credit:Number(line.credit)||0}))}));journalData=displayJournalData.flatMap((entry,transactionIndex)=>((entry.entries||[]).map((line,lineIndex)=>({id:`${transactionIndex}-${lineIndex}`,date:entry.date||'',explanation:entry.explanation||'',entries:[line]}))));const journalHeader=document.querySelector('.journal-title .ref');if(journalHeader)journalHeader.textContent='GJ-01 · Source';renderJournal();document.getElementById('loadJournalBtn').style.display='none';document.getElementById('startBtn').style.display='inline-flex';startPosting();return true}
-const ACTIVITY_HISTORY_KEY='power_laundry_activity07_1_history';let activityAttemptCode='',activityAttemptNumber=1,activityStart=0;
-function generatePostingAttemptCode(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let code='GL-';for(let i=0;i<6;i++)code+=chars[Math.floor(Math.random()*chars.length)];return code}
-function getPostingHistory(){try{const history=JSON.parse(localStorage.getItem(ACTIVITY_HISTORY_KEY)||'[]');return Array.isArray(history)?history:[]}catch(e){return[]}}
-function savePostingHistory(history){try{localStorage.setItem(ACTIVITY_HISTORY_KEY,JSON.stringify(history.slice(-20)))}catch(e){}}
-function formatPostingElapsed(ms){const total=Math.max(0,Math.floor(ms/1000)),minutes=Math.floor(total/60),seconds=total%60;return `${minutes} min ${String(seconds).padStart(2,'0')} sec`}
-const legacyStartPosting=startPosting,legacyFinishActivity=finishActivity,legacyNewAttempt=newAttempt;
-function renderPostingHistory(history){document.getElementById('attemptProgressList').innerHTML=history.length?history.map(item=>`<div class="attempt-progress-row"><span><strong>Attempt ${item.attempt}</strong>${item.code===activityAttemptCode?' · Current':''}</span><span class="attempt-progress-score">${item.score} · ${item.percentage}%</span><span class="attempt-progress-time">${new Date(item.when).toLocaleDateString()} · ${item.time}</span></div>`).join(''):'<div class="feedback">No previous Activity 07.1 attempts saved in this browser.</div>'}
-function startPosting(){activityAttemptCode=generatePostingAttemptCode();activityAttemptNumber=getPostingHistory().length+1;activityStart=Date.now();legacyStartPosting()}
-function finishActivity(){const elapsed=Date.now()-activityStart;legacyFinishActivity();const total=journalData.length,posted=postingHistory.length,history=getPostingHistory(),record={attempt:activityAttemptNumber,code:activityAttemptCode,score:`${posted} / ${total}`,percentage:total?Math.round(posted/total*100):0,time:formatPostingElapsed(elapsed),when:new Date().toISOString()};history.push(record);savePostingHistory(history);document.getElementById('summaryAttemptNumber').textContent=activityAttemptNumber;document.getElementById('summaryAttemptCode').textContent=activityAttemptCode;document.getElementById('summaryTimeSpent').textContent=formatPostingElapsed(elapsed);document.getElementById('metricEntries').textContent=total;document.getElementById('metricCompleted').textContent=`${posted} / ${total}`;document.getElementById('metricFirst').textContent=`${posted} / ${total}`;document.getElementById('metricRevised').textContent='0';renderPostingHistory(history)}
-function newAttempt(){legacyNewAttempt();activityAttemptCode='';activityStart=0}
-function initialize(){renderCOA();renderSourceRecord(readSavedJournalSnapshot())}
+const JOURNAL_STORAGE_KEY = 'power_laundry_last_general_journal';
+const ACTIVITY_HISTORY_KEY = 'power_laundry_activity07_1_history';
+const COA = [
+  { no: '101', title: 'Cash', class: 'Asset' },
+  { no: '106', title: 'Accounts Receivable', class: 'Asset' },
+  { no: '108', title: 'Laundry Supplies', class: 'Asset' },
+  { no: '109', title: 'Prepaid Rent', class: 'Asset' },
+  { no: '115', title: 'Laundry Equipment', class: 'Asset' },
+  { no: '201', title: 'Accounts Payable', class: 'Liability' },
+  { no: '210', title: 'Notes Payable', class: 'Liability' },
+  { no: '240', title: 'Unearned Service Revenue', class: 'Liability' },
+  { no: '301', title: 'Owner, Capital', class: "Owner's Equity" },
+  { no: '302', title: 'Owner, Withdrawals', class: "Owner's Equity" },
+  { no: '401', title: 'Service Revenue', class: 'Revenue' },
+  { no: '501', title: 'Salaries Expense', class: 'Expense' },
+  { no: '502', title: 'Rent Expense', class: 'Expense' },
+  { no: '503', title: 'Utilities Expense', class: 'Expense' },
+  { no: '504', title: 'Laundry Supplies Expense', class: 'Expense' },
+  { no: '505', title: 'Repairs and Maintenance Expense', class: 'Expense' },
+  { no: '506', title: 'Advertising Expense', class: 'Expense' }
+];
+const accountMap = Object.fromEntries(COA.map(account => [account.title, account]));
+const fmt = value => '₱' + Number(value || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const footingNumber = value => Number(String(value ?? '').replace(/[₱,\s]/g, '')) || 0;
+
+let journalData = [];
+let displayJournalData = [];
+let currentIndex = 0;
+let postingHistory = [];
+let journalMetadata = {};
+let activityAttemptCode = '';
+let activityAttemptNumber = 1;
+let activityStart = 0;
+let postingCheckTries = [];
+let footingLedger = {};
+let footingAccounts = [];
+let footingIndex = 0;
+let footingTries = {};
+let lineSide = '';
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char] || char));
+}
+
+function setFeedback(type, title, text) {
+  const el = document.getElementById('feedback');
+  if (!el) return;
+  el.className = 'feedback' + (type === 'good' ? ' good' : type === 'bad' ? ' bad' : '');
+  el.innerHTML = `<strong>${title}</strong> ${text}`;
+}
+
+function setAccepted(ok) {
+  const button = document.getElementById('postBtn');
+  if (!button) return;
+  button.textContent = ok ? 'Post to Ledger' : 'Check Posting';
+  button.className = ok ? 'highlight' : 'primary';
+  button.onclick = ok ? postEntry : checkEntry;
+}
+
+function renderCOA() {
+  const host = document.getElementById('coaBody');
+  if (!host) return;
+  host.innerHTML = COA.map(account => `
+    <tr>
+      <td>${escapeHtml(account.no)}</td>
+      <td>${escapeHtml(account.title)}</td>
+      <td>${escapeHtml(account.class)}</td>
+    </tr>
+  `).join('');
+}
+
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.add('open');
+}
+
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.classList.remove('open');
+}
+
+function backdropClose(event, id) {
+  if (event.target && event.target.id === id) closeModal(id);
+}
+
+function sanitizeSavedJournalText(value) {
+  const text = String(value ?? '').trim();
+  if (!text) return '';
+  if (/^#attachment:/i.test(text) || /^Pasted text/i.test(text)) return '';
+  return text;
+}
+
+function normalizeSavedJournalSnapshot(raw) {
+  if (!raw || !Array.isArray(raw.journal) || !raw.journal.length) return null;
+  return {
+    ...raw,
+    studentName: raw.studentName || raw.student?.name || '—',
+    studentSection: raw.studentSection || raw.student?.section || '—',
+    studentDate: raw.studentDate || raw.student?.date || '—',
+    attemptNumber: raw.attemptNumber ?? raw.student?.attemptNumber ?? '—',
+    attemptCode: raw.attemptCode || raw.student?.attemptCode || '—',
+    savedAt: raw.savedAt || new Date().toISOString(),
+    journal: raw.journal.map(entry => ({
+      ...entry,
+      explanation: sanitizeSavedJournalText(entry.explanation) || 'To record the transaction.',
+      entries: (entry.entries || []).map(line => ({
+        ...line,
+        account: line.account || '',
+        pr: String(line.pr ?? '').trim(),
+        debit: Number(line.debit) || 0,
+        credit: Number(line.credit) || 0
+      }))
+    }))
+  };
+}
+
+function readSavedJournalSnapshot() {
+  try {
+    return normalizeSavedJournalSnapshot(JSON.parse(localStorage.getItem(JOURNAL_STORAGE_KEY) || 'null'));
+  } catch (error) {
+    return null;
+  }
+}
+
+function renderSourceRecord(raw) {
+  if (!raw || !Array.isArray(raw.journal) || !raw.journal.length) return;
+  document.getElementById('sourceStudentName').textContent = raw.studentName || '—';
+  document.getElementById('sourceStudentSection').textContent = raw.studentSection || '—';
+  document.getElementById('sourceStudentDate').textContent = raw.studentDate || '—';
+  document.getElementById('sourceAttemptNumber').textContent = raw.attemptNumber || '—';
+  document.getElementById('sourceAttemptCode').textContent = raw.attemptCode || '—';
+  document.getElementById('sourceRecord').classList.remove('hidden');
+}
+
+function generatePostingAttemptCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = 'GL-';
+  for (let index = 0; index < 6; index += 1) {
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return code;
+}
+
+function getPostingHistory() {
+  try {
+    const history = JSON.parse(localStorage.getItem(ACTIVITY_HISTORY_KEY) || '[]');
+    return Array.isArray(history) ? history : [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function savePostingHistory(history) {
+  try {
+    localStorage.setItem(ACTIVITY_HISTORY_KEY, JSON.stringify(history.slice(-20)));
+  } catch (error) {
+    // Ignore storage errors.
+  }
+}
+
+function formatPostingElapsed(ms) {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes} min ${String(seconds).padStart(2, '0')} sec`;
+}
+
+function renderPostingHistory(history) {
+  const host = document.getElementById('attemptProgressList');
+  if (!host) return;
+  host.innerHTML = history.length
+    ? history.map(item => `
+        <div class="attempt-progress-row">
+          <span><strong>Attempt ${item.attempt}</strong>${item.code === activityAttemptCode ? ' · Current' : ''}</span>
+          <span class="attempt-progress-score">${item.score} · ${item.percentage}%</span>
+          <span class="attempt-progress-time">${new Date(item.when).toLocaleDateString()} · ${item.time}</span>
+        </div>
+      `).join('')
+    : '<div class="feedback">No previous Activity 07.1 attempts saved in this browser.</div>';
+}
+
+function renderJournal() {
+  const body = document.getElementById('journalBody');
+  if (!body) return;
+
+  if (!journalData.length) {
+    body.innerHTML = '<tr class="blank-row"><td></td><td>Saved journal will appear here.</td><td></td><td></td><td></td></tr>';
+    return;
+  }
+
+  let html = '';
+  journalData.forEach((entry, index) => {
+    const active = index === currentIndex;
+    const isCredit = Number(entry.credit) > 0;
+    html += `
+      <tr class="${active ? 'active-source' : ''}" data-source-entry="${index}">
+        <td>${index === 0 ? escapeHtml(entry.date || '') : ''}</td>
+        <td class="${isCredit ? 'credit-line' : 'debit-line'}">${escapeHtml(entry.account || '')}</td>
+        <td>${escapeHtml(entry.pr || '')}</td>
+        <td>${entry.debit ? fmt(entry.debit) : ''}</td>
+        <td>${entry.credit ? fmt(entry.credit) : ''}</td>
+      </tr>
+    `;
+    html += `
+      <tr class="${active ? 'active-source' : ''}" data-source-entry="${index}">
+        <td></td>
+        <td class="description-line">${escapeHtml(entry.explanation || 'To record the transaction.')}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    `;
+  });
+
+  body.innerHTML = html;
+  const activeRow = body.querySelector(`tr[data-source-entry="${Math.min(currentIndex, journalData.length - 1)}"]`);
+  if (activeRow) {
+    requestAnimationFrame(() => activeRow.scrollIntoView({ block: 'nearest', behavior: 'smooth' }));
+  }
+}
+
+function prepareLineControls() {
+  const accountSelect = document.getElementById('lineAccount');
+  const dateSelect = document.getElementById('lineDate');
+  if (!accountSelect || !dateSelect) return;
+
+  const uniqueAccounts = [...new Map(journalData.map(line => [line.account, line])).values()];
+  const uniqueDates = [...new Set(journalData.map(line => line.date).filter(Boolean))];
+
+  accountSelect.innerHTML = '<option value="">Choose an account...</option>' + uniqueAccounts.map(line => `
+    <option value="${escapeHtml(line.account)}">${escapeHtml(line.pr)} · ${escapeHtml(line.account)}</option>
+  `).join('');
+
+  dateSelect.innerHTML = '<option value="">Choose date...</option>' + uniqueDates.map(date => `
+    <option value="${escapeHtml(date)}">${escapeHtml(date)}</option>
+  `).join('');
+}
+
+function chooseLineSide(side) {
+  lineSide = side;
+  const debitBtn = document.getElementById('lineDebit');
+  const creditBtn = document.getElementById('lineCredit');
+  if (debitBtn) debitBtn.classList.toggle('active', side === 'Debit');
+  if (creditBtn) creditBtn.classList.toggle('active', side === 'Credit');
+}
+
+function loadEntry() {
+  if (currentIndex >= journalData.length) {
+    prepareFooting();
+    showFootingAccount();
+    return;
+  }
+
+  const entry = journalData[currentIndex];
+  const lineLabel = `${currentIndex + 1} of ${journalData.length}`;
+
+  document.getElementById('journalLineLabel').textContent = lineLabel;
+  document.getElementById('transactionStatus').textContent = lineLabel;
+  document.getElementById('completionStatus').textContent = `${postingHistory.length} posted`;
+  document.getElementById('progressFill').style.width = `${(postingHistory.length / Math.max(1, journalData.length)) * 100}%`;
+  document.getElementById('lineRefPreview').textContent = 'GJ-01';
+  document.getElementById('lineAccount').value = '';
+  document.getElementById('lineDate').value = '';
+  document.getElementById('lineParticulars').value = entry.explanation || 'To record the transaction.';
+  document.getElementById('lineAmount').value = '';
+  chooseLineSide('');
+  setAccepted(false);
+  setFeedback('neutral', 'Ready.', 'Select the ledger account and transfer the highlighted journal line.');
+}
+
+function checkEntry() {
+  if (!journalData.length || currentIndex >= journalData.length) return false;
+
+  const entry = journalData[currentIndex];
+  const accountOK = document.getElementById('lineAccount').value === entry.account;
+  const dateOK = document.getElementById('lineDate').value === entry.date;
+  const amountValue = footingNumber(document.getElementById('lineAmount').value);
+  const expected = Number(entry.debit) || Number(entry.credit);
+  const amountOK = amountValue === expected;
+  const sideOK = lineSide === (Number(entry.debit) > 0 ? 'Debit' : 'Credit');
+
+  postingCheckTries[currentIndex] = (postingCheckTries[currentIndex] || 0) + 1;
+
+  if (!(accountOK && dateOK && amountOK && sideOK)) {
+    const issues = [];
+    if (!accountOK) issues.push('account');
+    if (!dateOK) issues.push('date');
+    if (!amountOK) issues.push('amount');
+    if (!sideOK) issues.push('Debit or Credit side');
+    setAccepted(false);
+    setFeedback('bad', 'Line needs revision.', `Check: ${issues.join(', ')}.`);
+    return false;
+  }
+
+  setAccepted(true);
+  setFeedback('good', 'Line accepted.', 'The highlighted journal line is ready to post to the ledger.');
+  return true;
+}
+
+function addPostedEntry(entry) {
+  const accountInfo = accountMap[entry.account];
+  if (!accountInfo) return;
+
+  const no = accountInfo.no;
+  if (!footingLedger[no]) {
+    footingLedger[no] = {
+      no,
+      account: accountInfo.title,
+      normal: accountInfo.class === 'Asset' || accountInfo.class === 'Expense' || accountInfo.title === 'Owner, Withdrawals' ? 'Debit' : 'Credit',
+      debit: [],
+      credit: []
+    };
+  }
+
+  const amount = Number(entry.debit) > 0 ? Number(entry.debit) : Number(entry.credit);
+  const side = Number(entry.debit) > 0 ? 'debit' : 'credit';
+
+  footingLedger[no][side].push({
+    date: entry.date,
+    particulars: entry.explanation || 'To record the transaction.',
+    ref: 'GJ-01',
+    amount
+  });
+}
+
+function ledgerTotal(rows) {
+  return rows.reduce((sum, row) => sum + Number(row.amount || 0), 0);
+}
+
+function footingLedgerMarkup(account, showTotal = false) {
+  const rows = side => account[side].length
+    ? account[side].map(row => `
+        <tr>
+          <td>${escapeHtml(row.date)}</td>
+          <td>${escapeHtml(row.particulars)}</td>
+          <td>${escapeHtml(row.ref)}</td>
+          <td>${fmt(row.amount)}</td>
+        </tr>
+      `).join('')
+    : '<tr><td class="empty">—</td><td class="empty">No postings</td><td></td><td></td></tr>';
+
+  const totalRow = side => showTotal ? `<tr class="total-row"><td></td><td>Total</td><td></td><td>${fmt(ledgerTotal(account[side]))}</td></tr>` : '';
+
+  return `
+    <div class="ledger-account">${escapeHtml(account.no)} · ${escapeHtml(account.account)}</div>
+    <div class="ledger-sides">
+      <div class="ledger-side">
+        <div class="side-label">Debit</div>
+        <div class="ledger-scroll">
+          <table class="mini-ledger">
+            <thead>
+              <tr><th>Date</th><th>Particulars</th><th>F</th><th>Amount</th></tr>
+            </thead>
+            <tbody>${rows('debit')}${totalRow('debit')}</tbody>
+          </table>
+        </div>
+      </div>
+      <div class="ledger-side">
+        <div class="side-label">Credit</div>
+        <div class="ledger-scroll">
+          <table class="mini-ledger">
+            <thead>
+              <tr><th>Date</th><th>Particulars</th><th>F</th><th>Amount</th></tr>
+            </thead>
+            <tbody>${rows('credit')}${totalRow('credit')}</tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAccumulatedPostings() {
+  const host = document.getElementById('runningLedgerList');
+  if (!host) return;
+  const accounts = Object.keys(footingLedger).sort((a, b) => Number(a) - Number(b));
+  host.innerHTML = accounts.length
+    ? accounts.map(no => `<div class="ledger-card">${footingLedgerMarkup(footingLedger[no], true)}</div>`).join('')
+    : '<div class="feedback" style="margin:0"><strong>No postings yet.</strong> Accepted lines will accumulate here by ledger account.</div>';
+}
+
+function resetFooting() {
+  footingLedger = {};
+  footingAccounts = [];
+  footingIndex = 0;
+  footingTries = {};
+}
+
+function prepareFooting() {
+  footingAccounts = Object.keys(footingLedger).sort((a, b) => Number(a) - Number(b));
+  footingIndex = 0;
+}
+
+function showFootingAccount() {
+  if (!footingAccounts.length) {
+    finishActivity();
+    return;
+  }
+
+  const accountNo = footingAccounts[footingIndex];
+  const account = footingLedger[accountNo];
+  if (!account) return;
+
+  document.getElementById('activityScreen').classList.add('hidden');
+  document.getElementById('summaryScreen').classList.add('hidden');
+  document.getElementById('footingScreen').classList.remove('hidden');
+
+  document.getElementById('footingAccountProgress').textContent = `${footingIndex + 1} of ${footingAccounts.length}`;
+  document.getElementById('footingAccountNo').textContent = `${account.no} · ${account.account}`;
+  document.getElementById('footingNormalBalance').textContent = account.normal;
+  document.getElementById('footingTitle').textContent = `Foot ${account.no} ${account.account}.`;
+  document.getElementById('footingLedger').innerHTML = footingLedgerMarkup(account);
+
+  ['footDebit', 'footCredit', 'footBalance'].forEach(id => {
+    const field = document.getElementById(id);
+    if (field) field.value = '';
+  });
+
+  const footSide = document.getElementById('footSide');
+  if (footSide) footSide.value = '';
+
+  const feedback = document.getElementById('footingFeedback');
+  if (feedback) {
+    feedback.className = 'feedback';
+    feedback.innerHTML = '<strong>Remember:</strong> total Debit and Credit separately, then find the difference.';
+  }
+}
+
+function showFootingHint() {
+  if (!footingAccounts.length) return;
+  const account = footingLedger[footingAccounts[footingIndex]];
+  const debit = ledgerTotal(account.debit);
+  const credit = ledgerTotal(account.credit);
+  const side = debit > credit ? 'Debit' : credit > debit ? 'Credit' : 'Balanced';
+  const feedback = document.getElementById('footingFeedback');
+  if (feedback) {
+    feedback.className = 'feedback';
+    feedback.innerHTML = `<strong>Hint:</strong> Debit total ${fmt(debit)}, Credit total ${fmt(credit)}, balance side ${side}.`;
+  }
+}
+
+function checkFooting() {
+  if (!footingAccounts.length) return;
+  const accountNo = footingAccounts[footingIndex];
+  const account = footingLedger[accountNo];
+  const debit = ledgerTotal(account.debit);
+  const credit = ledgerTotal(account.credit);
+  const balance = Math.abs(debit - credit);
+  const side = debit > credit ? 'Debit' : credit > debit ? 'Credit' : 'Balanced';
+  footingTries[accountNo] = (footingTries[accountNo] || 0) + 1;
+
+  const debitValue = footingNumber(document.getElementById('footDebit').value);
+  const creditValue = footingNumber(document.getElementById('footCredit').value);
+  const balanceValue = footingNumber(document.getElementById('footBalance').value);
+  const selectedSide = document.getElementById('footSide').value;
+
+  const ok = debitValue === debit && creditValue === credit && balanceValue === balance && selectedSide === side;
+  const feedback = document.getElementById('footingFeedback');
+
+  if (!ok) {
+    if (feedback) {
+      feedback.className = 'feedback bad';
+      feedback.innerHTML = '<strong>Check the account again.</strong> Total both sides, calculate the difference, and identify the side with the larger total.';
+    }
+    return;
+  }
+
+  if (feedback) {
+    feedback.className = 'feedback good';
+    feedback.innerHTML = `<strong>Correct.</strong> ${fmt(debit)} Debit and ${fmt(credit)} Credit produce a ${fmt(balance)} ${side} balance.`;
+  }
+
+  document.getElementById('footingLedger').innerHTML = footingLedgerMarkup(account, true);
+  setTimeout(() => {
+    footingIndex += 1;
+    if (footingIndex < footingAccounts.length) {
+      showFootingAccount();
+    } else {
+      finishActivity();
+    }
+  }, 500);
+}
+
+function finishActivity() {
+  const elapsed = Date.now() - (activityStart || Date.now());
+  const postingTotal = journalData.length;
+  const footingTotal = footingAccounts.length;
+  const postingFirst = journalData.reduce((count, entry, index) => count + (postingCheckTries[index] === 1 ? 1 : 0), 0);
+  const footingCorrect = footingAccounts.filter(no => footingTries[no] === 1).length;
+  const total = postingTotal + footingTotal;
+  const first = postingFirst + footingCorrect;
+
+  const history = getPostingHistory();
+  const record = {
+    attempt: activityAttemptNumber,
+    code: activityAttemptCode,
+    score: `${first} / ${total}`,
+    percentage: total ? Math.round((first / total) * 100) : 0,
+    time: formatPostingElapsed(elapsed),
+    when: new Date().toISOString()
+  };
+  history.push(record);
+  savePostingHistory(history);
+
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('activityScreen').classList.add('hidden');
+  document.getElementById('footingScreen').classList.add('hidden');
+  document.getElementById('summaryScreen').classList.remove('hidden');
+
+  document.getElementById('summaryStudentName').textContent = journalMetadata.name || '—';
+  document.getElementById('summaryStudentSection').textContent = journalMetadata.section || '—';
+  document.getElementById('summaryStudentDate').textContent = journalMetadata.date || '—';
+  document.getElementById('summaryAttemptNumber').textContent = activityAttemptNumber;
+  document.getElementById('summaryAttemptCode').textContent = activityAttemptCode || '—';
+  document.getElementById('summaryTimeSpent').textContent = formatPostingElapsed(elapsed);
+
+  document.getElementById('metricEntries').textContent = `${postingTotal} / ${postingTotal}`;
+  document.getElementById('metricCompleted').textContent = `${postingHistory.length} / ${postingTotal}`;
+  document.getElementById('metricFirst').textContent = `${first} / ${total}`;
+  document.getElementById('metricRevised').textContent = String((postingTotal - postingFirst) + (footingTotal - footingCorrect));
+  document.getElementById('metricFooting').textContent = `${footingCorrect} / ${footingTotal}`;
+
+  document.getElementById('txResultsArea').innerHTML = journalData.map((entry, index) => {
+    const ok = postingCheckTries[index] === 1;
+    return `
+      <div class="tx-result-item">
+        <div class="tx-label">
+          <span class="tx-num">${escapeHtml(entry.account)}</span>
+          <span class="tx-desc">${escapeHtml(entry.date)} · ${escapeHtml(entry.explanation || 'To record the transaction.')}</span>
+        </div>
+        <span class="tx-status ${ok ? 'ok' : 'revised'}">${ok ? 'Correct · First Attempt' : 'Revised'}</span>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('footingResultsArea').innerHTML = footingAccounts.map(no => {
+    const account = footingLedger[no];
+    const debit = ledgerTotal(account.debit);
+    const credit = ledgerTotal(account.credit);
+    const balance = Math.abs(debit - credit);
+    const side = debit > credit ? 'Debit' : credit > debit ? 'Credit' : 'Balanced';
+    const ok = footingTries[no] === 1;
+    return `
+      <div class="tx-result-item">
+        <div class="tx-label">
+          <span class="tx-num">${escapeHtml(no)} ${escapeHtml(account.account)}</span>
+          <span class="tx-desc">Debit ${fmt(debit)} · Credit ${fmt(credit)} · Balance ${fmt(balance)} ${side}</span>
+        </div>
+        <span class="tx-status ${ok ? 'ok' : 'revised'}">${ok ? 'Correct · First Attempt' : 'Revised'}</span>
+      </div>
+    `;
+  }).join('');
+
+  renderPostingHistory(history);
+}
+
+function postEntry() {
+  if (!journalData.length || currentIndex >= journalData.length) return;
+  const entry = journalData[currentIndex];
+  postingHistory.push({ ...entry, timestamp: new Date().toISOString() });
+  addPostedEntry(entry);
+  currentIndex += 1;
+  renderAccumulatedPostings();
+  renderJournal();
+
+  if (currentIndex >= journalData.length) {
+    prepareFooting();
+    showFootingAccount();
+    return;
+  }
+
+  loadEntry();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function startPosting() {
+  resetFooting();
+  currentIndex = 0;
+  postingHistory = [];
+  postingCheckTries = [];
+  activityAttemptCode = generatePostingAttemptCode();
+  activityAttemptNumber = getPostingHistory().length + 1;
+  activityStart = Date.now();
+
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('activityScreen').classList.remove('hidden');
+  document.getElementById('progressFill').style.width = '0%';
+
+  prepareLineControls();
+  renderJournal();
+  loadEntry();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function newAttempt() {
+  journalData = [];
+  displayJournalData = [];
+  currentIndex = 0;
+  postingHistory = [];
+  postingCheckTries = [];
+  journalMetadata = {};
+  resetFooting();
+  activityAttemptCode = '';
+  activityAttemptNumber = 1;
+  activityStart = 0;
+  lineSide = '';
+
+  document.getElementById('summaryScreen').classList.add('hidden');
+  document.getElementById('footingScreen').classList.add('hidden');
+  document.getElementById('activityScreen').classList.add('hidden');
+  document.getElementById('startScreen').classList.remove('hidden');
+  document.getElementById('loadJournalBtn').style.display = 'inline-flex';
+  document.getElementById('startBtn').style.display = 'none';
+  document.getElementById('progressFill').style.width = '0';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function loadSavedJournal() {
+  const raw = readSavedJournalSnapshot();
+  if (!raw || !Array.isArray(raw.journal) || !raw.journal.length) {
+    alert('No saved General Journal found. Please complete Activity 06.1 first.');
+    return false;
+  }
+
+  renderSourceRecord(raw);
+  journalMetadata = {
+    name: raw.studentName || '—',
+    section: raw.studentSection || '—',
+    date: raw.studentDate || '—',
+    attemptCode: raw.attemptCode || '',
+    attemptNumber: raw.attemptNumber || '—'
+  };
+
+  displayJournalData = raw.journal.map((entry, index) => ({
+    id: `J${index + 1}`,
+    date: entry.date || '',
+    explanation: sanitizeSavedJournalText(entry.explanation) || 'To record the transaction.',
+    entries: (entry.entries || []).map(line => ({
+      ...line,
+      account: line.account || '',
+      pr: String(line.pr ?? '').trim(),
+      debit: Number(line.debit) || 0,
+      credit: Number(line.credit) || 0
+    }))
+  }));
+
+  journalData = displayJournalData.flatMap((entry, transactionIndex) =>
+    (entry.entries || []).map((line, lineIndex) => ({
+      id: `${transactionIndex}-${lineIndex}`,
+      date: entry.date || '',
+      explanation: entry.explanation || 'To record the transaction.',
+      account: line.account || '',
+      pr: line.pr || '',
+      debit: Number(line.debit) || 0,
+      credit: Number(line.credit) || 0
+    }))
+  );
+
+  const journalHeader = document.querySelector('.journal-title .ref');
+  if (journalHeader) journalHeader.textContent = 'GJ-01 · Source';
+
+  document.getElementById('loadJournalBtn').style.display = 'none';
+  document.getElementById('startBtn').style.display = 'inline-flex';
+  renderJournal();
+  startPosting();
+  return true;
+}
+
+function formatAmountInput(input) {
+  const digits = String(input.value || '').replace(/[^0-9]/g, '');
+  input.value = digits ? '₱' + Number(digits).toLocaleString('en-PH', { maximumFractionDigits: 0 }) : '';
+  try {
+    input.setSelectionRange(input.value.length, input.value.length);
+  } catch (error) {
+    // Ignore selection issues.
+  }
+}
+
+['lineAmount', 'footDebit', 'footCredit', 'footBalance'].forEach(id => {
+  const input = document.getElementById(id);
+  if (!input) return;
+  input.addEventListener('input', () => formatAmountInput(input));
+  input.addEventListener('blur', () => formatAmountInput(input));
+});
+
+function initialize() {
+  renderCOA();
+  renderSourceRecord(readSavedJournalSnapshot());
+}
+
 initialize();
-const legacyStartPostingWithHistory=startPosting,legacyFinishPostingWithHistory=finishActivity;
-let footingLedger={},footingAccounts=[],footingIndex=0,footingTries={};
-function footingNumber(value){return Number(String(value??'').replace(/[₱,\s]/g,''))||0}
-function resetFooting(){footingLedger={};footingAccounts=[];footingIndex=0;footingTries={}}
-function addPostedEntry(entry){entry.entries.forEach(line=>{const account=accountMap[line.account];if(!account)return;const no=account.no;if(!footingLedger[no])footingLedger[no]={no,account:account.title,normal:account.normal||'—',debit:[],credit:[]};const amount=footingNumber(line.debit)>0?footingNumber(line.debit):footingNumber(line.credit);const side=footingNumber(line.debit)>0?'debit':'credit';footingLedger[no][side].push({date:entry.date,particulars:entry.explanation||'',ref:'GJ-01',amount})})}
-function ledgerTotal(rows){return rows.reduce((sum,row)=>sum+row.amount,0)}
-function footingLedgerMarkup(account,showTotal=false){const rows=(side)=>account[side].length?account[side].map(row=>`<tr><td>${escapeHtml(row.date)}</td><td>${escapeHtml(row.particulars)}</td><td>${escapeHtml(row.ref)}</td><td>${fmt(row.amount)}</td></tr>`).join(''):'<tr><td class="empty">—</td><td class="empty">No postings</td><td></td><td></td></tr>';const total=(side)=>showTotal?`<tr class="total-row"><td></td><td>Total</td><td></td><td>${fmt(ledgerTotal(account[side]))}</td></tr>`:'';return `<div class="ledger-account">${escapeHtml(account.no)} · ${escapeHtml(account.account)}</div><div class="ledger-sides"><div class="ledger-side"><div class="side-label">Debit</div><div class="ledger-scroll"><table class="mini-ledger"><thead><tr><th>Date</th><th>Particulars</th><th>F</th><th>Amount</th></tr></thead><tbody>${rows('debit')}${total('debit')}</tbody></table></div></div><div class="ledger-side"><div class="side-label">Credit</div><div class="ledger-scroll"><table class="mini-ledger"><thead><tr><th>Date</th><th>Particulars</th><th>F</th><th>Amount</th></tr></thead><tbody>${rows('credit')}${total('credit')}</tbody></table></div></div></div>`}
-function prepareFooting(){footingAccounts=Object.keys(footingLedger).sort((a,b)=>Number(a)-Number(b));footingIndex=0}
-function showFootingAccount(){if(footingIndex>=footingAccounts.length){finishActivity();return}const account=footingLedger[footingAccounts[footingIndex]],debit=ledgerTotal(account.debit),credit=ledgerTotal(account.credit);document.querySelectorAll('#activityScreen,#summaryScreen').forEach(screen=>screen.classList.add('hidden'));document.getElementById('footingScreen').classList.remove('hidden');document.getElementById('footingAccountProgress').textContent=`${footingIndex+1} of ${footingAccounts.length}`;document.getElementById('footingAccountNo').textContent=account.no+' · '+account.account;document.getElementById('footingNormalBalance').textContent=account.normal;document.getElementById('footingTitle').textContent=`Foot ${account.no} ${account.account}.`;document.getElementById('footingLedger').innerHTML=footingLedgerMarkup(account);['footDebit','footCredit','footBalance'].forEach(id=>document.getElementById(id).value='');document.getElementById('footSide').value='';document.getElementById('footingFeedback').className='feedback';document.getElementById('footingFeedback').innerHTML='<strong>Remember:</strong> total Debit and Credit separately, then find the difference.'}
-function startPosting(){resetFooting();legacyStartPostingWithHistory()}
-function postEntry(){const entry=journalData[currentIndex];postingHistory.push({...entry,timestamp:new Date().toISOString()});addPostedEntry(entry);currentIndex++;if(currentIndex>=journalData.length){prepareFooting();showFootingAccount();return}loadEntry()}
-function showFootingHint(){const account=footingLedger[footingAccounts[footingIndex]],debit=ledgerTotal(account.debit),credit=ledgerTotal(account.credit),side=debit>credit?'Debit':credit>debit?'Credit':'Balanced';document.getElementById('footingFeedback').className='feedback';document.getElementById('footingFeedback').innerHTML=`<strong>Hint:</strong> Debit total ${fmt(debit)}, Credit total ${fmt(credit)}, balance side ${side}.`}
-function checkFooting(){const account=footingLedger[footingAccounts[footingIndex]],debit=ledgerTotal(account.debit),credit=ledgerTotal(account.credit),balance=Math.abs(debit-credit),side=debit>credit?'Debit':credit>debit?'Credit':'Balanced';footingTries[account.no]=(footingTries[account.no]||0)+1;const ok=footingNumber(document.getElementById('footDebit').value)===debit&&footingNumber(document.getElementById('footCredit').value)===credit&&footingNumber(document.getElementById('footBalance').value)===balance&&document.getElementById('footSide').value===side,feedback=document.getElementById('footingFeedback');if(!ok){feedback.className='feedback bad';feedback.innerHTML='<strong>Check the account again.</strong> Total both sides, calculate the difference, and identify the side with the larger total.';return}feedback.className='feedback good';feedback.innerHTML=`<strong>Correct.</strong> ${fmt(debit)} Debit and ${fmt(credit)} Credit produce a ${fmt(balance)} ${side} balance.`;document.getElementById('footingLedger').innerHTML=footingLedgerMarkup(account,true);setTimeout(()=>{footingIndex++;showFootingAccount()},450)}
-function finishActivity(){const elapsed=Date.now()-(activityStart||Date.now());legacyFinishActivity();const postingTotal=journalData.length,footingTotal=footingAccounts.length,footingCorrect=footingAccounts.filter(no=>footingTries[no]===1).length,first=postingTotal+footingCorrect,total=postingTotal+footingTotal,history=getPostingHistory(),record={attempt:activityAttemptNumber,code:activityAttemptCode,score:`${first} / ${total}`,percentage:total?Math.round(first/total*100):0,time:formatPostingElapsed(elapsed),when:new Date().toISOString()};history.push(record);savePostingHistory(history);document.getElementById('summaryAttemptNumber').textContent=activityAttemptNumber;document.getElementById('summaryAttemptCode').textContent=activityAttemptCode;document.getElementById('summaryTimeSpent').textContent=formatPostingElapsed(elapsed);document.getElementById('metricEntries').textContent=`${postingTotal} / ${postingTotal}`;document.getElementById('metricCompleted').textContent=`${postingTotal} / ${postingTotal}`;document.getElementById('metricFirst').textContent=`${first} / ${total}`;document.getElementById('metricRevised').textContent='0';document.getElementById('metricFooting').textContent=`${footingCorrect} / ${footingTotal}`;document.getElementById('footingResultsArea').innerHTML=footingAccounts.map(no=>{const account=footingLedger[no],debit=ledgerTotal(account.debit),credit=ledgerTotal(account.credit),balance=Math.abs(debit-credit),side=debit>credit?'Debit':credit>debit?'Credit':'Balanced',correct=footingTries[no]===1;return `<div class="tx-result-item"><div class="tx-label"><span class="tx-num">${escapeHtml(no)} ${escapeHtml(account.account)}</span><span class="tx-desc">Debit ${fmt(debit)} · Credit ${fmt(credit)} · Balance ${fmt(balance)} ${side}</span></div><div><span class="tx-status ${correct?'ok':'revised'}">${correct?'Correct · First Attempt':'Revised'}</span></div></div>`}).join('');renderPostingHistory(history)}
-let postingCheckTries=[];const legacyCheckEntryWithTracking=checkEntry,legacyStartPostingWithTracking=startPosting,legacyFinishActivityWithTracking=finishActivity;
-function checkEntry(){postingCheckTries[currentIndex]=(postingCheckTries[currentIndex]||0)+1;legacyCheckEntryWithTracking()}
-function startPosting(){postingCheckTries=[];legacyStartPostingWithTracking()}
-function finishActivity(){legacyFinishActivityWithTracking();const history=getPostingHistory(),record=history[history.length-1],postingTotal=journalData.length,postingFirst=journalData.reduce((count,entry,index)=>count+(postingCheckTries[index]===1?1:0),0),footingTotal=footingAccounts.length,footingCorrect=footingAccounts.filter(no=>footingTries[no]===1).length,total=postingTotal+footingTotal,first=postingFirst+footingCorrect;if(!record)return;record.score=`${first} / ${total}`;record.percentage=total?Math.round(first/total*100):0;savePostingHistory(history);document.getElementById('metricFirst').textContent=`${first} / ${total}`;document.getElementById('metricRevised').textContent=String(postingTotal-postingFirst);renderPostingHistory(history)}
-function derivedNormalBalance(account){const info=accountMap[account.account];return info&&(info.class==='Asset'||info.class==='Expense'||info.title==='Owner, Withdrawals')?'Debit':'Credit'}
-const legacyShowFootingAccount=showFootingAccount;function showFootingAccount(){legacyShowFootingAccount();if(footingAccounts[footingIndex])document.getElementById('footingNormalBalance').textContent=derivedNormalBalance(footingLedger[footingAccounts[footingIndex]])}
-startPosting=function(){resetFooting();postingCheckTries=[];activityAttemptCode=generatePostingAttemptCode();activityAttemptNumber=getPostingHistory().length+1;activityStart=Date.now();document.getElementById('startScreen').classList.add('hidden');document.getElementById('activityScreen').classList.remove('hidden');document.getElementById('progressFill').style.width='0%';currentIndex=0;postingHistory=[];loadEntry();window.scrollTo({top:0,behavior:'smooth'})};
-finishActivity=function(){const elapsed=Date.now()-(activityStart||Date.now()),postingTotal=journalData.length,footingTotal=footingAccounts.length,postingFirst=journalData.reduce((count,entry,index)=>count+(postingCheckTries[index]===1?1:0),0),footingCorrect=footingAccounts.filter(no=>footingTries[no]===1).length,total=postingTotal+footingTotal,first=postingFirst+footingCorrect,history=getPostingHistory(),record={attempt:activityAttemptNumber,code:activityAttemptCode,score:`${first} / ${total}`,percentage:total?Math.round(first/total*100):0,time:formatPostingElapsed(elapsed),when:new Date().toISOString()};history.push(record);savePostingHistory(history);document.getElementById('progressFill').style.width='100%';document.getElementById('activityScreen').classList.add('hidden');document.getElementById('footingScreen').classList.add('hidden');document.getElementById('summaryScreen').classList.remove('hidden');document.getElementById('summaryStudentName').textContent=journalMetadata.name||'—';document.getElementById('summaryStudentSection').textContent=journalMetadata.section||'—';document.getElementById('summaryStudentDate').textContent=journalMetadata.date||'—';document.getElementById('summaryAttemptNumber').textContent=activityAttemptNumber;document.getElementById('summaryAttemptCode').textContent=activityAttemptCode;document.getElementById('summaryTimeSpent').textContent=formatPostingElapsed(elapsed);document.getElementById('metricEntries').textContent=`${postingTotal} / ${postingTotal}`;document.getElementById('metricCompleted').textContent=`${postingTotal} / ${postingTotal}`;document.getElementById('metricFirst').textContent=`${first} / ${total}`;document.getElementById('metricRevised').textContent=String((postingTotal-postingFirst)+(footingTotal-footingCorrect));document.getElementById('metricFooting').textContent=`${footingCorrect} / ${footingTotal}`;document.getElementById('txResultsArea').innerHTML=journalData.map((entry,index)=>`<div class="tx-result-item"><div class="tx-label"><span class="tx-num">Entry ${String(index+1).padStart(2,'0')}</span><span class="tx-desc">${escapeHtml(entry.explanation||'Journal entry')}</span></div><div><span class="tx-status ${postingCheckTries[index]===1?'ok':'revised'}">${postingCheckTries[index]===1?'Correct · First Attempt':'Revised'}</span></div></div>`).join('');document.getElementById('footingResultsArea').innerHTML=footingAccounts.map(no=>{const account=footingLedger[no],debit=ledgerTotal(account.debit),credit=ledgerTotal(account.credit),balance=Math.abs(debit-credit),side=debit>credit?'Debit':credit>debit?'Credit':'Balanced',correct=footingTries[no]===1;return `<div class="tx-result-item"><div class="tx-label"><span class="tx-num">${escapeHtml(no)} ${escapeHtml(account.account)}</span><span class="tx-desc">Debit ${fmt(debit)} · Credit ${fmt(credit)} · Balance ${fmt(balance)} ${side}</span></div><div><span class="tx-status ${correct?'ok':'revised'}">${correct?'Correct · First Attempt':'Revised'}</span></div></div>`}).join('');renderPostingHistory(history);window.scrollTo({top:0,behavior:'smooth'})};
-newAttempt=function(){journalData=[];currentIndex=0;postingHistory=[];journalMetadata={};resetFooting();postingCheckTries=[];activityAttemptCode='';activityStart=0;document.getElementById('summaryScreen').classList.add('hidden');document.getElementById('footingScreen').classList.add('hidden');document.getElementById('activityScreen').classList.add('hidden');document.getElementById('startScreen').classList.remove('hidden');document.getElementById('loadJournalBtn').style.display='inline-flex';document.getElementById('startBtn').style.display='none';document.getElementById('progressFill').style.width='0';window.scrollTo({top:0,behavior:'smooth'})};
-renderJournal=function(){const body=document.getElementById('journalBody');const source=displayJournalData.length?displayJournalData:journalData;if(!source.length){body.innerHTML='<tr class="blank-row"><td></td><td>Saved journal will appear here.</td><td></td><td></td><td></td></tr>';return}let html='';source.forEach((entry,idx)=>{const active = displayJournalData.length ? idx === Math.floor(currentIndex / Math.max(1, (entry.entries||[]).length)) : idx === currentIndex;const debits=(entry.entries||[]).filter(e=>Number(e.debit)>0);const credits=(entry.entries||[]).filter(e=>Number(e.credit)>0);const ordered=[...debits,...credits];if(idx>0){html+='<tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr>';}ordered.forEach((line,lineIndex)=>{const isCredit=Number(line.credit)>0;html+=`<tr class="${active?'active-source':''}" data-source-entry="${idx}"><td>${lineIndex===0?escapeHtml(entry.date||''):''}</td><td class="${isCredit?'credit-line':'debit-line'}">${escapeHtml(line.account||'')}</td><td>${escapeHtml(line.pr||'')}</td><td>${line.debit?fmt(Number(line.debit)):''}</td><td>${line.credit?fmt(Number(line.credit)):''}</td></tr>`});html+=`<tr class="${active?'active-source':''}" data-source-entry="${idx}"><td></td><td class="description-line">${escapeHtml(entry.explanation||'To record the transaction.')}</td><td></td><td></td><td></td></tr>`});body.innerHTML=html;const activeRow=body.querySelector(`tr[data-source-entry="${Math.min(currentIndex, source.length - 1)}"]`);if(activeRow)requestAnimationFrame(()=>activeRow.scrollIntoView({block:'nearest',behavior:'smooth'}))};
-postEntry=function(){const entry=journalData[currentIndex];postingHistory.push({...entry,timestamp:new Date().toISOString()});addPostedEntry(entry);currentIndex++;renderJournal();if(currentIndex>=journalData.length){prepareFooting();showFootingAccount();return}loadEntry();window.scrollTo({top:0,behavior:'smooth'})};
-document.getElementById('builderTable').style.display='none';document.querySelector('#builderTable').parentElement.querySelector('.helper-row').style.display='none';document.querySelector('#builderTable').parentElement.querySelector('.entry-tools').style.display='none';
-let lineSide='';function chooseLineSide(side){lineSide=side;document.getElementById('lineDebit').classList.toggle('active',side==='Debit');document.getElementById('lineCredit').classList.toggle('active',side==='Credit')}
-function prepareLineControls(){const accountSelect=document.getElementById('lineAccount'),dateSelect=document.getElementById('lineDate');accountSelect.innerHTML='<option value="">Choose an account…</option>'+COA.map(account=>`<option value="${escapeHtml(account.title)}">${escapeHtml(account.no)} · ${escapeHtml(account.title)}</option>`).join('');dateSelect.innerHTML='<option value="">Choose date…</option>'+[...new Set(journalData.map(entry=>entry.date))].map(date=>`<option value="${escapeHtml(date)}">${escapeHtml(date)}</option>`).join('')}
-loadEntry=function(){if(currentIndex>=journalData.length){prepareFooting();showFootingAccount();return}const entry=journalData[currentIndex],line=entry.entries[0];document.getElementById('txDate').textContent=`${entry.date} · Journal line ${currentIndex+1} of ${journalData.length}`;document.getElementById('txText').textContent=`Post ${line.account} from the highlighted General Journal line.`;document.getElementById('transactionStatus').textContent=`Line ${String(currentIndex+1).padStart(2,'0')} of ${journalData.length}`;document.getElementById('completionStatus').textContent=`${postingHistory.length} posted · ${Math.round((postingHistory.length/journalData.length)*100)}% complete`;document.getElementById('progressFill').style.width=`${(postingHistory.length/journalData.length)*100}%`;document.getElementById('lineAccount').value='';document.getElementById('lineDate').value='';document.getElementById('lineRef').value='';document.getElementById('lineParticulars').value='';document.getElementById('lineAmount').value='';chooseLineSide('');setFeedback('neutral','Ready when you are.','Transfer the highlighted journal line into the ledger form.')}
-checkEntry=function(){const line=journalData[currentIndex].entries[0],accountOK=document.getElementById('lineAccount').value===line.account,dateOK=document.getElementById('lineDate').value===journalData[currentIndex].date,refOK=document.getElementById('lineRef').value.trim().toUpperCase()==='GJ-01',amount=footingNumber(document.getElementById('lineAmount').value),expected=footingNumber(line.debit)||footingNumber(line.credit),amountOK=amount===expected,sideOK=lineSide===(footingNumber(line.debit)>0?'Debit':'Credit');postingCheckTries[currentIndex]=(postingCheckTries[currentIndex]||0)+1;if(!(accountOK&&dateOK&&refOK&&amountOK&&sideOK)){setAccepted(false);const issues=[];if(!accountOK)issues.push('account');if(!dateOK)issues.push('date');if(!refOK)issues.push('GJ-01 reference');if(!amountOK)issues.push('amount');if(!sideOK)issues.push('Debit or Credit side');setFeedback('bad','Line needs revision.',`Check: ${issues.join(', ')}.`);return}setAccepted(true);setFeedback('good','Line accepted.','The highlighted journal line is ready to post to the ledger.')}
-startPosting=function(){const source=journalData;journalData=source.flatMap((transaction,transactionIndex)=>transaction.entries.map((entry,lineIndex)=>({id:`${transactionIndex}-${lineIndex}`,date:transaction.date,explanation:transaction.explanation,entries:[entry]})));resetFooting();postingCheckTries=[];activityAttemptCode=generatePostingAttemptCode();activityAttemptNumber=getPostingHistory().length+1;activityStart=Date.now();prepareLineControls();document.getElementById('startScreen').classList.add('hidden');document.getElementById('activityScreen').classList.remove('hidden');currentIndex=0;postingHistory=[];renderAccumulatedPostings();renderJournal();loadEntry();window.scrollTo({top:0,behavior:'smooth'})};
-const lineLoadEntry=loadEntry;loadEntry=function(){lineLoadEntry();if(currentIndex<journalData.length)setAccepted(false)};
-function renderAccumulatedPostings(){const host=document.getElementById('runningLedgerList'),accounts=Object.keys(footingLedger).sort((a,b)=>Number(a)-Number(b));host.innerHTML=accounts.length?accounts.map(no=>`<div class="ledger-card">${footingLedgerMarkup(footingLedger[no],true)}</div>`).join(''):'<div class="feedback" style="margin:0"><strong>No postings yet.</strong> Accepted lines will accumulate here by ledger account.</div>'}
-const linePostEntry=postEntry;postEntry=function(){linePostEntry();renderAccumulatedPostings()};
-function formatAmountInput(input){const digits=String(input.value||'').replace(/[^0-9]/g,'');input.value=digits?'₱'+Number(digits).toLocaleString('en-PH',{maximumFractionDigits:0}):'';try{input.setSelectionRange(input.value.length,input.value.length)}catch(e){}}
-['lineAmount','footDebit','footCredit','footBalance'].forEach(id=>{const input=document.getElementById(id);input.addEventListener('input',()=>formatAmountInput(input));input.addEventListener('blur',()=>formatAmountInput(input))});
-function prepareLineControls(){const accountSelect=document.getElementById('lineAccount'),dateSelect=document.getElementById('lineDate'),sourceLines=displayJournalData.flatMap(entry=>entry.entries||[]),accounts=[...new Map(sourceLines.filter(line=>line.account).map(line=>[line.account,line])).values()],dates=[...new Set(displayJournalData.map(entry=>entry.date).filter(Boolean))];accountSelect.innerHTML='<option value="">Choose an account...</option>'+accounts.map(line=>`<option value="${escapeHtml(line.account)}">${escapeHtml(line.pr)} · ${escapeHtml(line.account)}</option>`).join('');dateSelect.innerHTML='<option value="">Choose date...</option>'+dates.map(date=>`<option value="${escapeHtml(date)}">${escapeHtml(date)}</option>`).join('')}
-setAccepted=function(ok){const button=document.getElementById('postBtn');if(!button)return;button.disabled=false;button.className='highlight';button.textContent=ok?'Post to Ledger':'Check Posting';button.onclick=ok?postEntry:checkEntry};
-loadEntry=function(){if(currentIndex>=journalData.length){prepareFooting();showFootingAccount();return}const entry=journalData[currentIndex],line=entry.entries[0],lineLabel=`${currentIndex+1} of ${journalData.length}`;document.getElementById('txDate').textContent=`${entry.date} · Journal line ${lineLabel}`;document.getElementById('txText').textContent=`Post ${line.account} from the highlighted General Journal line.`;document.getElementById('journalLineLabel').textContent=lineLabel;document.getElementById('transactionStatus').textContent=lineLabel;document.getElementById('completionStatus').textContent=`${postingHistory.length} posted`;document.getElementById('lineRefPreview').textContent='GJ-01';document.getElementById('progressFill').style.width=`${(postingHistory.length/journalData.length)*100}%`;document.getElementById('lineAccount').value='';document.getElementById('lineDate').value='';document.getElementById('lineParticulars').value='';document.getElementById('lineAmount').value='';chooseLineSide('');setAccepted(false);setFeedback('neutral','Ready.','Select the ledger account and transfer the highlighted journal line.')};
-checkEntry=function(){const line=journalData[currentIndex].entries[0],accountOK=document.getElementById('lineAccount').value===line.account,dateOK=document.getElementById('lineDate').value===journalData[currentIndex].date,amount=footingNumber(document.getElementById('lineAmount').value),expected=footingNumber(line.debit)||footingNumber(line.credit),amountOK=amount===expected,sideOK=lineSide===(footingNumber(line.debit)>0?'Debit':'Credit');postingCheckTries[currentIndex]=(postingCheckTries[currentIndex]||0)+1;if(!(accountOK&&dateOK&&amountOK&&sideOK)){setAccepted(false);const issues=[];if(!accountOK)issues.push('account');if(!dateOK)issues.push('date');if(!amountOK)issues.push('amount');if(!sideOK)issues.push('Debit or Credit side');setFeedback('bad','Line needs revision.',`Check: ${issues.join(', ')}.`);return}setAccepted(true);setFeedback('good','Line accepted.','The highlighted journal line is ready to post to the ledger.')};
 </script>
 </body>
 </html>
