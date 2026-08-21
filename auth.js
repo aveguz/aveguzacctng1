@@ -39,3 +39,8 @@ export async function requireUser() {
     return null;
   }
 }
+
+const currentPage = location.pathname.split('/').pop();
+if (currentPage === 'dashboard.html' || currentPage === 'profile.html') {
+  import('./nav-sync.js').then(({ syncNavigation }) => syncNavigation());
+}
