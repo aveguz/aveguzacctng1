@@ -517,8 +517,9 @@ function renderJournal() {
     const orderedLines = [...entry.entries.filter(line => Number(line.debit) > 0), ...entry.entries.filter(line => Number(line.credit) > 0)];
     orderedLines.forEach((line, lineIndex) => {
       const isCredit = Number(line.credit) > 0;
+      const isActiveSource = journalData[currentIndex]?.id === `${index}-${lineIndex}`;
       html += `
-        <tr>
+        <tr class="${isActiveSource ? 'active-source' : ''}">
           <td>${lineIndex === 0 ? escapeHtml(entry.date || '') : ''}</td>
           <td class="${isCredit ? 'credit-line' : 'debit-line'}">${escapeHtml(line.account || '')}</td>
           <td>${escapeHtml(line.pr || '')}</td>
