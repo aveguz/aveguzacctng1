@@ -360,5 +360,6 @@ function addToJournal(){added.add(selected);renderBuilder(true);renderRunning();
 function renderRunning(){const body=document.getElementById("runningBody");document.getElementById("runningCount").textContent=`${added.size} journal entr${added.size===1?'y':'ies'} added`;if(added.size===0){body.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:28px">No entries added yet.</td></tr>`;return}let rows="";[...added].sort((a,b)=>a-b).forEach(i=>{const t=txs[i];t.lines.forEach((line,j)=>{rows+=`<tr><td>${j===0?t.date:""}</td><td class="particular ${line.type}">${line.acct}</td><td>${line.pr}</td><td>${line.debit}</td><td>${line.credit}</td></tr>`});rows+=`<tr class="journal-spacer"><td colspan="5" aria-label="Blank line before next journal entry"></td></tr>`});body.innerHTML=rows}
 renderTxList();renderBuilder(false);showScreen("welcome");
 </script>
+<script type="module">import './auth.js';</script>
 </body>
 </html>

@@ -71,5 +71,6 @@ document.getElementById('txResultsArea').innerHTML=summaryData.results.map((item
 document.getElementById('summaryJournalBody').innerHTML=summaryData.journal.map(row=>`<tr><td>${escapeHtml(row.date)}</td><td class="${row.description?'description-line':row.credit?'credit-line':'debit-line'}">${escapeHtml(row.account)}</td><td>${escapeHtml(row.pr)}</td><td>${escapeHtml(row.debit)}</td><td>${escapeHtml(row.credit)}</td></tr>`).join('');
 document.getElementById('nextModuleTitle').textContent=summaryData.nextModule.title;document.getElementById('nextModuleDescription').textContent=summaryData.nextModule.description;document.querySelectorAll('#nextModuleLink,#nextModuleAction').forEach(link=>link.href=summaryData.nextModule.href);
 </script>
+<script type="module">import './auth.js';</script>
 </body>
 </html>

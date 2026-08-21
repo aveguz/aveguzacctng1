@@ -64,5 +64,6 @@ function answerPractice(answer,btn){const x=practiceItems[practiceIndex];documen
 function nextPractice(){practiceIndex=(practiceIndex+1)%practiceItems.length;renderPractice()}function resetPractice(){practiceIndex=0;practiceDone=new Set();renderPractice()}
 renderAccounts();renderRules();renderPractice();showScreen("welcome");
 </script>
+<script type="module">import './auth.js';</script>
 </body>
 </html>

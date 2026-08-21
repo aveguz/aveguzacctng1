@@ -1,6 +1,15 @@
 import { SUPABASE_URL, supabaseHeaders } from './supabase-config.js';
 
 const sessionKey = 'acctng1_session';
+const publicPages = new Set(['login.html', 'register.html']);
+const currentPage = location.pathname.split('/').pop() || 'index.html';
+
+if (!publicPages.has(currentPage)) {
+  document.documentElement.classList.add('auth-pending');
+  const authStyle = document.createElement('style');
+  authStyle.textContent = 'html.auth-pending body{visibility:hidden}';
+  document.head.append(authStyle);
+}
 
 export function getSession() {
   try {
@@ -40,7 +49,23 @@ export async function requireUser() {
   }
 }
 
-const currentPage = location.pathname.split('/').pop();
+export async function protectPage() {
+  if (publicPages.has(currentPage)) return null;
+
+  const user = await requireUser();
+  if (!user) {
+    location.replace(`login.html?redirect=${encodeURIComponent(location.href)}`);
+    return null;
+  }
+
+  document.documentElement.classList.remove('auth-pending');
+  return user;
+}
+
+if (!publicPages.has(currentPage)) {
+  protectPage();
+}
+
 if (currentPage === 'dashboard.html' || currentPage === 'profile.html') {
   import('./nav-sync.js').then(({ syncNavigation }) => syncNavigation());
 }
