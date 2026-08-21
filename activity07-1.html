@@ -75,7 +75,7 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
 </head>
 <body>
 <style>
-.foot-card{max-width:980px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}.footing-form{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.footing-form label{display:block;font-size:.7rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}.footing-form input,.footing-form select{width:100%;border:1px solid #cbd8da;border-radius:8px;padding:9px 10px;background:#fff;color:var(--ink);font:inherit}.ledger-card{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff}.ledger-account{text-align:center;font-weight:900;padding:10px;background:#fbfcfc;border-bottom:1px solid var(--line)}.ledger-sides{display:grid;grid-template-columns:1fr 1fr}.ledger-side:first-child{border-right:3px solid #74868a}.side-label{text-align:center;background:#eef3f4;padding:8px;font-size:.68rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.ledger-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.mini-ledger{width:100%;border-collapse:collapse;min-width:390px}.mini-ledger th,.mini-ledger td{border:1px solid #d1dcde;padding:8px;font-size:.74rem}.mini-ledger th{font-size:.6rem;text-transform:uppercase;letter-spacing:.04em;color:#596d72;background:#fafcfc}.mini-ledger td:last-child,.mini-ledger th:last-child{text-align:right}.mini-ledger .new-posting td{background:var(--gold-soft);border-top-color:#dfc895;border-bottom-color:#dfc895}.mini-ledger .new-posting td:first-child{box-shadow:inset 4px 0 0 #b58b4d}.mini-ledger .total-row td{font-weight:900;background:#f4f7f7;border-top:2px solid #75878b}.footing-form .student-record-item{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--surface2)}
+.foot-card{max-width:980px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden}.footing-form{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.footing-form label{display:block;font-size:.7rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}.footing-form input,.footing-form select{width:100%;border:1px solid #cbd8da;border-radius:8px;padding:9px 10px;background:#fff;color:var(--ink);font:inherit}.ledger-card{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff}.ledger-account{text-align:center;font-weight:900;padding:10px;background:#fbfcfc;border-bottom:1px solid var(--line)}.ledger-sides{display:grid;grid-template-columns:1fr 1fr}.ledger-side:first-child{border-right:3px solid #74868a}.side-label{text-align:center;background:#eef3f4;padding:8px;font-size:.68rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.ledger-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}.mini-ledger{width:100%;border-collapse:collapse;min-width:390px}.mini-ledger th,.mini-ledger td{border:1px solid #d1dcde;padding:8px;font-size:.74rem}.mini-ledger th{font-size:.6rem;text-transform:uppercase;letter-spacing:.04em;color:#596d72;background:#fafcfc}.mini-ledger td:last-child,.mini-ledger th:last-child{text-align:right}.mini-ledger .new-posting td{background:var(--gold-soft);border-top-color:#dfc895;border-bottom-color:#dfc895}.mini-ledger .new-posting td:first-child{box-shadow:inset 4px 0 0 #b58b4d}.mini-ledger .total-row td{font-weight:900;background:#f4f7f7;border-top:2px solid #75878b}.mini-ledger .balance-row td{font-weight:900;background:var(--accent-soft);border-top:2px solid var(--accent)}.summary-ledger-list{display:grid;gap:14px;margin-top:12px}.footing-form .student-record-item{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--surface2)}
 @media(max-width:760px){.footing-form{grid-template-columns:1fr 1fr}.ledger-sides{grid-template-columns:1fr}.ledger-side:first-child{border-right:0;border-bottom:3px solid #74868a}}
 @media(max-width:480px){.footing-form{grid-template-columns:1fr}}
 .line-posting-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.line-posting-form .full{grid-column:1/-1}.line-posting-form label{display:block;font-size:.68rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}.line-posting-form input,.line-posting-form select{width:100%;border:1px solid #cbd8da;border-radius:8px;padding:9px 10px;background:#fff;color:var(--ink)}.line-posting-form .amount-input{font-weight:850;color:var(--accent-dark)}.side-choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}.side-choice button{border:1px solid var(--line);border-radius:9px;background:#fff;padding:9px;font-weight:850;color:var(--muted)}.side-choice button.active{background:var(--accent-soft);border-color:#bad0d4;color:var(--accent-dark)}
@@ -269,6 +269,14 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
       </div>
 
       <div class="results-wrap"><h3>Footing Results</h3><p>Account-by-account totals and balances produced from the posted General Journal.</p><div class="tx-results" id="footingResultsArea"></div></div>
+
+      <section class="results-wrap" aria-label="Complete General Ledger">
+        <h3>Complete General Ledger</h3>
+        <p>Review every posted account. Totals appear on the second-to-last row; the bold actual balance appears on its proper side below.</p>
+        <div class="summary-ledger-list" id="summaryLedgerList"></div>
+      </section>
+
+      <div class="feedback"><strong>Before proceeding:</strong> review the complete General Ledger and confirm each account total and balance.</div>
 
       <section class="next-wrap">
         <div class="eyebrow">What comes next?</div>
@@ -722,6 +730,30 @@ function footingLedgerMarkup(account, showTotal = false) {
   `;
 }
 
+function summaryLedgerMarkup(account) {
+  const debitTotal = ledgerTotal(account.debit);
+  const creditTotal = ledgerTotal(account.credit);
+  const balance = Math.abs(debitTotal - creditTotal);
+  const balanceSide = debitTotal > creditTotal ? 'debit' : creditTotal > debitTotal ? 'credit' : '';
+  const rowCount = Math.max(account.debit.length, account.credit.length);
+  const rows = side => Array.from({ length: rowCount }, (_, index) => {
+    const row = account[side][index];
+    return row
+      ? `<tr><td>${escapeHtml(row.date)}</td><td>${escapeHtml(row.particulars)}</td><td>${escapeHtml(row.ref)}</td><td>${fmt(row.amount)}</td></tr>`
+      : '<tr><td></td><td></td><td></td><td></td></tr>';
+  }).join('');
+  const totalRow = total => `<tr class="total-row"><td></td><td>Total</td><td></td><td>${fmt(total)}</td></tr>`;
+  const balanceRow = side => `<tr class="balance-row"><td></td><td>${side === balanceSide ? 'Actual Balance' : ''}</td><td></td><td>${side === balanceSide ? fmt(balance) : ''}</td></tr>`;
+
+  return `
+    <div class="ledger-account">${escapeHtml(account.no)} · ${escapeHtml(account.account)}</div>
+    <div class="ledger-sides">
+      <div class="ledger-side"><div class="side-label">Debit</div><div class="ledger-scroll"><table class="mini-ledger"><thead><tr><th>Date</th><th>Particulars</th><th>F</th><th>Amount</th></tr></thead><tbody>${rows('debit')}${totalRow(debitTotal)}${balanceRow('debit')}</tbody></table></div></div>
+      <div class="ledger-side"><div class="side-label">Credit</div><div class="ledger-scroll"><table class="mini-ledger"><thead><tr><th>Date</th><th>Particulars</th><th>F</th><th>Amount</th></tr></thead><tbody>${rows('credit')}${totalRow(creditTotal)}${balanceRow('credit')}</tbody></table></div></div>
+    </div>
+  `;
+}
+
 function renderAccumulatedPostings() {
   const host = document.getElementById('runningLedgerList');
   if (!host) return;
@@ -911,6 +943,10 @@ function finishActivity() {
       </div>
     `;
   }).join('');
+
+  document.getElementById('summaryLedgerList').innerHTML = footingAccounts
+    .map(no => `<div class="ledger-card">${summaryLedgerMarkup(footingLedger[no])}</div>`)
+    .join('');
 
   renderPostingHistory(history);
 }
