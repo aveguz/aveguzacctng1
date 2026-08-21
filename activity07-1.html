@@ -514,13 +514,14 @@ function renderJournal() {
 
   let html = '';
   displayJournalData.forEach((entry, index) => {
-    const orderedLines = [...entry.entries.filter(line => Number(line.debit) > 0), ...entry.entries.filter(line => Number(line.credit) > 0)];
-    orderedLines.forEach((line, lineIndex) => {
+    const numberedLines = entry.entries.map((line, sourceLineIndex) => ({ line, sourceLineIndex }));
+    const orderedLines = [...numberedLines.filter(({ line }) => Number(line.debit) > 0), ...numberedLines.filter(({ line }) => Number(line.credit) > 0)];
+    orderedLines.forEach(({ line, sourceLineIndex }, displayLineIndex) => {
       const isCredit = Number(line.credit) > 0;
-      const isActiveSource = journalData[currentIndex]?.id === `${index}-${lineIndex}`;
+      const isActiveSource = journalData[currentIndex]?.id === `${index}-${sourceLineIndex}`;
       html += `
         <tr class="${isActiveSource ? 'active-source' : ''}">
-          <td>${lineIndex === 0 ? escapeHtml(entry.date || '') : ''}</td>
+          <td>${displayLineIndex === 0 ? escapeHtml(entry.date || '') : ''}</td>
           <td class="${isCredit ? 'credit-line' : 'debit-line'}">${escapeHtml(line.account || '')}</td>
           <td>${escapeHtml(line.pr || '')}</td>
           <td>${line.debit ? fmt(line.debit) : ''}</td>
