@@ -3,14 +3,19 @@ import { SUPABASE_URL, supabaseHeaders } from './supabase-config.js';
 const sessionKey = 'acctng1_session';
 
 export function getSession() {
-  try { return JSON.parse(sessionStorage.getItem(sessionKey) || 'null'); } catch { return null; }
+  try {
+    const stored = localStorage.getItem(sessionKey) || sessionStorage.getItem(sessionKey);
+    if (stored && !localStorage.getItem(sessionKey)) localStorage.setItem(sessionKey, stored);
+    return JSON.parse(stored || 'null');
+  } catch { return null; }
 }
 
 export function saveSession(session) {
-  sessionStorage.setItem(sessionKey, JSON.stringify(session));
+  localStorage.setItem(sessionKey, JSON.stringify(session));
 }
 
 export function clearSession() {
+  localStorage.removeItem(sessionKey);
   sessionStorage.removeItem(sessionKey);
 }
 
