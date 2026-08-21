@@ -1039,6 +1039,8 @@
           <div id="attemptProgressList" class="attempt-progress-list"></div>
         </div>
 
+        <div id="trackingStatus" class="notice hidden" role="status"></div>
+
         <div class="encouragement">
           <strong id="encouragementTitle">Keep going.</strong>
           <p id="encouragementMessage"></p>
@@ -2111,6 +2113,7 @@
       const percentage = Math.round((score / 20) * 100);
       const history = commitCompletedAttempt();
       const encouragement = endingMessage(score);
+      window.recordChallengeAttempt?.({ challengeId: "01", attemptNumber: currentAttemptNumber, score, maxScore: 20, durationMinutes: Math.max(1, Math.ceil((assessmentEnd - assessmentStart) / 60000)), attemptCode });
 
       document.getElementById("resultLevel").textContent = resultLevel(percentage);
       document.getElementById("resultPercentage").textContent = `${percentage}%`;
@@ -2217,6 +2220,59 @@
 
     setDefaultDate();
 prefillStudentFromHistory();
+  </script>
+  <script type="module">
+    import { getSession, requireUser, request } from './auth.js';
+
+    const pendingAttemptKey = 'normal_balance_pending_challenge_attempt';
+
+    function setTrackingStatus(type, message) {
+      const status = document.getElementById('trackingStatus');
+      if (!status) return;
+      status.className = 'notice';
+      status.textContent = message;
+    }
+
+    async function syncChallengeAttempt() {
+      let pending;
+      try { pending = JSON.parse(localStorage.getItem(pendingAttemptKey) || 'null'); } catch { pending = null; }
+      if (!pending) return;
+
+      const user = await requireUser();
+      const session = getSession();
+      if (!user || !session?.access_token) {
+        setTrackingStatus('error', 'Attempt tracking is waiting for you to sign in.');
+        return;
+      }
+
+      try {
+        await request('/rest/v1/challenge_attempts', {
+          method: 'POST',
+          headers: { Prefer: 'return=minimal' },
+          body: JSON.stringify({
+            user_id: user.id,
+            challenge_id: pending.challengeId,
+            attempt_number: pending.attemptNumber,
+            score: pending.score,
+            max_score: pending.maxScore,
+            duration_minutes: pending.durationMinutes,
+            details: { attempt_code: pending.attemptCode }
+          })
+        }, session.access_token);
+        localStorage.removeItem(pendingAttemptKey);
+        setTrackingStatus('saved', 'This completed challenge was saved to your learning record.');
+      } catch (error) {
+        setTrackingStatus('error', `Attempt tracking could not be saved: ${error.message}`);
+        console.warn('Challenge attempt tracking could not be saved.', error);
+      }
+    }
+
+    window.recordChallengeAttempt = async payload => {
+      localStorage.setItem(pendingAttemptKey, JSON.stringify(payload));
+      await syncChallengeAttempt();
+    };
+
+    syncChallengeAttempt();
   </script>
 <footer style="padding:18px 20px;text-align:center;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line);">
   For educational use only. Please do not reproduce, redistribute, or share these materials without permission. © 2026 ave.guz

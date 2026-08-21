@@ -238,6 +238,8 @@ footer{margin-top:auto;padding:16px 28px 24px;display:flex;justify-content:space
       <div id="attemptProgressList" class="attempt-progress-list"></div>
     </div>
 
+    <div id="trackingStatus" class="notice hidden" role="status"></div>
+
     <div id="encourage" class="encourage"></div>
 
     <div class="actions no-print">
@@ -459,6 +461,7 @@ function finish(){
   const elapsed=Date.now()-startTime,now=new Date(),history=getHistory(),attemptNo=history.length+1;
   const record={score,percentage:Math.round(score/20*100),code:attemptCode,when:now.toISOString(),elapsed};
   history.push(record);localStorage.setItem(historyKey(),JSON.stringify(history));
+  window.recordChallengeAttempt?.({challengeId:"02",attemptNumber:attemptNo,score,maxScore:20,durationMinutes:Math.max(1,Math.ceil(elapsed/60000)),attemptCode});
   const best=Math.max(...history.map(x=>x.score)),pct=Math.round(score/20*100);
   $("resultPercent").textContent=pct+"%";$("resultRaw").textContent=score+"/20";
   let heading,msg;
@@ -487,6 +490,59 @@ $("beginBtn").onclick=begin;
 $("continueBtn").onclick=next;
 $("newAttemptBtn").onclick=()=>{show("infoScreen");refreshStatus()};
 loadProfile();today();refreshStatus();
+</script>
+<script type="module">
+import { getSession, requireUser, request } from './auth.js';
+
+const pendingAttemptKey = 'preti_dvc_pending_challenge_attempt';
+
+function setTrackingStatus(type, message) {
+  const status = document.getElementById('trackingStatus');
+  if (!status) return;
+  status.className = 'notice';
+  status.textContent = message;
+}
+
+async function syncChallengeAttempt() {
+  let pending;
+  try { pending = JSON.parse(localStorage.getItem(pendingAttemptKey) || 'null'); } catch { pending = null; }
+  if (!pending) return;
+
+  const user = await requireUser();
+  const session = getSession();
+  if (!user || !session?.access_token) {
+    setTrackingStatus('error', 'Attempt tracking is waiting for you to sign in.');
+    return;
+  }
+
+  try {
+    await request('/rest/v1/challenge_attempts', {
+      method: 'POST',
+      headers: { Prefer: 'return=minimal' },
+      body: JSON.stringify({
+        user_id: user.id,
+        challenge_id: pending.challengeId,
+        attempt_number: pending.attemptNumber,
+        score: pending.score,
+        max_score: pending.maxScore,
+        duration_minutes: pending.durationMinutes,
+        details: { attempt_code: pending.attemptCode }
+      })
+    }, session.access_token);
+    localStorage.removeItem(pendingAttemptKey);
+    setTrackingStatus('saved', 'This completed challenge was saved to your learning record.');
+  } catch (error) {
+    setTrackingStatus('error', `Attempt tracking could not be saved: ${error.message}`);
+    console.warn('Challenge attempt tracking could not be saved.', error);
+  }
+}
+
+window.recordChallengeAttempt = async payload => {
+  localStorage.setItem(pendingAttemptKey, JSON.stringify(payload));
+  await syncChallengeAttempt();
+};
+
+syncChallengeAttempt();
 </script>
 </body>
 </html>
