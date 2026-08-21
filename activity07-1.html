@@ -197,7 +197,7 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
               </div>
             </div>
 
-            <div class="notice" id="feedback"><strong>Ready.</strong> Select the ledger account and transfer the highlighted journal line.</div>
+            <div class="notice" id="feedback"><strong>Ready.</strong> Select the ledger account and transfer the highlighted journal line. Review the General Ledger after posting.</div>
 
             <div class="posting-actions">
               <button class="secondary" type="button" onclick="showFootingHint()">Show Hint</button>
@@ -616,7 +616,7 @@ function loadEntry() {
   document.getElementById('lineAmount').value = '';
   chooseLineSide('');
   setAccepted(false);
-  setFeedback('neutral', 'Ready.', 'Select the ledger account and transfer the highlighted journal line.');
+  setFeedback('neutral', 'Ready.', 'Select the ledger account and transfer the highlighted journal line. Review the General Ledger after posting.');
 }
 
 function checkEntry() {
