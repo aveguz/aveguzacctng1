@@ -512,7 +512,11 @@ function renderJournal() {
   }
 
   const sourceEntryIndex = Number(journalData[currentIndex]?.id.split('-')[0]);
-  const entriesToRender = Number.isInteger(sourceEntryIndex) ? [[displayJournalData[sourceEntryIndex], sourceEntryIndex]] : [];
+  const entriesToRender = Number.isInteger(sourceEntryIndex)
+    ? displayJournalData
+      .slice(sourceEntryIndex, sourceEntryIndex + 3)
+      .map((entry, index) => [entry, sourceEntryIndex + index])
+    : [];
   let html = '';
   entriesToRender.forEach(([entry, index]) => {
     if (!entry) return;
@@ -542,9 +546,6 @@ function renderJournal() {
     `;
   });
 
-      if (html) {
-        html += Array.from({ length: 4 }, () => '<tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr>').join('');
-      }
       body.innerHTML = html || '<tr class="blank-row"><td></td><td>Saved journal will appear here.</td><td></td><td></td><td></td></tr>';
 }
 
