@@ -133,7 +133,7 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
         <div class="supplies-note"><strong>Important:</strong> This activity continues directly from Activity 06.1. Finish and save your General Journal in Activity 06.1 before opening this page.</div>
 
         <div class="start-actions">
-          <p>Load your saved General Journal to begin the posting activity.</p>
+          <p id="sourceAttemptNotice">Load your saved General Journal to begin the posting activity.</p>
           <div>
             <button class="secondary" type="button" id="loadJournalBtn" onclick="loadSavedJournal()">Load Saved General Journal</button>
             <button class="primary" type="button" id="startBtn" style="display:none" onclick="startPosting()">Start Posting →</button>
@@ -466,6 +466,12 @@ function getPostingHistory() {
   } catch (error) {
     return [];
   }
+}
+
+function sourceJournalAttemptCount() {
+  const sourceAttemptCode = journalMetadata.attemptCode;
+  if (!sourceAttemptCode) return 0;
+  return getPostingHistory().filter(item => item.sourceJournalAttemptCode === sourceAttemptCode).length;
 }
 
 function savePostingHistory(history) {
@@ -812,6 +818,7 @@ function finishActivity() {
   const record = {
     attempt: activityAttemptNumber,
     code: activityAttemptCode,
+    sourceJournalAttemptCode: journalMetadata.attemptCode || '',
     score: `${first} / ${total}`,
     percentage: total ? Math.round((first / total) * 100) : 0,
     time: formatPostingElapsed(elapsed),
@@ -899,12 +906,21 @@ function postEntry() {
 }
 
 function startPosting() {
+  const sourceAttempts = sourceJournalAttemptCount();
+  if (sourceAttempts >= 5) {
+    const notice = document.getElementById('sourceAttemptNotice');
+    if (notice) notice.textContent = 'You have completed five Activity 07.1 attempts using this General Journal. Complete Activity 06.1 again to generate a new source journal before continuing.';
+    document.getElementById('loadJournalBtn').style.display = 'inline-flex';
+    document.getElementById('startBtn').style.display = 'none';
+    return false;
+  }
+
   resetFooting();
   currentIndex = 0;
   postingHistory = [];
   postingCheckTries = [];
   activityAttemptCode = generatePostingAttemptCode();
-  activityAttemptNumber = getPostingHistory().length + 1;
+  activityAttemptNumber = sourceAttempts + 1;
   activityStart = Date.now();
 
   document.getElementById('startScreen').classList.add('hidden');
@@ -984,11 +1000,20 @@ function loadSavedJournal() {
   const journalHeader = document.querySelector('.journal-title .ref');
   if (journalHeader) journalHeader.textContent = 'GJ-01';
 
+  const sourceAttempts = sourceJournalAttemptCount();
+  const notice = document.getElementById('sourceAttemptNotice');
+  if (sourceAttempts >= 5) {
+    if (notice) notice.textContent = 'You have completed five Activity 07.1 attempts using this General Journal. Complete Activity 06.1 again to generate a new source journal before continuing.';
+    document.getElementById('loadJournalBtn').style.display = 'inline-flex';
+    document.getElementById('startBtn').style.display = 'none';
+    renderJournal();
+    return false;
+  }
+
+  if (notice) notice.textContent = `${sourceAttempts} of 5 Activity 07.1 attempts completed using this General Journal.`;
   document.getElementById('loadJournalBtn').style.display = 'none';
   document.getElementById('startBtn').style.display = 'inline-flex';
-  renderJournal();
-  startPosting();
-  return true;
+  return startPosting();
 }
 
 function formatAmountInput(input) {
