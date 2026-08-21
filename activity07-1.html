@@ -546,6 +546,14 @@ function renderJournal() {
   body.innerHTML = html;
 }
 
+function refreshPostingViews(focusActiveSource = false) {
+  renderAccumulatedPostings();
+  renderJournal();
+  if (focusActiveSource) {
+    document.querySelector('.journal tr.active-source')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+}
+
 function prepareLineControls() {
   const accountSelect = document.getElementById('lineAccount');
   const dateSelect = document.getElementById('lineDate');
@@ -894,8 +902,7 @@ function postEntry() {
   postingHistory.push({ ...entry, timestamp: new Date().toISOString() });
   addPostedEntry(entry);
   currentIndex += 1;
-  renderAccumulatedPostings();
-  renderJournal();
+  refreshPostingViews(true);
 
   if (currentIndex >= journalData.length) {
     prepareFooting();
@@ -930,7 +937,7 @@ function startPosting() {
   document.getElementById('progressFill').style.width = '0%';
 
   prepareLineControls();
-  renderJournal();
+  refreshPostingViews();
   loadEntry();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
