@@ -830,7 +830,7 @@ function finishActivity() {
     attemptNumber: activityAttemptNumber,
     score: first,
     maxScore: total,
-    durationSeconds: Math.round(elapsed / 1000),
+    durationMinutes: Math.max(1, Math.ceil(elapsed / 60000)),
     attemptCode: activityAttemptCode
   });
 
@@ -1074,7 +1074,7 @@ async function syncActivityAttempt() {
         attempt_number: pending.attemptNumber,
         score: pending.score,
         max_score: pending.maxScore,
-        duration_seconds: pending.durationSeconds,
+        duration_minutes: pending.durationMinutes,
         details: { attempt_code: pending.attemptCode }
       })
     }, session.access_token);
