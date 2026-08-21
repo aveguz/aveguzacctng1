@@ -31,7 +31,7 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
 .start-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.start-item{border:1px solid var(--line);border-radius:12px;padding:13px;background:#fff}.start-item strong{display:block;font-size:.86rem;margin-bottom:3px}.start-item span{font-size:.8rem;color:var(--muted)}
 .start-actions{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}.start-actions p{margin:0;color:var(--muted);font-size:.8rem;max-width:570px}
 .primary,.secondary,.disabled{border:0;border-radius:10px;padding:10px 13px;font-weight:850}.primary{background:var(--accent);color:#fff}.secondary{background:var(--accent-soft);color:var(--accent-dark)}.disabled{background:#edf1f1;color:#94a3a6;cursor:not-allowed}.small-note{font-size:.74rem;color:var(--muted);max-width:360px}
-.stage{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:18px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.panel-head{padding:17px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2{margin:0;font-size:1.05rem}.micro{font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}.panel-body{padding:18px}.journal-panel{order:1;position:sticky;top:14px;max-height:calc(100vh - 28px);overflow:visible}.work-panel{order:2}
+.stage{display:grid;grid-template-columns:minmax(300px,.76fr) minmax(0,1.24fr);gap:18px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.panel-head{padding:17px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2{margin:0;font-size:1.05rem}.micro{font-size:.74rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}.panel-body{padding:18px}.journal-panel{order:1;position:sticky;top:14px;max-height:calc(100vh - 28px);overflow:visible}.work-panel{order:2}
 .step-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:16px}.step{border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center;font-size:.72rem;font-weight:850;color:var(--muted);background:var(--surface2)}.step.active{background:var(--accent-soft);border-color:#c4d8db;color:var(--accent-dark)}
 .tx-card{border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:14px;padding:15px 16px;background:var(--surface2);margin-bottom:16px}.tx-date{font-size:.74rem;font-weight:900;text-transform:uppercase;letter-spacing:.09em;color:var(--accent)}.tx-text{font-size:1.05rem;font-weight:750;margin:5px 0 0}
 .helper-row{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:0 0 10px}.helper-row strong{font-size:.88rem}.helper-row span{font-size:.78rem;color:var(--muted)}
@@ -79,7 +79,7 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
 @media(max-width:760px){.footing-form{grid-template-columns:1fr 1fr}.ledger-sides{grid-template-columns:1fr}.ledger-side:first-child{border-right:0;border-bottom:3px solid #74868a}}
 @media(max-width:480px){.footing-form{grid-template-columns:1fr}}
 .line-posting-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.line-posting-form .full{grid-column:1/-1}.line-posting-form label{display:block;font-size:.68rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}.line-posting-form input,.line-posting-form select{width:100%;border:1px solid #cbd8da;border-radius:8px;padding:9px 10px;background:#fff;color:var(--ink)}.line-posting-form .amount-input{font-weight:850;color:var(--accent-dark)}.side-choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}.side-choice button{border:1px solid var(--line);border-radius:9px;background:#fff;padding:9px;font-weight:850;color:var(--muted)}.side-choice button.active{background:var(--accent-soft);border-color:#bad0d4;color:var(--accent-dark)}
-.accumulated-postings{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}.accumulated-postings h3{margin:0 0 8px;font-size:.94rem}.running-ledger-list{display:grid;gap:9px;max-height:440px;overflow:auto;padding-right:8px;scrollbar-gutter:stable}.running-ledger-list .ledger-card{min-width:800px;box-shadow:none}.running-ledger-list .ledger-sides{grid-template-columns:1fr 1fr}.running-ledger-list .ledger-scroll{overflow:visible}
+.accumulated-postings{margin-top:16px;border-top:1px solid var(--line);padding-top:14px}.accumulated-postings h3{margin:0 0 8px;font-size:.94rem}.running-ledger-list{display:grid;gap:9px;max-height:560px;overflow:auto;padding-right:8px;scrollbar-gutter:stable}.running-ledger-list .ledger-card{min-width:800px;box-shadow:none}.running-ledger-list .ledger-sides{grid-template-columns:1fr 1fr}.running-ledger-list .ledger-scroll{overflow:visible}
 @media(max-width:760px){.line-posting-form{grid-template-columns:1fr}.line-posting-form .full{grid-column:auto}}
 </style>
 <div class="shell">
@@ -512,8 +512,11 @@ function renderJournal() {
     return;
   }
 
+  const sourceEntryIndex = Number(journalData[currentIndex]?.id.split('-')[0]);
+  const entriesToRender = Number.isInteger(sourceEntryIndex) ? [[displayJournalData[sourceEntryIndex], sourceEntryIndex]] : [];
   let html = '';
-  displayJournalData.forEach((entry, index) => {
+  entriesToRender.forEach(([entry, index]) => {
+    if (!entry) return;
     const numberedLines = entry.entries.map((line, sourceLineIndex) => ({ line, sourceLineIndex }));
     const orderedLines = [...numberedLines.filter(({ line }) => Number(line.debit) > 0), ...numberedLines.filter(({ line }) => Number(line.credit) > 0)];
     orderedLines.forEach(({ line, sourceLineIndex }, displayLineIndex) => {
@@ -538,12 +541,9 @@ function renderJournal() {
         <td></td>
       </tr>
     `;
-    if (index < displayJournalData.length - 1) {
-      html += '<tr class="blank-row"><td></td><td></td><td></td><td></td><td></td></tr>';
-    }
   });
 
-  body.innerHTML = html;
+  body.innerHTML = html || '<tr class="blank-row"><td></td><td>Saved journal will appear here.</td><td></td><td></td><td></td></tr>';
 }
 
 function refreshPostingViews(focusActiveSource = false) {
