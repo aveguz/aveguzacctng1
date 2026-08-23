@@ -1757,6 +1757,8 @@
           .forEach((s) => s.classList.remove("active"));
         target.classList.add("active");
         current = id;
+        if (id === "bridge")
+          window.dispatchEvent(new CustomEvent("module-progress-complete"));
         const index = screens.indexOf(id);
         document
           .querySelectorAll(".nav button")
@@ -1871,6 +1873,6 @@
       renderPosting();
       showScreen("welcome");
     </script>
-  <script type="module">import './auth.js';</script>
+  <script type="module" src="module-progress.js" data-module-id="07"></script>
   </body>
 </html>

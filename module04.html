@@ -426,6 +426,7 @@ function markComplete(i){
   if(!learningProgress.complete.includes(i)) learningProgress.complete.push(i);
   saveLearningProgress();
   renderJourney();
+  if(learningProgress.complete.length===txs.length)window.dispatchEvent(new CustomEvent('module-progress-complete'));
 }
 function resetModuleProgress(){
   learningProgress={opened:[],complete:[]};
@@ -805,6 +806,6 @@ function resetShift(){
 
 renderJourney(); renderAnalysis(); showScreen("welcome");
 </script>
-<script type="module">import './auth.js';</script>
+<script type="module" src="module-progress.js" data-module-id="04"></script>
 </body>
 </html>
