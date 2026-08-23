@@ -15,6 +15,15 @@ function saveLocalProgress(progress) {
   localStorage.setItem(localKey, JSON.stringify(progress));
 }
 
+function screenLabel(screen) {
+  const heading = document
+    .getElementById(screen)
+    ?.querySelector('h1, h2')
+    ?.textContent.replace(/\s+/g, ' ')
+    .trim();
+  return heading || screen;
+}
+
 async function syncProgress(progress) {
   const user = await requireUser();
   const session = getSession();
@@ -56,12 +65,16 @@ async function syncProgress(progress) {
   }
 }
 
-async function track(completed = false) {
+async function track({ completed = false, screen } = {}) {
   if (!moduleId || !localKey) return;
   const now = new Date().toISOString();
   const progress = loadLocalProgress();
   progress.openedAt ||= now;
   progress.lastOpenedAt = now;
+  if (screen) {
+    progress.lastScreen = screen;
+    progress.lastScreenLabel = screenLabel(screen);
+  }
   if (completed) progress.completedAt ||= now;
   saveLocalProgress(progress);
 
@@ -72,5 +85,14 @@ async function track(completed = false) {
   }
 }
 
-window.addEventListener('module-progress-complete', () => track(true));
-track();
+window.addEventListener('module-progress-screen', (event) =>
+  track({ screen: event.detail?.screen }),
+);
+window.addEventListener('module-progress-complete', () => track({ completed: true }));
+
+const savedProgress = loadLocalProgress();
+const activeScreen = document.querySelector('.screen.active')?.id;
+track({ screen: activeScreen });
+if (!savedProgress.completedAt && savedProgress.lastScreen && typeof window.showScreen === 'function') {
+  window.showScreen(savedProgress.lastScreen);
+}

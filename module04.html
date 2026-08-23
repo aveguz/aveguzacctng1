@@ -610,6 +610,7 @@ function showScreen(id){
  if(id==="journey") renderJourney();
  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
  document.getElementById(id).classList.add("active"); current=id;
+ window.dispatchEvent(new CustomEvent("module-progress-screen",{detail:{screen:id}}));
  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.screen===id));
  let i=order.indexOf(id); document.getElementById("progressFill").style.width=(i/(order.length-1)*100)+"%";
  updateFooterNav();

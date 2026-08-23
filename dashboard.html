@@ -31,6 +31,24 @@
             })[char],
         );
       const attemptCode = (item) => item.details?.attempt_code || "—";
+      const moduleLinks = {
+        "04": "module04.html",
+        "05": "module05.html",
+        "06": "module06.html",
+        "07": "module07.html",
+      };
+      function localModuleProgress(moduleId) {
+        try {
+          return JSON.parse(
+            localStorage.getItem(`acctng1_module_progress_${moduleId}`) || "{}",
+          );
+        } catch {
+          return {};
+        }
+      }
+      function moduleIdFor(item) {
+        return String(item.module_id).padStart(2, "0");
+      }
       function renderScoreMatrix(host, records, label) {
         host.replaceChildren();
         if (!records.length) {
@@ -145,26 +163,55 @@
             "Challenge",
           );
           const moduleHost = document.getElementById("moduleHistory");
+          const modulesById = new Map(
+            modules.map((item) => [moduleIdFor(item), item]),
+          );
+          Object.keys(moduleLinks).forEach((moduleId) => {
+            const local = localModuleProgress(moduleId);
+            if (local.openedAt && !modulesById.has(moduleId)) {
+              modulesById.set(moduleId, {
+                module_id: moduleId,
+                first_opened_at: local.openedAt,
+                last_opened_at: local.lastOpenedAt,
+                completed_at: local.completedAt,
+              });
+            }
+          });
+          const trackedModules = [...modulesById.values()].sort(
+            (left, right) =>
+              new Date(right.last_opened_at) - new Date(left.last_opened_at),
+          );
           moduleHost.replaceChildren();
-          if (!modules.length) {
+          if (!trackedModules.length) {
             moduleHost.innerHTML =
               '<p class="empty-copy">No module progress has been recorded yet.</p>';
           } else {
-            modules.forEach((item) => {
+            trackedModules.forEach((item) => {
+              const moduleId = moduleIdFor(item);
+              const local = localModuleProgress(moduleId);
               const row = document.createElement("div");
               row.className = "history-row";
               const label = document.createElement("div");
               const title = document.createElement("strong");
-              title.textContent = `Module ${item.module_id}`;
+              title.textContent = `Module ${moduleId}`;
               const date = document.createElement("span");
               date.textContent = item.completed_at
                 ? `Completed ${formatDate(item.completed_at)}`
-                : `Opened ${formatDate(item.first_opened_at)}`;
+                : local.lastScreenLabel
+                  ? `Last step: ${local.lastScreenLabel}`
+                  : `Last opened ${formatDate(item.last_opened_at)}`;
               label.append(title, date);
-              const state = document.createElement("span");
-              state.textContent = item.completed_at
-                ? "Completed"
-                : "In progress";
+              const state = item.completed_at
+                ? document.createElement("span")
+                : document.createElement("a");
+              if (item.completed_at) {
+                state.textContent = "Completed";
+              } else if (moduleLinks[moduleId]) {
+                state.href = moduleLinks[moduleId];
+                state.textContent = "Resume";
+              } else {
+                state.textContent = "In progress";
+              }
               row.append(label, state);
               moduleHost.append(row);
             });
