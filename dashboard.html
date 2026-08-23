@@ -30,7 +30,7 @@
               '"': "&quot;",
             })[char],
         );
-      const attemptCode = (item) => item.details?.attempt_code || "—";
+      const attemptCode = (item) => item?.details?.attempt_code || "—";
       const moduleLinks = {
         "04": "module04.html",
         "05": "module05.html",
