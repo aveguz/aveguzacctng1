@@ -267,7 +267,7 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
       </div>
       <section class="results-wrap" aria-label="Complete General Ledger">
         <h3>Complete General Ledger</h3>
-        <p>Totals appear on the second-to-last row; the bold actual balance appears on its proper side below.</p>
+        <p>Totals appear on the second-to-last row; the bold balance appears on its proper side below.</p>
         <div class="summary-ledger-list" id="ledgerReviewList"></div>
       </section>
       <div class="summary-actions"><a class="primary" id="ledgerReviewReattempt" href="activity07-1.html">Reattempt Activity 07.1</a><a class="secondary" href="dashboard.html">Back to Dashboard</a></div>
@@ -303,7 +303,7 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
 
       <section class="results-wrap" aria-label="Complete General Ledger">
         <h3>Complete General Ledger</h3>
-        <p>Review every posted account. Totals appear on the second-to-last row; the bold actual balance appears on its proper side below.</p>
+        <p>Review every posted account. Totals appear on the second-to-last row; the bold balance appears on its proper side below.</p>
         <div class="summary-ledger-list" id="summaryLedgerList"></div>
       </section>
 
@@ -746,7 +746,7 @@ function footingLedgerMarkup(account, showTotal = false) {
   }).join('');
 
   const totalRow = total => showTotal ? `<tr class="total-row"><td></td><td>Total</td><td></td><td>${fmt(total)}</td></tr>` : '';
-  const balanceRow = side => showTotal ? `<tr class="balance-row"><td></td><td>${side === balanceSide ? 'Actual Balance' : ''}</td><td></td><td>${side === balanceSide ? fmt(balance) : ''}</td></tr>` : '';
+  const balanceRow = side => showTotal ? `<tr class="balance-row"><td></td><td>${side === balanceSide ? 'Balance' : ''}</td><td></td><td>${side === balanceSide ? fmt(balance) : ''}</td></tr>` : '';
 
   return `
     <div class="ledger-account">${escapeHtml(account.no)} · ${escapeHtml(account.account)}</div>
@@ -790,7 +790,7 @@ function summaryLedgerMarkup(account) {
       : '<tr><td></td><td></td><td></td><td></td></tr>';
   }).join('');
   const totalRow = total => `<tr class="total-row"><td></td><td>Total</td><td></td><td>${fmt(total)}</td></tr>`;
-  const balanceRow = side => `<tr class="balance-row"><td></td><td>${side === balanceSide ? 'Actual Balance' : ''}</td><td></td><td>${side === balanceSide ? fmt(balance) : ''}</td></tr>`;
+  const balanceRow = side => `<tr class="balance-row"><td></td><td>${side === balanceSide ? 'Balance' : ''}</td><td></td><td>${side === balanceSide ? fmt(balance) : ''}</td></tr>`;
 
   return `
     <div class="ledger-account">${escapeHtml(account.no)} · ${escapeHtml(account.account)}</div>
@@ -806,7 +806,7 @@ function renderAccumulatedPostings() {
   if (!host) return;
   const accounts = Object.keys(footingLedger).sort((a, b) => Number(a) - Number(b));
   host.innerHTML = accounts.length
-    ? accounts.map(no => `<div class="ledger-card">${footingLedgerMarkup(footingLedger[no], true)}</div>`).join('')
+    ? accounts.map(no => `<div class="ledger-card">${footingLedgerMarkup(footingLedger[no])}</div>`).join('')
     : '<div class="feedback" style="margin:0"><strong>No postings yet.</strong> Accepted lines will accumulate here by ledger account.</div>';
 }
 
