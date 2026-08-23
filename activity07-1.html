@@ -200,7 +200,6 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
             <div class="notice" id="feedback"><strong>Ready.</strong> Select the ledger account and transfer the highlighted journal line. Review the General Ledger after posting.</div>
 
             <div class="posting-actions">
-              <button class="secondary" type="button" onclick="showFootingHint()">Show Hint</button>
               <button class="secondary" type="button" onclick="openModal('coaModal')">Chart of Accounts</button>
               <button class="highlight" type="button" id="postBtn" onclick="checkEntry()">Check Posting</button>
             </div>
@@ -238,9 +237,29 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
           <div class="student-record-item"><label for="footSide">Balance Side</label><select id="footSide"><option value="">Choose…</option><option>Debit</option><option>Credit</option><option>Balanced</option></select></div>
         </div>
         <div class="feedback" id="footingFeedback"><strong>Remember:</strong> total Debit and Credit separately, then find the difference.</div>
-        <div class="summary-actions"><button class="secondary" type="button" onclick="showFootingHint()">Show Hint</button><button class="primary" type="button" onclick="checkFooting()">Check Balance →</button></div>
+        <div class="summary-actions"><button class="primary" type="button" id="checkFootingBtn" onclick="checkFooting()">Check Balance</button><button class="primary hidden" type="button" id="nextFootingBtn" onclick="nextFootingAccount()">Next Ledger Account →</button></div>
       </div>
     </section>
+  </section>
+
+  <section id="ledgerReviewScreen" class="summary-card hidden" data-top-section="ledger-review">
+    <div class="summary-head"><div class="eyebrow">Activity 07.1 · Completed Ledger</div><h1>Complete General Ledger</h1><p>Review the T-format ledger built from the completed General Journal.</p></div>
+    <div class="summary-body">
+      <div class="student-record" aria-label="Source journal details">
+        <div class="student-record-title">Source General Journal</div>
+        <div class="student-record-grid">
+          <div class="student-record-item"><span>Name</span><strong id="ledgerReviewStudentName">—</strong></div>
+          <div class="student-record-item"><span>Section</span><strong id="ledgerReviewStudentSection">—</strong></div>
+          <div class="student-record-item"><span>Activity 06.1 Attempt Code</span><strong id="ledgerReviewAttemptCode">—</strong></div>
+        </div>
+      </div>
+      <section class="results-wrap" aria-label="Complete General Ledger">
+        <h3>Complete General Ledger</h3>
+        <p>Totals appear on the second-to-last row; the bold actual balance appears on its proper side below.</p>
+        <div class="summary-ledger-list" id="ledgerReviewList"></div>
+      </section>
+      <div class="summary-actions"><a class="primary" id="ledgerReviewReattempt" href="activity07-1.html">Reattempt Activity 07.1</a><a class="secondary" href="dashboard.html">Back to Dashboard</a></div>
+    </div>
   </section>
 
   <section id="summaryScreen" class="summary-card hidden" data-top-section="summary">
@@ -357,6 +376,7 @@ let latestPostedLedgerLine = null;
 let footingAccounts = [];
 let footingIndex = 0;
 let footingTries = {};
+let footingAccepted = false;
 let lineSide = '';
 
 function escapeHtml(value) {
@@ -775,6 +795,7 @@ function resetFooting() {
   footingAccounts = [];
   footingIndex = 0;
   footingTries = {};
+  footingAccepted = false;
 }
 
 function prepareFooting() {
@@ -794,6 +815,7 @@ function showFootingAccount() {
 
   document.getElementById('activityScreen').classList.add('hidden');
   document.getElementById('summaryScreen').classList.add('hidden');
+  document.getElementById('ledgerReviewScreen').classList.add('hidden');
   document.getElementById('footingScreen').classList.remove('hidden');
 
   document.getElementById('footingAccountProgress').textContent = `${footingIndex + 1} of ${footingAccounts.length}`;
@@ -815,23 +837,13 @@ function showFootingAccount() {
     feedback.className = 'feedback';
     feedback.innerHTML = '<strong>Remember:</strong> total Debit and Credit separately, then find the difference.';
   }
-}
-
-function showFootingHint() {
-  if (!footingAccounts.length) return;
-  const account = footingLedger[footingAccounts[footingIndex]];
-  const debit = ledgerTotal(account.debit);
-  const credit = ledgerTotal(account.credit);
-  const side = debit > credit ? 'Debit' : credit > debit ? 'Credit' : 'Balanced';
-  const feedback = document.getElementById('footingFeedback');
-  if (feedback) {
-    feedback.className = 'feedback';
-    feedback.innerHTML = `<strong>Hint:</strong> Debit total ${fmt(debit)}, Credit total ${fmt(credit)}, balance side ${side}.`;
-  }
+  footingAccepted = false;
+  document.getElementById('checkFootingBtn').classList.remove('hidden');
+  document.getElementById('nextFootingBtn').classList.add('hidden');
 }
 
 function checkFooting() {
-  if (!footingAccounts.length) return;
+  if (!footingAccounts.length || footingAccepted) return;
   const accountNo = footingAccounts[footingIndex];
   const account = footingLedger[accountNo];
   const debit = ledgerTotal(account.debit);
@@ -862,14 +874,21 @@ function checkFooting() {
   }
 
   document.getElementById('footingLedger').innerHTML = footingLedgerMarkup(account, true);
-  setTimeout(() => {
-    footingIndex += 1;
-    if (footingIndex < footingAccounts.length) {
-      showFootingAccount();
-    } else {
-      finishActivity();
-    }
-  }, 500);
+  footingAccepted = true;
+  document.getElementById('checkFootingBtn').classList.add('hidden');
+  const nextButton = document.getElementById('nextFootingBtn');
+  nextButton.textContent = footingIndex < footingAccounts.length - 1 ? 'Next Ledger Account →' : 'Complete Activity →';
+  nextButton.classList.remove('hidden');
+}
+
+function nextFootingAccount() {
+  if (!footingAccepted) return;
+  footingIndex += 1;
+  if (footingIndex < footingAccounts.length) {
+    showFootingAccount();
+  } else {
+    finishActivity();
+  }
 }
 
 function finishActivity() {
@@ -907,6 +926,7 @@ function finishActivity() {
   document.getElementById('progressFill').style.width = '100%';
   document.getElementById('activityScreen').classList.add('hidden');
   document.getElementById('footingScreen').classList.add('hidden');
+  document.getElementById('ledgerReviewScreen').classList.add('hidden');
   document.getElementById('summaryScreen').classList.remove('hidden');
 
   document.getElementById('summaryStudentName').textContent = journalMetadata.name || '—';
@@ -1021,6 +1041,7 @@ function newAttempt() {
 
   document.getElementById('summaryScreen').classList.add('hidden');
   document.getElementById('footingScreen').classList.add('hidden');
+  document.getElementById('ledgerReviewScreen').classList.add('hidden');
   document.getElementById('activityScreen').classList.add('hidden');
   document.getElementById('startScreen').classList.remove('hidden');
   document.getElementById('loadJournalBtn').style.display = 'inline-flex';
@@ -1089,6 +1110,34 @@ function loadSavedJournal() {
   return startPosting();
 }
 
+function showCompleteLedgerReview() {
+  const raw = readSavedJournalSnapshot();
+  if (!raw) return;
+
+  resetFooting();
+  raw.journal.forEach(entry => {
+    (entry.entries || []).forEach(line => addPostedEntry({
+      date: entry.date || '',
+      explanation: sanitizeSavedJournalText(entry.explanation) || 'To record the transaction.',
+      account: line.account || '',
+      debit: Number(line.debit) || 0,
+      credit: Number(line.credit) || 0
+    }));
+  });
+  prepareFooting();
+
+  document.getElementById('ledgerReviewStudentName').textContent = raw.studentName || '—';
+  document.getElementById('ledgerReviewStudentSection').textContent = raw.studentSection || '—';
+  document.getElementById('ledgerReviewAttemptCode').textContent = raw.attemptCode || '—';
+  document.getElementById('ledgerReviewList').innerHTML = footingAccounts
+    .map(no => `<div class="ledger-card">${summaryLedgerMarkup(footingLedger[no])}</div>`)
+    .join('');
+  document.getElementById('ledgerReviewReattempt').href = `activity07-1.html?journal=${encodeURIComponent(raw.attemptCode || '')}`;
+
+  ['startScreen', 'activityScreen', 'footingScreen', 'summaryScreen'].forEach(id => document.getElementById(id).classList.add('hidden'));
+  document.getElementById('ledgerReviewScreen').classList.remove('hidden');
+}
+
 function formatAmountInput(input) {
   const digits = String(input.value || '').replace(/[^0-9]/g, '');
   input.value = digits ? '₱' + Number(digits).toLocaleString('en-PH', { maximumFractionDigits: 0 }) : '';
@@ -1110,6 +1159,7 @@ function initialize() {
   renderCOA();
   renderSourceRecord(readSavedJournalSnapshot());
   window.addEventListener('resize', syncJournalHeight);
+  if (new URLSearchParams(location.search).get('view') === 'ledger') showCompleteLedgerReview();
 }
 
 initialize();
