@@ -224,6 +224,18 @@ main{width:100%;max-width:var(--max);margin:0 auto;padding:0 20px 54px;flex:1}
     </section>
   </section>
 
+  <section id="postingReviewScreen" class="summary-card hidden" data-top-section="posting-review">
+    <div class="summary-head"><div class="eyebrow">Posting Complete</div><h1>Review every T-ledger.</h1><p>Confirm that each journal line appears in the correct account and on the correct side before footing the General Ledger.</p></div>
+    <div class="summary-body">
+      <section class="results-wrap" aria-label="Posted General Ledger review">
+        <h3>Complete General Ledger</h3>
+        <p>Review all posted accounts. When you are ready, proceed to calculate each account's totals and balance.</p>
+        <div class="summary-ledger-list" id="postingReviewList"></div>
+      </section>
+      <div class="summary-actions"><button class="primary" type="button" onclick="proceedToFooting()">Proceed to Footing →</button></div>
+    </div>
+  </section>
+
   <section id="footingScreen" class="hidden" data-top-section="footing">
     <section class="foot-card">
       <div class="summary-head"><div class="eyebrow">Footing the General Ledger</div><h1 id="footingTitle">Foot the ledger accounts.</h1><p>Review the postings grouped by account, total both sides, and determine the balance before completing Activity 07.1.</p></div>
@@ -631,8 +643,7 @@ function chooseLineSide(side) {
 
 function loadEntry() {
   if (currentIndex >= journalData.length) {
-    prepareFooting();
-    showFootingAccount();
+    showPostingLedgerReview();
     return;
   }
 
@@ -714,18 +725,28 @@ function ledgerTotal(rows) {
 }
 
 function footingLedgerMarkup(account, showTotal = false) {
-  const rows = side => account[side].length
-    ? account[side].map(row => `
-      <tr class="${row === latestPostedLedgerLine ? 'new-posting' : ''}">
-          <td>${escapeHtml(row.date)}</td>
-          <td>${escapeHtml(row.particulars)}</td>
-          <td>${escapeHtml(row.ref)}</td>
-          <td>${fmt(row.amount)}</td>
-        </tr>
-      `).join('')
-    : '<tr><td class="empty">—</td><td class="empty">No postings</td><td></td><td></td></tr>';
+  const debitTotal = ledgerTotal(account.debit);
+  const creditTotal = ledgerTotal(account.credit);
+  const balance = Math.abs(debitTotal - creditTotal);
+  const balanceSide = debitTotal > creditTotal ? 'debit' : creditTotal > debitTotal ? 'credit' : '';
+  const rowCount = Math.max(account.debit.length, account.credit.length, 1);
+  const rows = side => Array.from({ length: rowCount }, (_, index) => {
+    const row = account[side][index];
+    if (row) {
+      return `<tr class="${row === latestPostedLedgerLine ? 'new-posting' : ''}">
+        <td>${escapeHtml(row.date)}</td>
+        <td>${escapeHtml(row.particulars)}</td>
+        <td>${escapeHtml(row.ref)}</td>
+        <td>${fmt(row.amount)}</td>
+      </tr>`;
+    }
+    return index === 0 && !account[side].length
+      ? '<tr><td class="empty">—</td><td class="empty">No postings</td><td></td><td></td></tr>'
+      : '<tr><td></td><td></td><td></td><td></td></tr>';
+  }).join('');
 
-  const totalRow = side => showTotal ? `<tr class="total-row"><td></td><td>Total</td><td></td><td>${fmt(ledgerTotal(account[side]))}</td></tr>` : '';
+  const totalRow = total => showTotal ? `<tr class="total-row"><td></td><td>Total</td><td></td><td>${fmt(total)}</td></tr>` : '';
+  const balanceRow = side => showTotal ? `<tr class="balance-row"><td></td><td>${side === balanceSide ? 'Actual Balance' : ''}</td><td></td><td>${side === balanceSide ? fmt(balance) : ''}</td></tr>` : '';
 
   return `
     <div class="ledger-account">${escapeHtml(account.no)} · ${escapeHtml(account.account)}</div>
@@ -737,7 +758,7 @@ function footingLedgerMarkup(account, showTotal = false) {
             <thead>
               <tr><th>Date</th><th>Particulars</th><th>F</th><th>Amount</th></tr>
             </thead>
-            <tbody>${rows('debit')}${totalRow('debit')}</tbody>
+            <tbody>${rows('debit')}${totalRow(debitTotal)}${balanceRow('debit')}</tbody>
           </table>
         </div>
       </div>
@@ -748,7 +769,7 @@ function footingLedgerMarkup(account, showTotal = false) {
             <thead>
               <tr><th>Date</th><th>Particulars</th><th>F</th><th>Amount</th></tr>
             </thead>
-            <tbody>${rows('credit')}${totalRow('credit')}</tbody>
+            <tbody>${rows('credit')}${totalRow(creditTotal)}${balanceRow('credit')}</tbody>
           </table>
         </div>
       </div>
@@ -814,6 +835,7 @@ function showFootingAccount() {
   if (!account) return;
 
   document.getElementById('activityScreen').classList.add('hidden');
+  document.getElementById('postingReviewScreen').classList.add('hidden');
   document.getElementById('summaryScreen').classList.add('hidden');
   document.getElementById('ledgerReviewScreen').classList.add('hidden');
   document.getElementById('footingScreen').classList.remove('hidden');
@@ -840,6 +862,24 @@ function showFootingAccount() {
   footingAccepted = false;
   document.getElementById('checkFootingBtn').classList.remove('hidden');
   document.getElementById('nextFootingBtn').classList.add('hidden');
+}
+
+function showPostingLedgerReview() {
+  prepareFooting();
+  document.getElementById('activityScreen').classList.add('hidden');
+  document.getElementById('footingScreen').classList.add('hidden');
+  document.getElementById('summaryScreen').classList.add('hidden');
+  document.getElementById('ledgerReviewScreen').classList.add('hidden');
+  document.getElementById('postingReviewList').innerHTML = footingAccounts
+    .map(no => `<div class="ledger-card">${footingLedgerMarkup(footingLedger[no])}</div>`)
+    .join('');
+  document.getElementById('postingReviewScreen').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function proceedToFooting() {
+  showFootingAccount();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function checkFooting() {
@@ -925,6 +965,7 @@ function finishActivity() {
 
   document.getElementById('progressFill').style.width = '100%';
   document.getElementById('activityScreen').classList.add('hidden');
+  document.getElementById('postingReviewScreen').classList.add('hidden');
   document.getElementById('footingScreen').classList.add('hidden');
   document.getElementById('ledgerReviewScreen').classList.add('hidden');
   document.getElementById('summaryScreen').classList.remove('hidden');
@@ -989,8 +1030,7 @@ function postEntry() {
   refreshPostingViews(true);
 
   if (currentIndex >= journalData.length) {
-    prepareFooting();
-    showFootingAccount();
+    showPostingLedgerReview();
     return;
   }
 
@@ -1040,6 +1080,7 @@ function newAttempt() {
   lineSide = '';
 
   document.getElementById('summaryScreen').classList.add('hidden');
+  document.getElementById('postingReviewScreen').classList.add('hidden');
   document.getElementById('footingScreen').classList.add('hidden');
   document.getElementById('ledgerReviewScreen').classList.add('hidden');
   document.getElementById('activityScreen').classList.add('hidden');
