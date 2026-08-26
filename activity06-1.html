@@ -403,15 +403,18 @@ function saveGeneralJournal(){const snapshot={
 localStorage.setItem('power_laundry_last_general_journal', JSON.stringify(snapshot));
 try{const archive=JSON.parse(localStorage.getItem('power_laundry_general_journal_archive')||'{}');archive[attemptCode]=snapshot;localStorage.setItem('power_laundry_general_journal_archive',JSON.stringify(archive));}catch{}
 return snapshot;}
-function finishActivity(){const elapsed=Date.now()-activityStart;const first=completed.filter(t=>t.firstCorrect).length;const history=getActivityHistory();const record={score:first,percentage:Math.round(first/15*100),elapsed,when:new Date().toISOString(),attemptCode};history.push(record);localStorage.setItem(activityHistoryKey(),JSON.stringify(history));saveGeneralJournal();window.recordActivityAttempt?.({attemptNumber:activityAttemptNumber,score:first,maxScore:15,durationMinutes:Math.max(1,Math.ceil(elapsed/60000)),attemptCode});document.getElementById('progressFill').style.width='100%';document.getElementById('activityScreen').classList.add('hidden');document.getElementById('summaryScreen').classList.remove('hidden');setTopNav('navSummary');document.getElementById('summaryStudentName').textContent=studentInfo.name||'—';document.getElementById('summaryStudentSection').textContent=studentInfo.section||'—';document.getElementById('summaryStudentDate').textContent=formatStudentDate(studentInfo.date);document.getElementById('summaryAttemptNumber').textContent=activityAttemptNumber;document.getElementById('summaryAttemptCode').textContent=attemptCode;document.getElementById('summaryTimeSpent').textContent=formatElapsed(elapsed);const revised=15-first;document.getElementById('metricCompleted').textContent='15 / 15';document.getElementById('metricFirst').textContent=`${first} / 15`;document.getElementById('metricRevised').textContent=String(revised);
+function savedJournalRowsHtml(journal){return(journal||[]).map(entry=>{const lines=(entry.entries||[]).map(line=>`<tr><td>${escapeHtml(entry.date||'')}</td><td class="${line.credit?'credit-line':'debit-line'}">${escapeHtml(line.account||'')}</td><td>${escapeHtml(line.pr||'')}</td><td>${line.debit?fmt(line.debit):''}</td><td>${line.credit?fmt(line.credit):''}</td></tr>`).join('');return lines+`<tr><td></td><td class="description-line">${escapeHtml(entry.explanation||'To record the transaction.')}</td><td></td><td></td><td></td></tr>`;}).join('');}
+function showSavedJournalReview(snapshot){const code=new URLSearchParams(location.search).get('journal');if(!code)return false;try{snapshot=snapshot||JSON.parse(localStorage.getItem('power_laundry_general_journal_archive')||'{}')[code];if(!snapshot)return false;const journal=snapshot.journal||[];document.getElementById('startScreen').classList.add('hidden');document.getElementById('activityScreen').classList.add('hidden');document.getElementById('summaryScreen').classList.remove('hidden');setTopNav('navSummary');document.getElementById('summaryStudentName').textContent=snapshot.studentName||'—';document.getElementById('summaryStudentSection').textContent=snapshot.studentSection||'—';document.getElementById('summaryStudentDate').textContent=formatStudentDate(snapshot.studentDate);document.getElementById('summaryAttemptNumber').textContent=snapshot.attemptNumber||'—';document.getElementById('summaryAttemptCode').textContent=snapshot.attemptCode||code;document.getElementById('summaryTimeSpent').textContent='—';document.getElementById('metricCompleted').textContent=`${journal.length} / ${journal.length}`;document.getElementById('metricFirst').textContent='—';document.getElementById('metricRevised').textContent='—';document.getElementById('txResultsArea').innerHTML='<div class="feedback"><strong>Saved General Journal.</strong> This completed record is available from your dashboard.</div>';document.getElementById('attemptProgressList').innerHTML='';document.getElementById('summaryJournalBody').innerHTML=savedJournalRowsHtml(journal);window.scrollTo({top:0,behavior:'smooth'});return true;}catch{return false;}}
+function finishActivity(){const elapsed=Date.now()-activityStart;const first=completed.filter(t=>t.firstCorrect).length;const history=getActivityHistory();const record={score:first,percentage:Math.round(first/15*100),elapsed,when:new Date().toISOString(),attemptCode};history.push(record);localStorage.setItem(activityHistoryKey(),JSON.stringify(history));const journalSnapshot=saveGeneralJournal();window.recordActivityAttempt?.({attemptNumber:activityAttemptNumber,score:first,maxScore:15,durationMinutes:Math.max(1,Math.ceil(elapsed/60000)),attemptCode,journalSnapshot});document.getElementById('progressFill').style.width='100%';document.getElementById('activityScreen').classList.add('hidden');document.getElementById('summaryScreen').classList.remove('hidden');setTopNav('navSummary');document.getElementById('summaryStudentName').textContent=studentInfo.name||'—';document.getElementById('summaryStudentSection').textContent=studentInfo.section||'—';document.getElementById('summaryStudentDate').textContent=formatStudentDate(studentInfo.date);document.getElementById('summaryAttemptNumber').textContent=activityAttemptNumber;document.getElementById('summaryAttemptCode').textContent=attemptCode;document.getElementById('summaryTimeSpent').textContent=formatElapsed(elapsed);const revised=15-first;document.getElementById('metricCompleted').textContent='15 / 15';document.getElementById('metricFirst').textContent=`${first} / 15`;document.getElementById('metricRevised').textContent=String(revised);
 document.getElementById('txResultsArea').innerHTML=completed.map((t,i)=>{const ok=t.firstCorrect;return `<div class="tx-result-item"><div class="tx-label"><span class="tx-num">Tx ${String(i+1).padStart(2,'0')}</span><span class="tx-desc">${escapeHtml(t.text)}</span></div><div><span class="tx-status ${ok?'ok':'revised'}">${ok?'Correct · First Attempt':'Revised'}</span>${ok?'':`<div class="tx-issue">${escapeHtml(t.issues.join('; '))}</div>`}</div></div>`}).join('');
 document.getElementById('summaryJournalBody').innerHTML=journalRowsHtml(completed);const progressList=document.getElementById('attemptProgressList');progressList.innerHTML='';history.forEach((item,index)=>{const row=document.createElement('div');row.className='attempt-progress-row';row.innerHTML=`<span>Attempt ${index+1}</span><span class="attempt-progress-score">${item.score} / 15 · ${item.percentage}%</span><span class="attempt-progress-time">${new Date(item.when).toLocaleDateString()} · ${formatElapsed(item.elapsed)}</span>`;progressList.appendChild(row)});window.scrollTo({top:0,behavior:'smooth'})}
 function newAttempt(){attempt=[];completed=[];currentIndex=0;document.getElementById('summaryScreen').classList.add('hidden');document.getElementById('activityScreen').classList.add('hidden');document.getElementById('startScreen').classList.remove('hidden');document.getElementById('progressFill').style.width='0';setTopNav('navOverview');window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('#studentName,#studentSection,#studentDate').forEach(el=>el.addEventListener('input',()=>document.getElementById('studentInfoError').classList.remove('show')));
 renderCOA();
+showSavedJournalReview();
 </script>
 <script type="module">
-import { getSession, requireUser, request } from './auth.js';
+import { getSession, getStudentNames, requireUser, request } from './auth.js';
 
 const pendingAttemptKey = 'power_laundry_pending_activity06_1_attempt';
 
@@ -435,17 +438,19 @@ async function syncActivityAttempt() {
   }
 
   try {
+    const names = await getStudentNames(user.id, session.access_token);
     await request('/rest/v1/activity_attempts', {
       method: 'POST',
       headers: { Prefer: 'return=minimal' },
       body: JSON.stringify({
         user_id: user.id,
+        ...names,
         activity_id: '06.1',
         attempt_number: pending.attemptNumber,
         score: pending.score,
         max_score: pending.maxScore,
         duration_minutes: pending.durationMinutes,
-        details: { attempt_code: pending.attemptCode }
+        details: { attempt_code: pending.attemptCode, general_journal_snapshot: pending.journalSnapshot }
       })
     }, session.access_token);
     localStorage.removeItem(pendingAttemptKey);
@@ -461,7 +466,20 @@ window.recordActivityAttempt = async payload => {
   await syncActivityAttempt();
 };
 
+async function restoreDashboardJournalReview() {
+  const code = new URLSearchParams(location.search).get('journal');
+  if (!code || !document.getElementById('summaryScreen').classList.contains('hidden')) return;
+  const user = await requireUser(), session = getSession();
+  if (!user || !session?.access_token) return;
+  try {
+    const attempts = await request(`/rest/v1/activity_attempts?select=details&user_id=eq.${encodeURIComponent(user.id)}&activity_id=eq.06.1&details-%3E%3Eattempt_code=eq.${encodeURIComponent(code)}&limit=1`, { method: 'GET' }, session.access_token);
+    const snapshot = attempts[0]?.details?.general_journal_snapshot;
+    if (snapshot) showSavedJournalReview(snapshot);
+  } catch {}
+}
+
 syncActivityAttempt();
+restoreDashboardJournalReview();
 </script>
 </body>
 </html>

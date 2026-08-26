@@ -132,12 +132,19 @@
                 new Date(right.completed_at) - new Date(left.completed_at),
             );
           const runningLedger = runningLedgerAttempts[0];
+          if (runningLedger?.details?.running_ledger_snapshot) {
+            localStorage.setItem(
+              `power_laundry_running_ledger_review_${attemptCode(runningLedger)}`,
+              JSON.stringify(runningLedger.details.running_ledger_snapshot),
+            );
+          }
+          const journalLink = `activity06-1.html?journal=${encodeURIComponent(journalCode)}`;
           const ledgerLink = `activity07-1.html?journal=${encodeURIComponent(journalCode)}`;
           const completedLedgerLink = `${ledgerLink}&view=ledger`;
-          const runningLedgerLink = `activity07-2.html?ledger=${encodeURIComponent(attemptCode(runningLedger))}`;
+          const runningLedgerLink = `activity07-2.html?journal=${encodeURIComponent(journalCode)}&ledger=${encodeURIComponent(attemptCode(runningLedger))}&view=ledger`;
           const runningLedgerRetryLink = `activity07-2.html?journal=${encodeURIComponent(journalCode)}`;
           const row = document.createElement("tr");
-          row.innerHTML = `<td><div class="process-step"><strong>Activity 06.1 · Attempt ${escapeHtml(journal.attempt_number)}</strong><span>${escapeHtml(journalCode)} · Completed ${escapeHtml(formatDate(journal.completed_at))}</span></div></td><td><div class="process-step"><strong>Activity 07.1${ledger ? ` · Attempt ${escapeHtml(ledger.attempt_number)}` : ""}</strong><span>${ledger ? `Completed · ${escapeHtml(attemptCode(ledger))}` : "Ready to post from this journal"}</span>${ledger ? `<a href="${completedLedgerLink}">View Complete General Ledger · ${escapeHtml(attemptCode(ledger))}</a><a href="${ledgerLink}">Reattempt Activity 07.1</a>` : `<a href="${ledgerLink}">Post to T-Format Ledger</a>`}</div></td><td><div class="process-step"><strong>Activity 07.2${runningLedger ? ` · Attempt ${escapeHtml(runningLedger.attempt_number)}` : ""}</strong><span>${runningLedger ? `Completed · ${escapeHtml(attemptCode(runningLedger))}` : "Ready to post from this journal"}</span>${runningLedger ? `<a href="${runningLedgerLink}">View Running General Ledger · ${escapeHtml(attemptCode(runningLedger))}</a><a href="${runningLedgerRetryLink}">Reattempt Activity 07.2</a>` : `<a href="${runningLedgerRetryLink}">Post to Running-Balance Ledger</a>`}</div></td><td><div class="process-step"><strong>Activity 08.1</strong><span>Unadjusted Trial Balance</span><span class="unavailable">Available later</span></div></td>`;
+          row.innerHTML = `<td><div class="process-step"><strong>Activity 06.1 · Attempt ${escapeHtml(journal.attempt_number)}</strong><span>${escapeHtml(journalCode)} · Completed ${escapeHtml(formatDate(journal.completed_at))}</span><a href="${journalLink}">View Complete General Journal · ${escapeHtml(journalCode)}</a></div></td><td><div class="process-step"><strong>Activity 07.1${ledger ? ` · Attempt ${escapeHtml(ledger.attempt_number)}` : ""}</strong><span>${ledger ? `Completed · ${escapeHtml(attemptCode(ledger))}` : "Ready to post from this journal"}</span>${ledger ? `<a href="${completedLedgerLink}">View Complete General Ledger · ${escapeHtml(attemptCode(ledger))}</a><a href="${ledgerLink}">Reattempt Activity 07.1</a>` : `<a href="${ledgerLink}">Post to T-Format Ledger</a>`}</div></td><td><div class="process-step"><strong>Activity 07.2${runningLedger ? ` · Attempt ${escapeHtml(runningLedger.attempt_number)}` : ""}</strong><span>${runningLedger ? `Completed · ${escapeHtml(attemptCode(runningLedger))}` : "Ready to post from this journal"}</span>${runningLedger ? `<a href="${runningLedgerLink}">View Running General Ledger · ${escapeHtml(attemptCode(runningLedger))}</a><a href="${runningLedgerRetryLink}">Reattempt Activity 07.2</a>` : `<a href="${runningLedgerRetryLink}">Post to Running-Balance Ledger</a>`}</div></td><td><div class="process-step"><strong>Activity 08.1</strong><span>Unadjusted Trial Balance</span><span class="unavailable">Available later</span></div></td>`;
           body.append(row);
         });
         table.append(body);

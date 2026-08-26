@@ -49,6 +49,20 @@ export async function requireUser() {
   }
 }
 
+export async function getStudentNames(userId, accessToken) {
+  const profiles = await request(
+    `/rest/v1/profiles?select=last_name,first_name,middle_initial&id=eq.${encodeURIComponent(userId)}`,
+    { method: 'GET', headers: { Accept: 'application/json' } },
+    accessToken
+  );
+  const profile = profiles[0] || {};
+  return {
+    last_name: profile.last_name || null,
+    first_name: profile.first_name || null,
+    middle_name: profile.middle_initial || null
+  };
+}
+
 export async function protectPage() {
   if (publicPages.has(currentPage)) return null;
 

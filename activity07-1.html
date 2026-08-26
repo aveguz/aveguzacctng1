@@ -1206,7 +1206,7 @@ function initialize() {
 initialize();
 </script>
 <script type="module">
-import { getSession, requireUser, request } from './auth.js';
+import { getSession, getStudentNames, requireUser, request } from './auth.js';
 
 const pendingAttemptKey = 'power_laundry_pending_activity07_1_attempt';
 
@@ -1230,11 +1230,13 @@ async function syncActivityAttempt() {
   }
 
   try {
+    const names = await getStudentNames(user.id, session.access_token);
     await request('/rest/v1/activity_attempts', {
       method: 'POST',
       headers: { Prefer: 'return=minimal' },
       body: JSON.stringify({
         user_id: user.id,
+        ...names,
         activity_id: '07.1',
         attempt_number: pending.attemptNumber,
         score: pending.score,
