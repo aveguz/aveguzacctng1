@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACCTNG 1 | Module 09 - Adjusting Entries</title>
+<style>
+:root{--bg:#f3f7f7;--surface:#fff;--ink:#203136;--muted:#697c81;--line:#d7e2e3;--accent:#3f6870;--accent-dark:#31535a;--accent-soft:#e8f1f2;--gold-soft:#f7f1e5;--good:#4e775f;--good-soft:#edf5ef;--shadow:0 10px 28px rgba(33,55,60,.075);--radius:18px;--max:1180px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,rgba(63,104,112,.07),transparent 24rem),var(--bg);line-height:1.6}button{font:inherit;cursor:pointer}.shell{min-height:100vh;display:grid;grid-template-rows:auto 1fr auto}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.topbar-inner{max-width:var(--max);margin:auto;padding:11px 20px;display:flex;gap:18px;align-items:center;justify-content:space-between}.topbar-left{display:flex;align-items:center;gap:14px}.home-top{border:0;background:var(--accent-soft);color:var(--accent-dark);border-radius:11px;padding:10px 13px;font-weight:850;text-decoration:none}.brand-kicker,.section-no,.eyebrow{font-size:.75rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}.brand-title{font-size:.92rem;font-weight:800}.nav{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.nav button{border:0;background:transparent;color:var(--muted);padding:8px 9px;border-radius:9px;font-size:.78rem;font-weight:850}.nav button:hover,.nav button.active{background:var(--accent-soft);color:var(--accent-dark)}.progress{height:4px;background:#e7eeee}.progress>div{height:100%;width:0;background:var(--accent);transition:.25s ease}
+main{max-width:var(--max);width:100%;margin:auto;padding:36px 20px 58px}.screen{display:none;animation:fade .22s ease}.screen.active{display:block}@keyframes fade{from{opacity:.25;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{font-size:clamp(2.3rem,5.5vw,4.5rem);line-height:1.02;letter-spacing:-.05em;margin:13px 0 18px}h2{font-size:clamp(1.75rem,4vw,3rem);letter-spacing:-.03em;margin:7px 0 10px}h3,p{margin-top:0}.lead,.section-head p{max-width:850px;color:#50666c;line-height:1.7}.section-head{margin-bottom:24px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}.hero{min-height:66vh;display:grid;grid-template-columns:1.12fr .88fr;gap:34px;align-items:center}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.btn{border:0;border-radius:11px;padding:11px 15px;background:var(--accent);color:#fff;font-weight:850;box-shadow:0 4px 12px rgba(63,104,112,.14);text-decoration:none}.btn:hover{background:var(--accent-dark)}.btn.secondary{background:var(--accent-soft);color:var(--accent-dark);box-shadow:none}.btn.ghost{background:#eef3f4;color:#4d6268;box-shadow:none}.btn:disabled{opacity:.45;cursor:not-allowed}
+.bridge-stack{display:grid;gap:10px}.bridge-step{border:1px solid var(--line);border-radius:14px;padding:15px;background:#f8fbfb;font-weight:850}.bridge-step.current{background:var(--accent-soft);color:var(--accent-dark);border-color:#c4d8db}.bridge-arrow{text-align:center;color:var(--muted);font-weight:900;font-size:1.25rem}
+.grid{display:grid;gap:14px}.three{grid-template-columns:repeat(3,1fr)}.two{grid-template-columns:repeat(2,1fr)}.card{border:1px solid var(--line);border-radius:15px;padding:18px;background:#fff}.card .num{font-size:.74rem;font-weight:900;color:var(--accent)}.card h3{margin:10px 0 6px}.card p{color:var(--muted);font-size:.9rem;margin:0}
+.callout{margin-top:16px;padding:14px 16px;border-radius:13px;border:1px solid #d9c8a8;background:var(--gold-soft);color:#665233}.callout strong{display:block;margin-bottom:4px}.good{border-color:#cfe0d3;background:var(--good-soft);color:#41654f}
+.cycle{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:15px}.cycle-step{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff;text-align:center;font-size:.82rem;color:var(--muted);font-weight:760}.cycle-step.current{background:var(--accent-soft);border-color:#c4d8db;color:var(--accent-dark);font-weight:900}.cycle-step.later{opacity:.55}
+.timeline{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:14px;margin-top:16px}.time-side{border:1px solid var(--line);background:#fff;border-radius:15px;padding:18px}.time-side h3{margin-bottom:6px}.cutoff{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:115px}.cutoff-line{width:4px;flex:1;min-height:65px;border-radius:5px;background:var(--accent)}.cutoff-label{background:var(--accent);color:#fff;border-radius:11px;padding:9px 11px;text-align:center;font-size:.78rem;font-weight:900;margin:8px 0}.question-strip{border:1px solid #d9c8a8;background:var(--gold-soft);border-radius:15px;padding:16px;margin-top:16px}.question-strip strong{display:block;margin-bottom:6px}
+.adjust-map{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.map-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px}.map-card .tag{display:inline-block;border-radius:999px;background:var(--accent-soft);color:var(--accent-dark);padding:4px 9px;font-size:.72rem;font-weight:900;margin-bottom:10px}.map-card h3{margin:0 0 6px}.map-card p{color:var(--muted);font-size:.9rem;margin:0}
+.scenario{border-left:4px solid var(--accent);background:#fff;border-radius:0 15px 15px 0;padding:17px 19px;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}.scenario .date-chip{display:inline-block;background:var(--accent-soft);color:var(--accent-dark);border-radius:999px;padding:4px 9px;font-size:.72rem;font-weight:900;margin-bottom:9px}.scenario p:last-child{margin-bottom:0}
+.entry{width:100%;border-collapse:collapse}.entry td{padding:7px 8px;border-bottom:1px solid #edf1f2}.entry td:nth-child(2),.entry td:nth-child(3){text-align:right;width:25%;white-space:nowrap}.entry .credit-title{padding-left:28px}.entry .explain{font-size:.84rem;color:var(--muted);font-style:italic;border-bottom:0;padding-top:2px}
+.flow-arrow{text-align:center;font-weight:900;color:var(--accent);font-size:1.35rem;margin:10px 0}.mini-label{font-size:.72rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.calc{background:#f8fbfb;border:1px solid var(--line);border-radius:15px;padding:17px}.calc-line{display:flex;justify-content:space-between;gap:15px;padding:7px 0;border-bottom:1px solid #e6edef}.calc-line:last-child{border-bottom:0}.calc-line.result{font-weight:900;color:var(--accent-dark);font-size:1.05rem}
+.months{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin-top:12px}.month{border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 4px;text-align:center;font-size:.72rem;font-weight:850;color:var(--muted)}.month.used{background:var(--accent-soft);border-color:#bfd4d8;color:var(--accent-dark)}.month.future{opacity:.55}
+.method-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.method-tabs button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:850;color:var(--muted)}.method-tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent)}.method-view{display:none}.method-view.active{display:block}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.taccount{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px}.t-title{text-align:center;font-weight:900;border-bottom:2px solid #657b80;padding-bottom:7px}.t-body{display:grid;grid-template-columns:1fr 1fr;min-height:130px}.t-side{padding:10px}.t-side:first-child{border-right:2px solid #657b80}.t-side-label{text-align:center;color:var(--muted);font-size:.74rem;font-weight:850;margin-bottom:7px}.t-row{display:flex;justify-content:space-between;gap:8px;font-size:.86rem;margin:5px 0}.t-bal{margin-top:9px;padding-top:7px;border-top:1px solid #839499;font-weight:900}
+.compare{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center}.compare .big{font-size:1.65rem;font-weight:900;color:var(--accent-dark)}.compare-mid{text-align:center;font-weight:900;color:var(--muted)}
+.contra-box{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center}.contra-item{border:1px solid var(--line);background:#fff;border-radius:15px;padding:17px}.contra-item strong{display:block;font-size:1.2rem}.minus{font-size:1.7rem;font-weight:900;color:var(--muted)}
+.balance-meter{display:grid;gap:10px}.meter-row{display:grid;grid-template-columns:170px 1fr 95px;gap:10px;align-items:center}.meter-track{height:20px;background:#edf2f2;border-radius:999px;overflow:hidden}.meter-fill{height:100%;background:var(--accent);border-radius:999px}.meter-fill.soft{background:#9fb9be}.meter-row strong{text-align:right}
+.summary-table{width:100%;border-collapse:collapse;min-width:760px}.summary-table th,.summary-table td{border:1px solid #cbd6d8;padding:10px 12px;vertical-align:top}.summary-table th{background:#eef3f4;font-size:.76rem;letter-spacing:.055em;text-transform:uppercase;color:#52676d}.summary-table td:nth-child(2),.summary-table td:nth-child(3){font-weight:850}
+.reveal-box{border:1px solid var(--line);border-radius:15px;background:#fff;padding:18px;margin-top:14px}.hidden-detail{display:none;margin-top:14px}.hidden-detail.show{display:block;animation:fade .22s ease}.process-flow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}.process-node{border:1px solid var(--line);background:#fff;border-radius:14px;padding:16px}.process-node strong{display:block;color:var(--accent-dark);margin-bottom:5px}.process-node span{font-size:.86rem;color:var(--muted)}.handoff{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin-top:16px}.handoff-card{border:1px solid var(--line);background:#fff;border-radius:15px;padding:18px}.handoff-arrow{font-size:1.7rem;font-weight:900;color:var(--accent)}
+.quiz-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.quiz-card{border:1px solid var(--line);background:#fff;border-radius:16px;padding:18px}.quiz-options{display:grid;gap:8px}.quiz-options button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:10px;padding:10px 12px;text-align:left;font-weight:760}.quiz-options button.correct{background:var(--good-soft);border-color:#cfe0d3;color:#41654f}.quiz-options button.wrong{background:var(--gold-soft);border-color:#d9c8a8;color:#665233}.quiz-feedback{min-height:28px;margin-top:10px;color:var(--muted);font-size:.88rem}
+.footer{width:100%;padding:12px 18px 18px;display:flex;justify-content:space-between;align-items:center;gap:18px;color:#60757b;font-size:.82rem;font-weight:760;background:#f4f8f8;border-top:1px solid #e2eaeb}.footer-nav{display:flex;gap:8px}.footer-nav button,.footer-nav a{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px;font-weight:850;color:var(--ink);text-decoration:none}.footer-nav .modules-btn{background:var(--accent-soft);color:var(--accent-dark)}.footer-nav button:disabled{opacity:.35;cursor:not-allowed}
+@media(max-width:980px){.hero{grid-template-columns:1fr}.three,.adjust-map{grid-template-columns:1fr 1fr}.tgrid{grid-template-columns:1fr}.process-flow{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){main{padding:24px 14px 44px}.topbar-inner{flex-direction:column;align-items:flex-start;padding:10px 14px}.nav{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:3px}.nav button{white-space:nowrap}.three,.two,.quiz-grid,.adjust-map{grid-template-columns:1fr}.cycle{grid-template-columns:1fr 1fr}.timeline,.compare,.contra-box,.handoff{grid-template-columns:1fr}.cutoff{min-width:0;flex-direction:row}.cutoff-line{height:4px;min-height:0;min-width:35px}.months{grid-template-columns:repeat(6,1fr)}.process-flow{grid-template-columns:1fr}.handoff-arrow{transform:rotate(90deg);text-align:center}.meter-row{grid-template-columns:110px 1fr 75px}.footer{flex-direction:column;align-items:flex-start;padding:12px 14px 16px}.footer-nav{width:100%;display:grid;grid-template-columns:1fr 1fr}.footer-nav button,.footer-nav a{text-align:center}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+<div class="topbar-inner">
+<div class="topbar-left"><a class="home-top" href="index.html">Home</a><div><div class="brand-kicker">ACCTNG 1 · MODULE 09</div><div class="brand-title">Adjusting Entries</div></div></div>
+<nav class="nav" aria-label="Module navigation">
+<button data-screen="welcome">Overview</button><button data-screen="cycle">Accounting Cycle</button><button data-screen="checkpoint">Period-End</button><button data-screen="deferrals">Deferrals</button><button data-screen="accruals">Accruals</button><button data-screen="estimates">Estimates</button><button data-screen="summary">Summary</button><button data-screen="quiz">Quick Check</button><button data-screen="wrap">Wrap-Up</button>
+</nav>
+</div><div class="progress"><div id="progressFill"></div></div>
+</header>
+<main>
+
+<section id="welcome" class="screen active">
+<div class="hero">
+<div><div class="eyebrow">Balanced does not always mean complete</div><h1>Adjusting Entries</h1>
+<p class="lead">In Module 08, you prepared the <strong>Unadjusted Trial Balance</strong>. The Debit and Credit totals may agree, but some account balances can still need updating because time has passed, resources have been used, revenue has been earned, or expenses have been incurred.</p>
+<div class="callout"><strong>This module has several adjustment types—but they follow one central idea.</strong>At the end of the accounting period, ask: <strong>What has changed that the accounts do not yet fully show?</strong> Work through one situation at a time.</div>
+<div class="actions"><button class="btn" data-go="outcomes">Begin Module 09 →</button><button class="btn secondary" data-go="cycle">View Accounting Cycle</button></div></div>
+<div class="panel"><div class="bridge-stack"><div class="bridge-step">MODULE 08 · Do the balances agree?</div><div class="bridge-arrow">↓</div><div class="bridge-step current">MODULE 09 · Are the balances up to date?</div><div class="bridge-arrow">↓</div><div class="bridge-step">NEXT · What do the balances show after adjustment?</div></div></div>
+</div>
+</section>
+
+<section id="outcomes" class="screen">
+<div class="section-head"><div class="section-no">Learning Targets</div><h2>What you will learn</h2><p>Use period-end information to identify, compute, and record basic adjusting entries.</p></div>
+<div class="grid three">
+<div class="card"><div class="num">01</div><h3>Explain</h3><p>why adjusting entries are prepared at the end of an accounting period.</p></div>
+<div class="card"><div class="num">02</div><h3>Locate</h3><p>the existing account balance in the General Ledger or Unadjusted Trial Balance before adjusting it.</p></div>
+<div class="card"><div class="num">03</div><h3>Distinguish</h3><p>deferrals, accruals, depreciation, and estimated doubtful accounts.</p></div>
+<div class="card"><div class="num">04</div><h3>Compute</h3><p>the amount needed for common period-end adjustments.</p></div>
+<div class="card"><div class="num">05</div><h3>Journalize</h3><p>the required adjusting entry using the appropriate accounts and amounts.</p></div>
+<div class="card"><div class="num">06</div><h3>Recognize</h3><p>contra-assets and the difference between a required ending balance and the adjustment needed.</p></div>
+</div>
+<div class="actions"><button class="btn" data-go="cycle">Open the lesson →</button></div>
+</section>
+
+<section id="cycle" class="screen">
+<div class="section-head"><div class="section-no">01 · Accounting Cycle</div><h2>Where are we now?</h2><p>Our focus is <strong>Step 5: Adjustments</strong>.</p></div>
+<div class="cycle">
+<div class="cycle-step">1 · Identify Transactions</div><div class="cycle-step">2 · Journalize</div><div class="cycle-step">3 · Post to Ledger</div><div class="cycle-step">4 · Unadjusted Trial Balance</div><div class="cycle-step current">5 · ADJUSTMENTS</div><div class="cycle-step later">6 · Adjusted Trial Balance</div><div class="cycle-step later">7 · Financial Statements</div><div class="cycle-step later">8 · Closing Entries</div><div class="cycle-step later">9 · Post-Closing TB</div><div class="cycle-step later">10 · Reversing Entries</div>
+</div>
+<div class="callout good"><strong>The connection to Module 08</strong>The Unadjusted Trial Balance gives us the balances <em>before</em> adjustment. We now review those balances using information available at the end of the period.</div>
+<div class="actions"><button class="btn" data-go="checkpoint">Go to the period-end checkpoint →</button></div>
+</section>
+
+<section id="checkpoint" class="screen">
+<div class="section-head"><div class="section-no">02 · The Period-End Checkpoint</div><h2>Adjustments happen because the period has ended.</h2><p>Most transactions are recorded as they occur. At the end of the accounting period, however, the accounts are reviewed before financial statements are prepared.</p></div>
+<div class="timeline">
+<div class="time-side"><div class="mini-label">During January</div><h3>Transactions happen and are recorded.</h3><p>Cash is received and paid, services are rendered, supplies are purchased, and other transactions are journalized and posted.</p></div>
+<div class="cutoff"><div class="cutoff-line"></div><div class="cutoff-label">JAN. 31, 2026<br>PERIOD END</div><div class="cutoff-line"></div></div>
+<div class="time-side"><div class="mini-label">Before statements</div><h3>Review what January should report.</h3><p>Has something been used, earned, incurred, or changed even though the accounts do not yet fully show it?</p></div>
+</div>
+<div class="question-strip"><strong>Where do I look for the “account balance”?</strong>Start with the <strong>General Ledger</strong>, where each account has its running or ending balance. The same balances are also listed in the <strong>Unadjusted Trial Balance</strong> prepared in Module 08. The adjustment updates those existing balances; it does not start the accounts over.</div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">The period-end flow</div><div class="bridge-stack"><div class="bridge-step">Unadjusted Trial Balance</div><div class="bridge-arrow">↓</div><div class="bridge-step current">Review period-end information → Prepare Adjusting Entries</div><div class="bridge-arrow">↓</div><div class="bridge-step">Post adjustments → Determine updated balances</div><div class="bridge-arrow">↓</div><div class="bridge-step">Adjusted Trial Balance</div></div></div>
+<div class="actions"><button class="btn" data-go="map">Meet the adjustment families →</button></div>
+</section>
+
+<section id="map" class="screen">
+<div class="section-head"><div class="section-no">03 · Adjustment Map</div><h2>Different situations. One period-end question.</h2><p>Do not treat the adjustment types as unrelated entries. First identify what changed by the end of the period.</p></div>
+<div class="adjust-map">
+<div class="map-card"><span class="tag">DEFERRAL</span><h3>Prepaid Expense</h3><p>Cash was paid earlier. Part of the asset has now been <strong>used</strong>.</p></div>
+<div class="map-card"><span class="tag">DEFERRAL</span><h3>Unearned Revenue</h3><p>Cash was received earlier. Part of the obligation has now been <strong>earned</strong>.</p></div>
+<div class="map-card"><span class="tag">ACCRUAL</span><h3>Accrued Expense</h3><p>An expense has been <strong>incurred</strong>, but payment will happen later.</p></div>
+<div class="map-card"><span class="tag">ACCRUAL</span><h3>Accrued Income</h3><p>Income has been <strong>earned</strong>, but cash will be received later.</p></div>
+<div class="map-card"><span class="tag">ESTIMATE / ALLOCATION</span><h3>Depreciation</h3><p>Part of a long-term asset's depreciable cost is allocated to the current period.</p></div>
+<div class="map-card"><span class="tag">ESTIMATE</span><h3>Doubtful Accounts</h3><p>Part of Accounts Receivable is estimated to be uncollectible.</p></div>
+</div>
+<div class="callout"><strong>Keep this boundary in mind.</strong>We are learning basic period-end adjustments. Each example will begin with a situation or transaction, then move to the amount that belongs to the current period.</div>
+<div class="panel" style="margin-top:18px"><div class="mini-label">Illustration Business</div><h3>Meet PRIME Vulcanizing</h3><p><strong>PRIME Vulcanizing</strong> is an established service business that has already been operating for some time. Its primary operations include vulcanizing, tire repair, and related services. Its regular transactions have already been journalized and posted during the accounting period.</p><p>PRIME also owns a <strong>small commercial unit beside its shop</strong> that it rents to another business, giving it an alternative source of income apart from its normal service operations.</p><p>It is now <strong>January 31, 2026</strong>. Before financial statements are prepared, PRIME reviews its accounts and additional period-end information to determine whether any balances still need to be updated.</p><div class="callout good"><strong>We are not starting PRIME's accounting records from the beginning.</strong>Earlier transactions have already been recorded. When an earlier transaction helps explain an adjustment, we will briefly look back at the <strong>original entry</strong>, then determine what must be updated at January 31.</div></div>
+<div class="actions"><button class="btn" data-go="prepaid">Start with prepaid expenses →</button></div>
+</section>
+
+<section id="prepaid" class="screen">
+<div class="section-head"><div class="section-no">04 · Deferral · Prepaid Expenses</div><h2>Cash was paid earlier. Now part of the asset has been used.</h2><p>We will first use the <strong>asset method</strong>, then compare it with the alternative <strong>expense method</strong>.</p></div>
+<div class="scenario"><span class="date-chip">Earlier transaction · January 1, 2026</span><p><strong>PRIME Vulcanizing paid ₱12,000 for a 12-month insurance policy covering its shop and equipment.</strong></p><p>Under the asset method, the payment was initially recorded as a prepaid asset because future insurance coverage remained.</p></div>
+<div class="grid two" style="margin-top:16px">
+<div class="panel"><div class="mini-label">Original entry already recorded · January 1, 2026</div><table class="entry"><tr><td><strong>Prepaid Insurance</strong></td><td>₱12,000</td><td></td></tr><tr><td class="credit-title">Cash</td><td></td><td>₱12,000</td></tr><tr><td colspan="3" class="explain">To record the 12-month insurance premium paid in advance</td></tr></table></div>
+<div class="calc"><div class="mini-label">At January 31, 2026</div><div class="calc-line"><span>₱12,000 ÷ 12 months</span><strong>₱1,000/month</strong></div><div class="calc-line"><span>Month used: January</span><strong>1 month</strong></div><div class="calc-line result"><span>Insurance expired</span><strong>₱1,000</strong></div></div>
+</div>
+<div class="months"><div class="month used">JAN<br>₱1,000</div><div class="month future">FEB</div><div class="month future">MAR</div><div class="month future">APR</div><div class="month future">MAY</div><div class="month future">JUN</div><div class="month future">JUL</div><div class="month future">AUG</div><div class="month future">SEP</div><div class="month future">OCT</div><div class="month future">NOV</div><div class="month future">DEC</div></div>
+<div class="question-strip"><strong>What has changed by January 31?</strong>PRIME has used one month of insurance coverage. ₱1,000 now belongs in Insurance Expense, while ₱11,000 remains an asset representing future coverage.</div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">Adjusting entry · January 31, 2026</div><table class="entry"><tr><td><strong>Insurance Expense</strong></td><td>₱1,000</td><td></td></tr><tr><td class="credit-title">Prepaid Insurance</td><td></td><td>₱1,000</td></tr><tr><td colspan="3" class="explain">To record expired insurance for January</td></tr></table></div>
+<div class="method-tabs"><button class="active" data-method="asset">Asset Method</button><button data-method="expense">Expense Method</button></div>
+<div id="asset" class="method-view active"><div class="tgrid">
+<div class="taccount"><div class="t-title">Prepaid Insurance</div><div class="t-body"><div class="t-side"><div class="t-side-label">Debit</div><div class="t-row"><span>1/1</span><strong>₱12,000</strong></div><div class="t-bal">Bal. ₱11,000</div></div><div class="t-side"><div class="t-side-label">Credit</div><div class="t-row"><span>1/31 Adj.</span><strong>₱1,000</strong></div></div></div></div>
+<div class="taccount"><div class="t-title">Insurance Expense</div><div class="t-body"><div class="t-side"><div class="t-side-label">Debit</div><div class="t-row"><span>1/31 Adj.</span><strong>₱1,000</strong></div><div class="t-bal">Bal. ₱1,000</div></div><div class="t-side"><div class="t-side-label">Credit</div></div></div></div>
+</div></div>
+<div id="expense" class="method-view"><div class="callout"><strong>Alternative: Expense Method</strong>If the full ₱12,000 payment had initially been debited to Insurance Expense, the period-end adjustment would move the <strong>unused or unexpired portion</strong>, ₱11,000, into Prepaid Insurance.</div><div class="tgrid">
+<div class="taccount"><div class="t-title">Insurance Expense</div><div class="t-body"><div class="t-side"><div class="t-side-label">Debit</div><div class="t-row"><span>1/1</span><strong>₱12,000</strong></div><div class="t-bal">Bal. ₱1,000</div></div><div class="t-side"><div class="t-side-label">Credit</div><div class="t-row"><span>1/31 Adj.</span><strong>₱11,000</strong></div></div></div></div>
+<div class="taccount"><div class="t-title">Prepaid Insurance</div><div class="t-body"><div class="t-side"><div class="t-side-label">Debit</div><div class="t-row"><span>1/31 Adj.</span><strong>₱11,000</strong></div><div class="t-bal">Bal. ₱11,000</div></div><div class="t-side"><div class="t-side-label">Credit</div></div></div></div>
+</div></div>
+<div class="callout good"><strong>Different starting points. Same ending balances.</strong>After adjustment: Prepaid Insurance = <strong>₱11,000</strong> and Insurance Expense = <strong>₱1,000</strong> under either method.</div>
+<div class="actions"><button class="btn" data-go="unearned">Next: Unearned Revenue →</button></div>
+</section>
+
+<section id="unearned" class="screen">
+<div class="section-head"><div class="section-no">05 · Deferral · Unearned Revenue</div><h2>Cash was received first. Now part of the obligation has been earned.</h2><p>Unearned revenue begins as a <strong>liability</strong> because the business still owes service to the customer.</p></div>
+<div class="scenario"><span class="date-chip">Earlier transaction · January 1, 2026</span><p><strong>A local delivery company paid PRIME Vulcanizing ₱12,000 in advance for three months of scheduled tire inspection, repair, and vulcanizing services covering January, February, and March.</strong></p></div>
+<div class="grid two" style="margin-top:16px">
+<div class="panel"><div class="mini-label">Original entry already recorded · Liability Method</div><table class="entry"><tr><td><strong>Cash</strong></td><td>₱12,000</td><td></td></tr><tr><td class="credit-title">Unearned Service Revenue</td><td></td><td>₱12,000</td></tr><tr><td colspan="3" class="explain">To record cash received before the services are rendered</td></tr></table></div>
+<div class="calc"><div class="mini-label">At January 31, 2026</div><div class="calc-line"><span>₱12,000 ÷ 3 months</span><strong>₱4,000/month</strong></div><div class="calc-line"><span>Service already rendered</span><strong>January</strong></div><div class="calc-line result"><span>Revenue earned</span><strong>₱4,000</strong></div></div>
+</div>
+<div class="months" style="grid-template-columns:repeat(3,1fr)"><div class="month used">JAN<br>EARNED<br>₱4,000</div><div class="month future">FEB<br>UNEARNED</div><div class="month future">MAR<br>UNEARNED</div></div>
+<div class="question-strip"><strong>What has changed by January 31?</strong>One month of the promised service has been completed. The liability must decrease by ₱4,000 and Service Revenue must increase by ₱4,000.</div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">Adjusting entry · January 31, 2026</div><table class="entry"><tr><td><strong>Unearned Service Revenue</strong></td><td>₱4,000</td><td></td></tr><tr><td class="credit-title">Service Revenue</td><td></td><td>₱4,000</td></tr><tr><td colspan="3" class="explain">To record the portion of advance collections earned in January</td></tr></table></div>
+<div class="method-tabs"><button class="active" data-revmethod="liability">Liability Method</button><button data-revmethod="income">Income Method</button></div>
+<div id="liability" class="method-view active"><div class="tgrid">
+<div class="taccount"><div class="t-title">Unearned Service Revenue</div><div class="t-body"><div class="t-side"><div class="t-side-label">Debit</div><div class="t-row"><span>1/31 Adj.</span><strong>₱4,000</strong></div></div><div class="t-side"><div class="t-side-label">Credit</div><div class="t-row"><span>1/1</span><strong>₱12,000</strong></div><div class="t-bal">Bal. ₱8,000</div></div></div></div>
+<div class="taccount"><div class="t-title">Service Revenue</div><div class="t-body"><div class="t-side"><div class="t-side-label">Debit</div></div><div class="t-side"><div class="t-side-label">Credit</div><div class="t-row"><span>1/31 Adj.</span><strong>₱4,000</strong></div><div class="t-bal">Bal. ₱4,000</div></div></div></div>
+</div></div>
+<div id="income" class="method-view"><div class="callout"><strong>Alternative: Income Method</strong>If the full ₱12,000 had initially been credited to Service Revenue, the period-end adjustment would move the <strong>unearned portion</strong>, ₱8,000, into Unearned Service Revenue.</div><div class="panel"><table class="entry"><tr><td><strong>Service Revenue</strong></td><td>₱8,000</td><td></td></tr><tr><td class="credit-title">Unearned Service Revenue</td><td></td><td>₱8,000</td></tr><tr><td colspan="3" class="explain">To record the portion of revenue not yet earned</td></tr></table></div></div>
+<div class="callout good"><strong>Same ending result.</strong>After adjustment, Service Revenue includes the <strong>₱4,000 earned</strong> in January and Unearned Service Revenue shows the <strong>₱8,000 still owed</strong> for February and March.</div>
+<div class="actions"><button class="btn" data-go="accruedexpense">Next: Accrued Expenses →</button></div>
+</section>
+
+
+<section id="accruedexpense" class="screen">
+<div class="section-head"><div class="section-no">06 · Accrual · Accrued Expenses</div><h2>The expense belongs to this period even if payment comes later.</h2><p>Accrued expenses are expenses already <strong>incurred</strong> but not yet paid or fully recorded.</p></div>
+<div class="scenario"><span class="date-chip">Period-end information · January 31, 2026</span><p><strong>PRIME Vulcanizing's employees have already worked the final three days of January. Salaries attributable to those days amount to ₱900 per day and will be paid on February 2.</strong></p></div>
+<div class="timeline">
+<div class="time-side"><div class="mini-label">January 29–31</div><h3>Employees perform the work.</h3><p>The business has already received the employees' service. The <strong>expense belongs to January</strong>.</p></div>
+<div class="cutoff"><div class="cutoff-line"></div><div class="cutoff-label">JAN. 31<br>ADJUST</div><div class="cutoff-line"></div></div>
+<div class="time-side"><div class="mini-label">February 2</div><h3>Cash will be paid later.</h3><p>The future payment date does not move January's expense into February.</p></div>
+</div>
+<div class="calc" style="margin-top:16px"><div class="mini-label">Compute the amount that belongs to January</div><div class="calc-line"><span>Daily salaries</span><strong>₱900</strong></div><div class="calc-line"><span>Days already worked</span><strong>3 days</strong></div><div class="calc-line result"><span>₱900 × 3 days</span><strong>₱2,700</strong></div></div>
+<div class="question-strip"><strong>Why is there no earlier entry for these ₱2,700 salaries?</strong>The work has already been performed, but the amount has not yet been paid or recorded. That is precisely why an accrued-expense adjustment is needed.</div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">Adjusting entry · January 31, 2026</div><table class="entry"><tr><td><strong>Salaries Expense</strong></td><td>₱2,700</td><td></td></tr><tr><td class="credit-title">Salaries Payable</td><td></td><td>₱2,700</td></tr><tr><td colspan="3" class="explain">To record salaries incurred but not yet paid</td></tr></table></div>
+<div class="grid three" style="margin-top:16px"><div class="card"><h3>Accounts Payable</h3><p>Amounts owed from ordinary credit purchases.</p></div><div class="card"><h3>Notes Payable</h3><p>A formal written promise to pay, usually with stated terms.</p></div><div class="card"><h3>Accrued Payables</h3><p>Amounts already incurred, such as Salaries Payable or Interest Payable.</p></div></div>
+<div class="actions"><button class="btn" data-go="interest">See accrued interest in context →</button></div>
+</section>
+
+<section id="interest" class="screen">
+<div class="section-head"><div class="section-no">07 · Accrued Interest</div><h2>A note has terms—and interest can accumulate before payment.</h2><p>A <strong>note payable</strong> states a principal amount and may carry an annual interest rate. Even when interest is paid later, part of it may already belong to the current period.</p></div>
+<div class="scenario"><span class="date-chip">Earlier transaction · January 1, 2026</span><p><strong>PRIME Vulcanizing borrowed ₱120,000 and issued a 90-day, 12% note payable.</strong> The principal and interest will be paid at maturity.</p></div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">Original borrowing entry already recorded</div><table class="entry"><tr><td><strong>Cash</strong></td><td>₱120,000</td><td></td></tr><tr><td class="credit-title">Notes Payable</td><td></td><td>₱120,000</td></tr><tr><td colspan="3" class="explain">To record the amount borrowed under the note</td></tr></table><div class="callout"><strong>Notice what is not in the original entry.</strong>No Interest Expense was recorded on January 1. Interest is incurred as time passes.</div></div>
+<div class="grid three" style="margin-top:16px"><div class="card"><h3>Principal</h3><p><strong>₱120,000</strong><br>The amount borrowed.</p></div><div class="card"><h3>Rate</h3><p><strong>12% per annum</strong><br>The annual interest rate.</p></div><div class="card"><h3>Term</h3><p><strong>90 days</strong><br>The stated length of the note.</p></div></div>
+<div class="timeline">
+<div class="time-side"><div class="mini-label">January 1</div><h3>Note is issued.</h3><p>PRIME receives the borrowed amount and records Notes Payable.</p></div>
+<div class="cutoff"><div class="cutoff-line"></div><div class="cutoff-label">JAN. 31<br>1 MONTH</div><div class="cutoff-line"></div></div>
+<div class="time-side"><div class="mini-label">Later</div><h3>Interest is paid at maturity.</h3><p>For this introductory illustration, one month of interest is accrued through January 31.</p></div>
+</div>
+<div class="calc"><div class="mini-label">Interest = Principal × Rate × Time</div><div class="calc-line"><span>Principal</span><strong>₱120,000</strong></div><div class="calc-line"><span>Annual rate</span><strong>12%</strong></div><div class="calc-line"><span>Time accrued</span><strong>1/12 year</strong></div><div class="calc-line result"><span>₱120,000 × 12% × 1/12</span><strong>₱1,200</strong></div></div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">Adjusting entry · January 31, 2026</div><table class="entry"><tr><td><strong>Interest Expense</strong></td><td>₱1,200</td><td></td></tr><tr><td class="credit-title">Interest Payable</td><td></td><td>₱1,200</td></tr><tr><td colspan="3" class="explain">To record interest incurred for January</td></tr></table></div>
+<div class="actions"><button class="btn" data-go="accruedincome">Next: Accrued Income →</button></div>
+</section>
+
+<section id="accruedincome" class="screen">
+<div class="section-head"><div class="section-no">08 · Accrual · Accrued Income</div><h2>Income can be earned even when cash has not yet been received.</h2><p>PRIME's main source of income is vulcanizing, tire repair, and related services. An established business may also earn income from <strong>other sources</strong>.</p></div>
+<div class="scenario"><span class="date-chip">Rental arrangement · January 2026</span><p><strong>PRIME owns a small commercial unit beside its shop and rents it to a motorcycle-parts retailer for ₱6,000 per month.</strong> Rent for each month is payable on the <strong>5th day of the following month</strong>.</p><p>By January 31, the tenant has already occupied the unit for the entire month, but the January rent will not be collected until February 5.</p></div>
+<div class="timeline">
+<div class="time-side"><div class="mini-label">During January</div><h3>The tenant uses the commercial unit.</h3><p>PRIME has already <strong>earned ₱6,000 Rental Income</strong> for January.</p></div>
+<div class="cutoff"><div class="cutoff-line"></div><div class="cutoff-label">JAN. 31<br>PERIOD END</div><div class="cutoff-line"></div></div>
+<div class="time-side"><div class="mini-label">February 5</div><h3>Cash is collected later.</h3><p>The collection occurs in the next period, but the income belongs to January.</p></div>
+</div>
+<div class="question-strip"><strong>Does PRIME have income for January even though the tenant has not yet paid?</strong>Yes. The tenant has already occupied the unit for January. PRIME has therefore <strong>earned the ₱6,000 Rental Income</strong>, even though cash will be collected in February.</div>
+<div class="grid two" style="margin-top:16px">
+<div class="card"><div class="mini-label">What has already happened?</div><h3>Rental income was earned.</h3><p>January should report <strong>Rental Income of ₱6,000</strong>.</p></div>
+<div class="card"><div class="mini-label">What has not happened yet?</div><h3>Cash has not been collected.</h3><p>January should also report <strong>Rent Receivable of ₱6,000</strong>.</p></div>
+</div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">Adjusting entry · January 31, 2026</div><table class="entry"><tr><td><strong>Rent Receivable</strong></td><td>₱6,000</td><td></td></tr><tr><td class="credit-title">Rental Income</td><td></td><td>₱6,000</td></tr><tr><td colspan="3" class="explain">To record rental income earned but not yet collected</td></tr></table></div>
+<div class="callout good"><strong>The accrued-income pattern</strong><strong>Income earned now → Cash received later.</strong> The period-end adjustment recognizes both the income already earned and the related receivable.</div>
+<div class="callout"><strong>Connect this with Accounts Receivable.</strong>When PRIME performs its normal vulcanizing or repair services on account, the receivable and Service Revenue are ordinarily recorded when the transaction occurs. Here, the January rent has already been earned but remains <strong>unrecorded at period-end</strong>, so an adjusting entry is needed. <strong>Rent Receivable</strong> makes the source of the receivable clear.</div>
+<div class="reveal-box"><div class="mini-label">Another example</div><h3>Accrued income can also arise from PRIME's normal operations.</h3><p>Suppose PRIME completes repair services for a regular fleet customer near the end of January, but the service will not be billed until February. If the earned amount has not yet been recorded, the receivable and Service Revenue would need to be accrued at January 31.</p></div>
+<div class="actions"><button class="btn" data-go="depreciation">Next: Depreciation →</button></div>
+</section>
+
+
+<section id="depreciation" class="screen">
+<div class="section-head"><div class="section-no">09 · Depreciation</div><h2>Long-term assets help the business for more than one period.</h2><p><strong>Depreciation expense</strong> allocates the depreciable cost of a plant asset over its estimated useful life. For now, we will use <strong>straight-line depreciation</strong>, the simplest starting method.</p></div>
+<div class="grid three"><div class="card"><h3>Cost</h3><p>The acquisition cost of the depreciable asset.</p></div><div class="card"><h3>Salvage Value</h3><p>The estimated value expected at the end of the asset's useful life.</p></div><div class="card"><h3>Estimated Useful Life</h3><p>The estimated period over which the asset is expected to be useful to the business.</p></div></div>
+<div class="callout"><strong>Other depreciation methods exist.</strong>Examples include declining-balance and units-of-production methods. This module focuses on <strong>straight-line depreciation</strong> so you can first understand the period-end adjustment.</div>
+<div class="scenario" style="margin-top:16px"><span class="date-chip">Earlier transaction · November 1, 2025</span><p><strong>PRIME Vulcanizing purchased vulcanizing equipment for ₱126,000.</strong> Its estimated salvage value is ₱6,000 and its estimated useful life is 5 years.</p></div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">Earlier acquisition</div><p>The equipment acquisition has already been recorded in PRIME's books. The illustration focuses on the <strong>period-end depreciation adjustment</strong>; no assumption is needed here about whether the equipment was originally paid entirely in cash or acquired under another payment arrangement.</p></div>
+<div class="grid two" style="margin-top:16px">
+<div class="calc"><div class="mini-label">Step 1 · Annual depreciation</div><div class="calc-line"><span>Cost</span><strong>₱126,000</strong></div><div class="calc-line"><span>Less: Salvage value</span><strong>₱6,000</strong></div><div class="calc-line"><span>Depreciable cost</span><strong>₱120,000</strong></div><div class="calc-line"><span>₱120,000 ÷ 5 years</span><strong></strong></div><div class="calc-line result"><span>Annual depreciation</span><strong>₱24,000</strong></div></div>
+<div class="calc"><div class="mini-label">Step 2 · Monthly depreciation</div><div class="calc-line"><span>₱24,000 ÷ 12 months</span><strong>₱2,000/month</strong></div><div class="calc-line"><span>Nov. + Dec. + Jan.</span><strong>3 months</strong></div><div class="calc-line result"><span>Depreciation to Jan. 31</span><strong>₱6,000</strong></div></div>
+</div>
+<div class="months" style="grid-template-columns:repeat(3,1fr)"><div class="month used">NOV<br>₱2,000</div><div class="month used">DEC<br>₱2,000</div><div class="month used">JAN<br>₱2,000</div></div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">Adjusting entry · January 31, 2026</div><table class="entry"><tr><td><strong>Depreciation Expense—Vulcanizing Equipment</strong></td><td>₱6,000</td><td></td></tr><tr><td class="credit-title">Accumulated Depreciation—Vulcanizing Equipment</td><td></td><td>₱6,000</td></tr><tr><td colspan="3" class="explain">To record depreciation for November through January</td></tr></table></div>
+<div class="question-strip"><strong>Why don't we credit Vulcanizing Equipment directly?</strong>The asset remains recorded at its original cost. Depreciation accumulated to date is recorded separately in <strong>Accumulated Depreciation—Vulcanizing Equipment</strong>.</div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">Meet a new account type · Contra-Asset</div><div class="contra-box"><div class="contra-item"><span>Vulcanizing Equipment</span><strong>₱126,000</strong><small>original cost</small></div><div class="minus">−</div><div class="contra-item"><span>Accumulated Depreciation—Vulcanizing Equipment</span><strong>₱6,000</strong><small>contra-asset balance</small></div></div><div class="callout good"><strong>Carrying amount = ₱120,000</strong>₱126,000 cost − ₱6,000 accumulated depreciation.</div></div>
+<div class="actions"><button class="btn" data-go="doubtful">Next: Doubtful Accounts →</button></div>
+</section>
+
+<section id="doubtful" class="screen">
+<div class="section-head"><div class="section-no">10 · Doubtful Accounts</div><h2>Not every receivable may be collected.</h2><p>At period-end, a business may estimate that part of its Accounts Receivable will be uncollectible. The estimate is recorded without reducing Accounts Receivable directly.</p></div>
+<div class="scenario"><span class="date-chip">Period-end information · January 31, 2026</span><p><strong>Because PRIME has been operating for some time, some customers have received vulcanizing and repair services on account.</strong> At January 31, Accounts Receivable has a <strong>₱100,000 balance</strong>. Based on experience, <strong>8%</strong> is estimated to be uncollectible.</p></div>
+<div class="question-strip"><strong>Does this mean PRIME already knows exactly which customer will not pay?</strong>No. This is an <strong>estimate</strong> of the receivables that may not be collected.</div>
+<div class="grid two" style="margin-top:16px">
+<div class="calc"><div class="mini-label">Required allowance</div><div class="calc-line"><span>Accounts Receivable</span><strong>₱100,000</strong></div><div class="calc-line"><span>Estimated uncollectible</span><strong>8%</strong></div><div class="calc-line result"><span>₱100,000 × 8%</span><strong>₱8,000</strong></div></div>
+<div class="panel"><div class="mini-label">If there is no existing allowance balance</div><table class="entry"><tr><td><strong>Bad Debts Expense</strong></td><td>₱8,000</td><td></td></tr><tr><td class="credit-title">Allowance for Doubtful Accounts</td><td></td><td>₱8,000</td></tr><tr><td colspan="3" class="explain">To record estimated uncollectible accounts</td></tr></table></div>
+</div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">Another contra-asset</div><div class="compare"><div><span>Accounts Receivable</span><div class="big">₱100,000</div></div><div class="compare-mid">less<br>₱8,000</div><div><span>Estimated collectible amount</span><div class="big">₱92,000</div></div></div><div class="callout good"><strong>Allowance for Doubtful Accounts is a contra-asset.</strong>It is related to Accounts Receivable and normally carries a <strong>credit balance</strong>.</div></div>
+<div class="actions"><button class="btn" data-go="required">But what if the allowance already has a balance? →</button></div>
+</section>
+
+<section id="required" class="screen">
+<div class="section-head"><div class="section-no">11 · Required Balance vs Adjustment</div><h2>What if the account already has a balance?</h2><p>The amount a problem says should be in an account at period-end may be the <strong>required ending balance</strong>—not automatically the amount of the adjusting entry.</p></div>
+<div class="scenario"><span class="date-chip">What if...</span><p>PRIME still requires an <strong>₱8,000 credit balance</strong> in Allowance for Doubtful Accounts at January 31. But because the business has been operating for some time, the General Ledger already shows a <strong>₱1,000 credit balance</strong> in Allowance for Doubtful Accounts before adjustment.</p></div>
+<div class="question-strip"><strong>Do we record another ₱8,000?</strong>No. First compare what is <strong>already there</strong> with what is <strong>required at period-end</strong>.</div>
+<div class="panel" style="margin-top:16px"><div class="balance-meter">
+<div class="meter-row"><span>Already there</span><div class="meter-track"><div class="meter-fill soft" style="width:12.5%"></div></div><strong>₱1,000</strong></div>
+<div class="meter-row"><span>Required ending balance</span><div class="meter-track"><div class="meter-fill" style="width:100%"></div></div><strong>₱8,000</strong></div>
+<div class="meter-row"><span>Adjustment needed</span><div class="meter-track"><div class="meter-fill" style="width:87.5%"></div></div><strong>₱7,000</strong></div>
+</div></div>
+<div class="calc" style="margin-top:16px"><div class="calc-line"><span>Required ending balance</span><strong>₱8,000</strong></div><div class="calc-line"><span>Less: Existing credit balance</span><strong>₱1,000</strong></div><div class="calc-line result"><span>Adjusting entry needed</span><strong>₱7,000</strong></div></div>
+<div class="panel" style="margin-top:16px"><table class="entry"><tr><td><strong>Bad Debts Expense</strong></td><td>₱7,000</td><td></td></tr><tr><td class="credit-title">Allowance for Doubtful Accounts</td><td></td><td>₱7,000</td></tr></table></div>
+<div class="callout good"><strong>Key distinction</strong><strong>Required balance</strong> = what the account should show after adjustment. <strong>Adjustment</strong> = the amount needed to move the existing balance to that required balance.</div>
+<div class="actions"><button class="btn" data-go="summary">Bring the adjustment types together →</button></div>
+</section>
+
+
+<section id="summary" class="screen">
+<div class="section-head"><div class="section-no">12 · Adjustment Summary</div><h2>Ask what changed by the end of the period.</h2><p>Use the situation first. The Debit and Credit pattern follows from what needs to be recognized or updated.</p></div>
+<div class="table-wrap"><table class="summary-table"><thead><tr><th>Situation at Period-End</th><th>Debit</th><th>Credit</th><th>What the Adjustment Does</th></tr></thead><tbody>
+<tr><td>Prepaid asset has been <strong>used</strong></td><td>Expense</td><td>Prepaid Asset</td><td>Recognizes the expired or used portion.</td></tr>
+<tr><td>Revenue received in advance has been <strong>earned</strong></td><td>Unearned Revenue</td><td>Revenue</td><td>Reduces the liability and recognizes earned revenue.</td></tr>
+<tr><td>Expense has been <strong>incurred but not paid</strong></td><td>Expense</td><td>Payable</td><td>Recognizes the current-period expense and liability.</td></tr>
+<tr><td>Income has been <strong>earned but not received</strong></td><td>Receivable</td><td>Revenue / Income</td><td>Recognizes the current-period income and receivable.</td></tr>
+<tr><td>Long-term asset has been <strong>used over time</strong></td><td>Depreciation Expense</td><td>Accumulated Depreciation</td><td>Allocates depreciable cost without reducing the asset's recorded cost.</td></tr>
+<tr><td>Some receivables are estimated to be <strong>uncollectible</strong></td><td>Bad Debts Expense</td><td>Allowance for Doubtful Accounts</td><td>Recognizes estimated credit losses using a contra-asset.</td></tr>
+</tbody></table></div>
+<div class="callout good"><strong>Don't memorize six unrelated entries.</strong>At period-end, ask: <strong>What has been used? What has been earned? What has been incurred? What has changed that is not yet fully recorded?</strong></div>
+<div class="callout good"><strong>You have now seen the adjustments within one established business.</strong>PRIME's regular transactions had already been recorded. The adjustments did not replace those entries—they <strong>updated the accounts for information relevant at January 31</strong>.</div>
+<div class="actions"><button class="btn" data-go="afteradjustments">See what happens to the adjustments →</button></div>
+</section>
+
+
+<section id="afteradjustments" class="screen">
+<div class="section-head"><div class="section-no">13 · After the Adjusting Entries</div><h2>What happens to the adjustments?</h2><p>Preparing an adjusting entry is not the end of the process. Like the journal entries you learned earlier, an adjusting entry must move forward into the ledger so that the affected account balances are updated.</p></div>
+<div class="process-flow">
+<div class="process-node"><strong>1 · Adjusting Entry</strong><span>Record the period-end adjustment in the General Journal.</span></div>
+<div class="process-node"><strong>2 · Post to the Ledger</strong><span>Post the Debit and Credit to the accounts affected by the adjustment.</span></div>
+<div class="process-node"><strong>3 · Updated Balances</strong><span>The adjustment becomes part of each account's existing balance.</span></div>
+<div class="process-node"><strong>4 · Adjusted Trial Balance</strong><span>List the updated account balances and test Debit = Credit again.</span></div>
+</div>
+<div class="callout good"><strong>Nothing is being started over.</strong>The adjustment is added to what is already in the account. The existing ledger balance and the adjustment together determine the <strong>adjusted balance</strong>.</div>
+<div class="grid two" style="margin-top:16px">
+<div class="panel"><div class="mini-label">Example from PRIME Vulcanizing</div><h3>Recall the accrued-salaries adjustment.</h3><table class="entry"><tr><td><strong>Salaries Expense</strong></td><td>₱2,700</td><td></td></tr><tr><td class="credit-title">Salaries Payable</td><td></td><td>₱2,700</td></tr><tr><td colspan="3" class="explain">To record salaries already incurred but not yet paid</td></tr></table></div>
+<div class="panel"><div class="mini-label">Then post it</div><h3>The affected accounts are updated.</h3><p><strong>Salaries Expense</strong> increases by ₱2,700. Whatever balance it already had is updated by the adjustment.</p><p><strong>Salaries Payable</strong> increases by ₱2,700 because the amount is owed at period-end.</p></div>
+</div>
+<div class="question-strip"><strong>Do we simply add one total adjustment to the Unadjusted Trial Balance?</strong>No. Each adjusting entry is first posted to the <strong>individual ledger accounts it affects</strong>. After all adjustments are posted, the resulting account balances are used to prepare the Adjusted Trial Balance.</div>
+<div class="panel" style="margin-top:16px"><div class="mini-label">The relationship</div><div class="bridge-stack"><div class="bridge-step">UNADJUSTED ACCOUNT BALANCE · what the ledger showed before adjustment</div><div class="bridge-arrow">+</div><div class="bridge-step current">ADJUSTMENT · the period-end update</div><div class="bridge-arrow">↓</div><div class="bridge-step">ADJUSTED ACCOUNT BALANCE · what the account should now show</div></div></div>
+
+<div class="section-head" style="margin-top:34px"><div class="section-no">Reconnect</div><h2>Now let's return to Power Laundry.</h2><p>We used <strong>PRIME Vulcanizing</strong> as our illustration business so that we could focus on understanding each type of adjustment. Now we can reconnect those ideas with <strong>Power Laundry</strong>, the business you followed through journalizing, posting, and the Unadjusted Trial Balance in the previous modules.</p></div>
+<div class="handoff">
+<div class="handoff-card"><div class="eyebrow">PRIME Vulcanizing</div><h3>Learn how adjustments work</h3><p>Identify what changed at period-end, compute the amount, prepare the adjustment, and see how it updates the ledger.</p></div>
+<div class="handoff-arrow">→</div>
+<div class="handoff-card"><div class="eyebrow">Power Laundry</div><h3>Apply adjustments to balances you already know</h3><p>Return to the Unadjusted Trial Balance from Module 08 and continue moving those balances forward.</p></div>
+</div>
+<div class="panel" style="margin-top:18px"><div class="mini-label">Remember where we left Power Laundry?</div><h3>Power Laundry · Unadjusted Trial Balance</h3><p>In Module 08, Power Laundry's ledger balances were brought together in an <strong>Unadjusted Trial Balance</strong>. At that stage, our main question was whether total Debits and total Credits agreed.</p>
+<div class="compare" style="margin-top:14px"><div class="card"><div class="mini-label">Module 08 asked</div><h3>Do the balances agree?</h3><p>Debit total = Credit total</p></div><div class="compare-mid">→</div><div class="card"><div class="mini-label">Module 09 now asks</div><h3>Are the balances up to date?</h3><p>What must be adjusted at January 31, 2026?</p></div></div>
+<div class="callout"><strong>Balanced does not necessarily mean adjusted.</strong>An Unadjusted Trial Balance can have equal Debit and Credit totals while still containing accounts that need period-end updates.</div>
+<div class="callout"><strong>Use the exact Module 08 balances.</strong>The complete Power Laundry Unadjusted Trial Balance is intentionally not recreated here from memory. Continue with the same balances from Module 08 so the accounting information carries forward without changing the underlying data.</div>
+</div>
+<div class="callout good"><strong>Now the two ideas come together.</strong>Power Laundry already has an <strong>Unadjusted Trial Balance</strong>. You now know how to identify, compute, journalize, and post <strong>adjusting entries</strong>. The next step is to apply those adjustments to Power Laundry's existing balances.</div>
+<div class="actions"><button class="btn" data-go="nextstage">Continue →</button></div>
+</section>
+
+<section id="nextstage" class="screen">
+<div class="section-head"><div class="section-no">14 · Looking Ahead</div><h2>See where the adjustments go next.</h2><p>Adjusting entries are not the end of the process. They update the ledger so that the balances used for the next stage reflect the period-end information.</p></div>
+<div class="panel"><div class="bridge-stack"><div class="bridge-step">UNADJUSTED TRIAL BALANCE · balances before adjustment</div><div class="bridge-arrow">↓</div><div class="bridge-step current">ADJUSTING ENTRIES · update what the period should report</div><div class="bridge-arrow">↓</div><div class="bridge-step">ADJUSTED TRIAL BALANCE · updated account balances</div><div class="bridge-arrow">↓</div><div class="bridge-step">FINANCIAL STATEMENTS</div></div></div>
+<div class="reveal-box"><div class="mini-label">Something to look forward to</div><h3>There is a practical way to organize all of this side by side.</h3><p>After you understand adjustments, you will meet a working tool that brings the Unadjusted Trial Balance, adjustments, and adjusted balances together before the financial statements are prepared.</p><button class="btn secondary" id="revealNext">Show me a hint →</button><div class="hidden-detail" id="nextHint"><div class="callout good"><strong>Think columns, not separate piles of work.</strong>The same account balances will keep moving forward. You will not be starting over.</div></div></div>
+<div class="actions"><button class="btn" data-go="quiz">Quick Check →</button></div>
+</section>
+
+<section id="quiz" class="screen">
+<div class="section-head"><div class="section-no">15 · Quick Check</div><h2>Can you identify what the period-end information requires?</h2><p>Choose an answer. Feedback appears immediately.</p></div>
+<div class="quiz-grid">
+<div class="quiz-card" data-answer="Expense and prepaid asset"><h3>1 · Part of a prepaid insurance policy has expired.</h3><div class="quiz-options"><button data-choice="Cash and expense">Cash and expense</button><button data-choice="Expense and prepaid asset">Expense and prepaid asset</button><button data-choice="Payable and expense">Payable and expense</button></div><div class="quiz-feedback"></div></div>
+<div class="quiz-card" data-answer="Unearned revenue and revenue"><h3>2 · Part of a customer's advance payment has now been earned.</h3><div class="quiz-options"><button data-choice="Cash and revenue">Cash and revenue</button><button data-choice="Receivable and revenue">Receivable and revenue</button><button data-choice="Unearned revenue and revenue">Unearned revenue and revenue</button></div><div class="quiz-feedback"></div></div>
+<div class="quiz-card" data-answer="Salaries Expense and Salaries Payable"><h3>3 · Employees earned ₱5,000 by period-end, payable next week.</h3><div class="quiz-options"><button data-choice="Cash and Salaries Expense">Cash and Salaries Expense</button><button data-choice="Salaries Expense and Salaries Payable">Salaries Expense and Salaries Payable</button><button data-choice="Salaries Payable and Cash">Salaries Payable and Cash</button></div><div class="quiz-feedback"></div></div>
+<div class="quiz-card" data-answer="₱2,000"><h3>4 · Equipment costs ₱120,000, no salvage value, 5-year life. Monthly straight-line depreciation?</h3><div class="quiz-options"><button data-choice="₱2,000">₱2,000</button><button data-choice="₱10,000">₱10,000</button><button data-choice="₱24,000">₱24,000</button></div><div class="quiz-feedback"></div></div>
+<div class="quiz-card" data-answer="Contra-asset"><h3>5 · Accumulated Depreciation is best classified as:</h3><div class="quiz-options"><button data-choice="Expense">Expense</button><button data-choice="Liability">Liability</button><button data-choice="Contra-asset">Contra-asset</button></div><div class="quiz-feedback"></div></div>
+<div class="quiz-card" data-answer="₱7,000"><h3>6 · Required Allowance for Doubtful Accounts balance ₱8,000; existing credit balance ₱1,000. Adjustment?</h3><div class="quiz-options"><button data-choice="₱1,000">₱1,000</button><button data-choice="₱7,000">₱7,000</button><button data-choice="₱8,000">₱8,000</button></div><div class="quiz-feedback"></div></div>
+</div>
+<div class="actions"><button class="btn" data-go="wrap">Complete the module →</button></div>
+</section>
+
+<section id="wrap" class="screen">
+<div class="section-head"><div class="section-no">16 · Module Wrap-Up</div><h2>The same accounting information keeps moving forward.</h2><p>The Unadjusted Trial Balance gave us the balances before adjustment. Period-end review identifies what needs updating, and adjusting entries bring those accounts up to date.</p></div>
+<div class="grid three">
+<div class="card"><div class="eyebrow">Module 08</div><h3>Unadjusted Trial Balance</h3><p>What do the ledger balances currently show?</p></div>
+<div class="card"><div class="eyebrow">Module 09</div><h3>Adjusting Entries</h3><p>What must be updated at the end of the accounting period?</p></div>
+<div class="card"><div class="eyebrow">Next</div><h3>Adjusted Trial Balance</h3><p>What do the accounts show after the adjustments are posted?</p></div>
+</div>
+<div class="callout good"><strong>Unadjusted Trial Balance → Period-End Review → Adjusting Entries → Adjusted Trial Balance</strong>Accounting information is being refined for the period—not restarted.</div>
+<div class="callout"><strong>One last reminder</strong>You do not need to master every adjustment at once. Follow the timeline, identify what changed by period-end, locate the existing balance when needed, compute the amount, and then prepare the entry.</div>
+<div class="actions"><a class="btn" href="activities.html">View Activities →</a><a class="btn secondary" href="modules.html">Back to Modules</a></div>
+</section>
+
+<section id="examples" class="screen"><div class="section-head"><div class="section-no">17 · Guided Build · January 31, 2026</div><h2>Move Power Laundry's balances forward.</h2><p>Start with the Unadjusted Trial Balance from Module 08. One period-end entry at a time, record the adjustment, post it to the affected accounts, and see the balances update.</p></div><div class="scenario"><span class="date-chip">Period-end information</span><p id="adjustmentFact"><strong>Start with Laundry Supplies.</strong> A physical count shows ₱1,000 remains from the ₱5,000 unadjusted balance.</p></div><div class="actions"><button class="btn" id="postAdjustment">Post Next Adjustment →</button><button class="btn secondary" id="resetAdjustments">Reset</button></div><div class="panel" id="entryPreview"><div class="mini-label">Adjusting Entry Preview</div><p>Post an adjustment to view its Debit, Credit, and explanation.</p></div><div class="callout" id="ledgerReminder"><strong>Then post the entry to the ledger.</strong>The adjustment changes the affected account balances; new account titles appear below the original Module 08 balances when they are first needed.</div><div class="balance-view" aria-label="Power Laundry account balances"><div class="mini-label">Power Laundry · Balances in Progress</div><div class="balance-scroll"><table class="balance-table"><thead><tr><th rowspan="2">Accounts</th><th colspan="2">Unadjusted Trial Balance</th><th colspan="2">Adjustments</th><th colspan="2">Updated Balances</th></tr><tr><th>Debit</th><th>Credit</th><th>Debit</th><th>Credit</th><th>Debit</th><th>Credit</th></tr></thead><tbody id="adjustmentBody"></tbody></table></div></div></section>
+
+</main>
+<footer class="footer"><div>For educational use only. Please do not reproduce, redistribute, or share these materials without permission. Copyright 2026 ave.guz</div><div class="footer-nav"><a href="index.html">Home</a><a class="modules-btn" href="modules.html">Modules</a><button id="backBtn">← Back</button><button id="nextBtn">Next →</button></div></footer>
+</div>
+
+<style>
+.balance-view{margin-top:16px;border:1px solid var(--line);border-radius:15px;background:#fff;padding:17px}.balance-scroll{overflow-x:auto}.balance-table{width:100%;min-width:920px;border-collapse:collapse}.balance-table th,.balance-table td{border:1px solid #cbd6d8;padding:9px 10px;vertical-align:middle}.balance-table th{background:#eef3f4;color:#52676d;font-size:.76rem;font-weight:850;letter-spacing:.055em;text-transform:uppercase;text-align:center}.balance-table td:first-child{min-width:220px;font-weight:760}.balance-table td:not(:first-child){min-width:95px;text-align:right;font-variant-numeric:tabular-nums}.balance-table tr.adjustment-row td{background:#f8fbfb}.balance-table tr.current-adjustment td{background:var(--accent-soft)}.balance-table tr.introduced-account td:first-child{padding-left:22px;color:var(--accent-dark)}
+</style>
+<script>
+const screens=['welcome','outcomes','cycle','checkpoint','map','prepaid','unearned','accruedexpense','interest','accruedincome','depreciation','doubtful','required','summary','afteradjustments','nextstage','quiz','wrap','examples'];
+let current='welcome';
+function showScreen(id){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ const target=document.getElementById(id); if(!target)return;
+ target.classList.add('active'); current=id;
+ document.querySelectorAll('.nav button').forEach(b=>{
+   const group=b.dataset.screen;
+   const active=group===id ||
+    (group==='deferrals' && ['prepaid','unearned'].includes(id)) ||
+    (group==='accruals' && ['accruedexpense','interest','accruedincome'].includes(id)) ||
+    (group==='estimates' && ['depreciation','doubtful','required'].includes(id)) ||
+    (group==='summary' && ['summary','afteradjustments','nextstage'].includes(id));
+   b.classList.toggle('active',active);
+ });
+ const i=screens.indexOf(id);
+ document.getElementById('progressFill').style.width=((i+1)/screens.length*100)+'%';
+ document.getElementById('backBtn').disabled=i<=0;
+ document.getElementById('nextBtn').disabled=i>=screens.length-1;
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>showScreen(b.dataset.go)));
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>{
+ const id=b.dataset.screen;
+ if(id==='deferrals') showScreen('prepaid');
+ else if(id==='accruals') showScreen('accruedexpense');
+ else if(id==='estimates') showScreen('depreciation');
+ else showScreen(id);
+}));
+document.getElementById('backBtn').addEventListener('click',()=>{const i=screens.indexOf(current);if(i>0)showScreen(screens[i-1])});
+document.getElementById('nextBtn').addEventListener('click',()=>{const i=screens.indexOf(current);if(i<screens.length-1)showScreen(screens[i+1])});
+
+document.querySelectorAll('[data-method]').forEach(btn=>btn.addEventListener('click',()=>{
+ document.querySelectorAll('[data-method]').forEach(x=>x.classList.remove('active'));
+ btn.classList.add('active');
+ ['asset','expense'].forEach(id=>document.getElementById(id).classList.toggle('active',id===btn.dataset.method));
+}));
+document.querySelectorAll('[data-revmethod]').forEach(btn=>btn.addEventListener('click',()=>{
+ document.querySelectorAll('[data-revmethod]').forEach(x=>x.classList.remove('active'));
+ btn.classList.add('active');
+ ['liability','income'].forEach(id=>document.getElementById(id).classList.toggle('active',id===btn.dataset.revmethod));
+}));
+document.getElementById('revealNext').addEventListener('click',()=>{
+ document.getElementById('nextHint').classList.toggle('show');
+ document.getElementById('revealNext').textContent=document.getElementById('nextHint').classList.contains('show')?'Hide hint':'Show me a hint →';
+});
+document.querySelectorAll('.quiz-card').forEach(card=>card.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{
+ const correct=button.dataset.choice===card.dataset.answer;
+ card.querySelectorAll('button').forEach(item=>item.classList.remove('correct','wrong'));
+ button.classList.add(correct?'correct':'wrong');
+ if(!correct) card.querySelector(`[data-choice="${card.dataset.answer}"]`).classList.add('correct');
+ card.querySelector('.quiz-feedback').innerHTML=correct?'<strong>Correct.</strong> Follow the period-end condition and the accounts that need updating.':`<strong>Check the period-end condition.</strong> The correct answer is ${card.dataset.answer}.`;
+})));
+const guidedAccounts=[
+ {account:'Cash',side:'debit',amount:147000},
+ {account:'Accounts Receivable',side:'debit',amount:17000},
+ {account:'Laundry Supplies',side:'debit',amount:5000},
+ {account:'Laundry Equipment',side:'debit',amount:44000},
+ {account:'Accounts Payable',side:'credit',amount:16000},
+ {account:'Notes Payable',side:'credit',amount:30000},
+ {account:'Unearned Service Revenue',side:'credit',amount:4000},
+ {account:'Owner, Capital',side:'credit',amount:150000},
+ {account:'Owner, Withdrawals',side:'debit',amount:4500},
+ {account:'Service Revenue',side:'credit',amount:43000},
+ {account:'Salaries Expense',side:'debit',amount:7000},
+ {account:'Rent Expense',side:'debit',amount:9000},
+ {account:'Utilities Expense',side:'debit',amount:3000},
+ {account:'Repairs and Maintenance Expense',side:'debit',amount:4000},
+ {account:'Advertising Expense',side:'debit',amount:2500}
+];
+const guidedAdjustments=[
+ {fact:'A physical count shows ₱1,000 remains from the ₱5,000 unadjusted Laundry Supplies balance.',debit:'Supplies Expense',credit:'Laundry Supplies',amount:4000,explanation:'To record laundry supplies used during January.'},
+ {fact:'All ₱4,000 of Unearned Service Revenue has been earned by January 31.',debit:'Unearned Service Revenue',credit:'Service Revenue',amount:4000,explanation:'To record service revenue earned from advance collections.'},
+ {fact:'Employees earned ₱2,700 during the final three unpaid days of January.',debit:'Salaries Expense',credit:'Salaries Payable',amount:2700,explanation:'To record salaries incurred but not yet paid.'},
+ {fact:'The ₱30,000 note payable bears 12% annual interest. One month of interest has accrued: ₱300.',debit:'Interest Expense',credit:'Interest Payable',amount:300,explanation:'To record interest incurred on the note payable.'},
+ {fact:'Equipment depreciation for January is ₱1,000.',debit:'Depreciation Expense—Laundry Equipment',credit:'Accumulated Depreciation—Laundry Equipment',amount:1000,explanation:'To record January depreciation.'},
+ {fact:'Two percent of Accounts Receivable, ₱340, is estimated uncollectible.',debit:'Bad Debts Expense',credit:'Allowance for Doubtful Accounts',amount:340,explanation:'To record estimated uncollectible accounts.'}
+];
+let postedAdjustments=0;
+const adjustmentFact=document.getElementById('adjustmentFact');
+const entryPreview=document.getElementById('entryPreview');
+const adjustmentBody=document.getElementById('adjustmentBody');
+const postAdjustment=document.getElementById('postAdjustment');
+function renderGuidedAdjustments(){
+ const posted=guidedAdjustments.slice(0,postedAdjustments),debits={},credits={};
+ posted.forEach(({debit,credit,amount})=>{debits[debit]=(debits[debit]||0)+amount;credits[credit]=(credits[credit]||0)+amount;});
+ const accountNames=new Set(guidedAccounts.map(({account})=>account));
+ const introduced=[...Object.keys(debits),...Object.keys(credits)];
+ const visibleAccounts=guidedAccounts.concat([...new Set(introduced)].filter(account=>!accountNames.has(account)).map(account=>({account,side:credits[account]?'credit':'debit',amount:0,introduced:true})));
+ const money=amount=>amount?`₱${amount.toLocaleString('en-PH')}`:'';
+ const current=posted[posted.length-1];
+ adjustmentBody.innerHTML=visibleAccounts.map(({account,side,amount,introduced})=>{
+  const debit=debits[account]||0,credit=credits[account]||0,updated=(side==='debit'?amount:-amount)+debit-credit;
+  return `<tr class="${debit||credit?'adjustment-row':''}${current&&(current.debit===account||current.credit===account)?' current-adjustment':''}${introduced?' introduced-account':''}"><td>${account}</td><td>${side==='debit'?money(amount):''}</td><td>${side==='credit'?money(amount):''}</td><td>${money(debit)}</td><td>${money(credit)}</td><td>${updated>0?money(updated):''}</td><td>${updated<0?money(Math.abs(updated)):''}</td></tr>`;
+ }).join('');
+ if(!postedAdjustments){entryPreview.innerHTML='<div class="mini-label">Adjusting Entry Preview</div><p>Post an adjustment to view its Debit, Credit, and explanation.</p>';return;}
+ const {debit,credit,amount,explanation}=current;
+ entryPreview.innerHTML=`<div class="mini-label">Adjusting Entry ${posted.length} · January 31, 2026</div><table class="entry"><tr><td><strong>${debit}</strong></td><td>${money(amount)}</td><td></td></tr><tr><td class="credit-title">${credit}</td><td></td><td>${money(amount)}</td></tr><tr><td colspan="3" class="explain">${explanation}</td></tr></table>`;
+ if(postedAdjustments===guidedAdjustments.length){adjustmentFact.innerHTML='<strong>All adjustments are posted.</strong> Review the updated balances before moving to the next module.';postAdjustment.textContent='All Adjustments Posted';postAdjustment.disabled=true;}else{adjustmentFact.innerHTML=`<strong>Next period-end update.</strong> ${guidedAdjustments[postedAdjustments].fact}`;}
+}
+postAdjustment.addEventListener('click',()=>{postedAdjustments+=1;renderGuidedAdjustments();});
+document.getElementById('resetAdjustments').addEventListener('click',()=>{postedAdjustments=0;postAdjustment.disabled=false;postAdjustment.textContent='Post Next Adjustment →';adjustmentFact.innerHTML='<strong>Start with Laundry Supplies.</strong> A physical count shows ₱1,000 remains from the ₱5,000 unadjusted balance.';renderGuidedAdjustments();});
+document.querySelector('#wrap .actions').insertAdjacentHTML('afterbegin','<button class="btn" data-go="examples">Continue to Guided Practice →</button>');
+document.querySelector('#wrap [data-go="examples"]').addEventListener('click',()=>showScreen('examples'));
+renderGuidedAdjustments();
+showScreen('welcome');
+</script>
+</body>
+<!-- Legacy duplicate fragment retained as non-executing text.
+<section id="quiz" class="screen"><div class="section-head"><div class="section-no">04 · Quick Check</div><h2>Can you identify the period-end adjustment?</h2><p>Choose an answer. Feedback appears immediately.</p></div><div class="quiz-grid"><div class="quiz-card" data-answer="Expense and prepaid asset"><h3>1 · Part of a prepaid insurance policy has expired.</h3><div class="quiz-options"><button data-choice="Cash and expense">Cash and expense</button><button data-choice="Expense and prepaid asset">Expense and prepaid asset</button><button data-choice="Payable and expense">Payable and expense</button></div><div class="quiz-feedback"></div></div><div class="quiz-card" data-answer="Unearned revenue and revenue"><h3>2 · Part of an advance payment has been earned.</h3><div class="quiz-options"><button data-choice="Cash and revenue">Cash and revenue</button><button data-choice="Receivable and revenue">Receivable and revenue</button><button data-choice="Unearned revenue and revenue">Unearned revenue and revenue</button></div><div class="quiz-feedback"></div></div><div class="quiz-card" data-answer="Salaries Expense and Salaries Payable"><h3>3 · Employees earned PHP 5,000, payable next week.</h3><div class="quiz-options"><button data-choice="Cash and Salaries Expense">Cash and Salaries Expense</button><button data-choice="Salaries Expense and Salaries Payable">Salaries Expense and Salaries Payable</button><button data-choice="Salaries Payable and Cash">Salaries Payable and Cash</button></div><div class="quiz-feedback"></div></div><div class="quiz-card" data-answer="Contra-asset"><h3>4 · Accumulated Depreciation is best classified as:</h3><div class="quiz-options"><button data-choice="Expense">Expense</button><button data-choice="Liability">Liability</button><button data-choice="Contra-asset">Contra-asset</button></div><div class="quiz-feedback"></div></div></div><div class="actions"><button class="btn" data-go="wrap">Complete the module →</button></div></section>
+<section id="wrap" class="screen"><div class="section-head"><div class="section-no">05 · Module Wrap-Up</div><h2>The same accounting information keeps moving forward.</h2><p>The Unadjusted Trial Balance gave us balances before adjustment. Period-end review identifies what needs updating, and adjusting entries bring the accounts up to date.</p></div><div class="grid three"><div class="card"><div class="eyebrow">Module 08</div><h3>Unadjusted Trial Balance</h3><p>What do ledger balances currently show?</p></div><div class="card"><div class="eyebrow">Module 09</div><h3>Adjusting Entries</h3><p>What must be updated at period-end?</p></div><div class="card"><div class="eyebrow">Next</div><h3>Adjusted Trial Balance</h3><p>What do the accounts show after adjustment?</p></div></div><div class="callout good"><strong>Unadjusted Trial Balance → Adjusting Entries → Adjusted Trial Balance</strong>Accounting information is refined for the period, not restarted.</div><div class="actions"><a class="btn" href="activities.html">View Activities →</a><a class="btn secondary" href="modules.html">Back to Modules</a></div></section>
+</main><footer class="footer"><div>For educational use only. Please do not reproduce, redistribute, or share these materials without permission. Copyright 2026 ave.guz</div><div class="footer-nav"><a href="index.html">Home</a><a class="modules-btn" href="modules.html">Modules</a><button id="backBtn">← Back</button><button id="nextBtn">Next →</button></div></footer></div><script>
+const screens=['welcome','outcomes','cycle','map','examples','quiz','wrap'];let current='welcome';function showScreen(id){document.querySelectorAll('.screen').forEach(screen=>screen.classList.remove('active'));const target=document.getElementById(id);if(!target)return;target.classList.add('active');current=id;document.querySelectorAll('.nav button').forEach(button=>button.classList.toggle('active',button.dataset.screen===id));const index=screens.indexOf(id);document.getElementById('progressFill').style.width=((index+1)/screens.length*100)+'%';document.getElementById('backBtn').disabled=index<=0;document.getElementById('nextBtn').disabled=index>=screens.length-1;window.scrollTo({top:0,behavior:'smooth'})}document.querySelectorAll('[data-go]').forEach(button=>button.addEventListener('click',()=>showScreen(button.dataset.go)));document.querySelectorAll('.nav button').forEach(button=>button.addEventListener('click',()=>showScreen(button.dataset.screen)));document.getElementById('backBtn').addEventListener('click',()=>{const index=screens.indexOf(current);if(index>0)showScreen(screens[index-1])});document.getElementById('nextBtn').addEventListener('click',()=>{const index=screens.indexOf(current);if(index<screens.length-1)showScreen(screens[index+1])});
+const money=value=>value?'PHP '+Number(value).toLocaleString('en-PH'):'';const adjustmentAccounts=[{account:'Laundry Supplies',side:'Debit',amount:5000},{account:'Supplies Expense',side:'Debit',amount:0},{account:'Unearned Service Revenue',side:'Credit',amount:4000},{account:'Service Revenue',side:'Credit',amount:43000},{account:'Salaries Expense',side:'Debit',amount:7000},{account:'Salaries Payable',side:'Credit',amount:0},{account:'Interest Expense',side:'Debit',amount:0},{account:'Interest Payable',side:'Credit',amount:0},{account:'Laundry Equipment',side:'Debit',amount:44000},{account:'Accumulated Depreciation—Laundry Equipment',side:'Credit',amount:0},{account:'Depreciation Expense—Laundry Equipment',side:'Debit',amount:0},{account:'Accounts Receivable',side:'Debit',amount:17000},{account:'Allowance for Doubtful Accounts',side:'Credit',amount:0},{account:'Bad Debts Expense',side:'Debit',amount:0}];const adjustments=[{fact:'A physical count shows PHP 1,000 of Laundry Supplies remains from the PHP 5,000 unadjusted balance.',entry:'Debit Supplies Expense and credit Laundry Supplies, PHP 4,000.',lines:[['Supplies Expense','Debit',4000],['Laundry Supplies','Credit',4000]]},{fact:'All PHP 4,000 of Unearned Service Revenue has been earned by January 31.',entry:'Debit Unearned Service Revenue and credit Service Revenue, PHP 4,000.',lines:[['Unearned Service Revenue','Debit',4000],['Service Revenue','Credit',4000]]},{fact:'Employees earned PHP 2,700 during the final three unpaid days of January.',entry:'Debit Salaries Expense and credit Salaries Payable, PHP 2,700.',lines:[['Salaries Expense','Debit',2700],['Salaries Payable','Credit',2700]]},{fact:'The PHP 30,000 note payable bears 12% annual interest. One month of interest has accrued: PHP 300.',entry:'Debit Interest Expense and credit Interest Payable, PHP 300.',lines:[['Interest Expense','Debit',300],['Interest Payable','Credit',300]]},{fact:'Equipment depreciation for January is PHP 1,000, and 2% of Accounts Receivable (PHP 340) is estimated uncollectible.',entry:'Record both estimates: depreciation and doubtful accounts.',lines:[['Depreciation Expense—Laundry Equipment','Debit',1000],['Accumulated Depreciation—Laundry Equipment','Credit',1000],['Bad Debts Expense','Debit',340],['Allowance for Doubtful Accounts','Credit',340]]}];let postedAdjustments=0;function renderAdjustments(){const debit={},credit={};adjustments.slice(0,postedAdjustments).forEach(adjustment=>adjustment.lines.forEach(([account,side,amount])=>{const target=side==='Debit'?debit:credit;target[account]=(target[account]||0)+amount}));document.getElementById('adjustmentBody').innerHTML=adjustmentAccounts.map(item=>{const debitAmount=debit[item.account]||0,creditAmount=credit[item.account]||0;const signed=(item.side==='Debit'?item.amount:-item.amount)+debitAmount-creditAmount;const adjusted=signed?`${money(Math.abs(signed))} ${signed>0?'Dr':'Cr'}`:'';return `<tr class="${debitAmount||creditAmount?'adjustment-row':''}"><td>${item.account}</td><td>${item.amount?`${money(item.amount)} ${item.side==='Debit'?'Dr':'Cr'}`:''}</td><td>${money(debitAmount)}</td><td>${money(creditAmount)}</td><td>${adjusted}</td></tr>`}).join('');const fact=document.getElementById('adjustmentFact'),message=document.getElementById('adjustmentMessage'),button=document.getElementById('postAdjustment');if(postedAdjustments<adjustments.length){fact.innerHTML=`<strong>Adjustment ${postedAdjustments+1}.</strong> ${adjustments[postedAdjustments].fact}`;message.innerHTML=`<strong>Next entry:</strong> ${adjustments[postedAdjustments].entry}`;button.textContent='Post Next Adjustment →'}else{fact.innerHTML='<strong>All January adjustments are posted.</strong> Compare the unadjusted and adjusted balances before moving to the worksheet.';message.innerHTML='<strong>Adjustments total:</strong> PHP 12,340 Debit = PHP 12,340 Credit.';button.textContent='All Adjustments Posted';button.disabled=true}}document.getElementById('postAdjustment').addEventListener('click',()=>{if(postedAdjustments<adjustments.length){postedAdjustments++;renderAdjustments()}});document.getElementById('resetAdjustments').addEventListener('click',()=>{postedAdjustments=0;document.getElementById('postAdjustment').disabled=false;renderAdjustments()});renderAdjustments();document.querySelectorAll('.quiz-card').forEach(card=>card.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{const correct=button.dataset.choice===card.dataset.answer;card.querySelectorAll('button').forEach(item=>item.classList.remove('correct','wrong'));button.classList.add(correct?'correct':'wrong');if(!correct)card.querySelector(`[data-choice="${card.dataset.answer}"]`).classList.add('correct');card.querySelector('.quiz-feedback').innerHTML=correct?'<strong>Correct.</strong> Follow the period-end condition and the accounts that need updating.':`<strong>Check the period-end condition.</strong> The correct answer is ${card.dataset.answer}.`;})));showScreen('welcome');
+</script><script>
+const worksheetAccounts=[
+	{account:'Cash',side:'Debit',amount:147000},
+	{account:'Accounts Receivable',side:'Debit',amount:17000},
+	{account:'Allowance for Doubtful Accounts',side:'Credit',amount:0},
+	{account:'Laundry Supplies',side:'Debit',amount:5000},
+	{account:'Laundry Equipment',side:'Debit',amount:44000},
+	{account:'Accumulated Depreciation—Laundry Equipment',side:'Credit',amount:0},
+	{account:'Accounts Payable',side:'Credit',amount:16000},
+	{account:'Notes Payable',side:'Credit',amount:30000},
+	{account:'Interest Payable',side:'Credit',amount:0},
+	
