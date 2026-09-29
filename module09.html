@@ -439,6 +439,7 @@ postAdjustment.addEventListener('click',()=>{postedAdjustments+=1;renderGuidedAd
 document.getElementById('resetAdjustments').addEventListener('click',()=>{postedAdjustments=0;postAdjustment.disabled=false;postAdjustment.textContent='Post Next Adjustment →';adjustmentFact.innerHTML='<strong>Start with Laundry Supplies.</strong> A physical count shows ₱1,000 remains from the ₱5,000 unadjusted balance.';renderGuidedAdjustments();});
 document.querySelector('#wrap .actions').insertAdjacentHTML('afterbegin','<button class="btn" data-go="examples">Continue to Guided Practice →</button>');
 document.querySelector('#wrap [data-go="examples"]').addEventListener('click',()=>showScreen('examples'));
+document.querySelector('#examples .balance-view').insertAdjacentHTML('afterend','<div class="actions"><a class="btn" href="module10.html">Continue to Module 10: Worksheet →</a></div>');
 renderGuidedAdjustments();
 showScreen('welcome');
 </script>
