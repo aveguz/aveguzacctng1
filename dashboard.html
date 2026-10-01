@@ -1,4 +1,61 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard | ACCTNG 1 Learning Hub</title><link rel="stylesheet" href="auth.css"><style>.score-matrix{width:100%;margin-top:15px;border-collapse:collapse;font-size:.86rem}.score-matrix td,.score-matrix th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}.score-matrix th{color:#516b70;background:#f5f9f9;font-size:.68rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.score-matrix td:nth-child(n+2),.score-matrix th:nth-child(n+2){text-align:right}.score-matrix td{color:var(--muted)}.score-matrix td:first-child{color:var(--ink);font-weight:850}.matrix-scroll{overflow-x:auto}.dashboard-actions{margin:18px 0}.process-matrix{min-width:900px}.process-matrix td,.process-matrix th{vertical-align:top;text-align:left}.process-step{display:grid;gap:3px}.process-step strong{color:var(--ink)}.process-step span{color:var(--muted);font-size:.78rem}.process-step a{color:var(--accent-dark);font-size:.8rem;font-weight:850;text-decoration:underline}.process-step .unavailable{color:var(--muted);font-size:.8rem;font-weight:850}@media (max-width:720px){.process-matrix,.score-matrix{min-width:690px}}@media print{body{background:#fff}.dashboard-actions,.notice,.topbar{display:none!important}main{max-width:none;margin:0;padding:0}.dashboard-sections{display:block}.card{break-inside:avoid;box-shadow:none}}</style></head><body><header class="topbar"><div class="nav"><a class="brand" href="index.html"><span class="brand-mark">AG</span><span><span class="brand-title">AVE GUZMAN</span><span class="brand-sub">ACCTNG 1 LEARNING HUB</span></span></a><nav class="navlinks"><a href="index.html">HOME</a><a href="modules.html">MODULES</a><a href="activities.html">ACTIVITIES</a><a class="active" href="dashboard.html">DASHBOARD</a><a href="profile.html">PROFILE</a></nav></div></header><main><div class="eyebrow">Student learning record</div><h1 id="dashboardTitle">Your dashboard.</h1><p class="lead">Review your scores by activity or challenge, then follow your module progress.</p><div class="dashboard-actions"><button type="button" class="btn" onclick="window.print()">Print / Save Dashboard</button></div><section class="dashboard-grid" aria-label="Learning summary"><div class="dashboard-metric"><span>Completed Attempts</span><strong id="attemptTotal">—</strong></div><div class="dashboard-metric"><span>Best Score</span><strong id="bestScore">—</strong></div><div class="dashboard-metric"><span>Modules Completed</span><strong id="moduleTotal">—</strong></div></section><section class="dashboard-sections"><section class="card"><h2>Activity Scoring History</h2><p>Attempts are grouped by activity and listed in completion order.</p><div class="matrix-scroll" id="activityHistory"><p class="empty-copy">Loading activity records…</p></div></section><section class="card"><h2>Accounting Records Flow</h2><p>Return to each connected record in the accounting process, from journalizing through the Unadjusted Trial Balance.</p><div class="matrix-scroll" id="accountingProcessHistory"><p class="empty-copy">Loading accounting records…</p></div></section><section class="card"><h2>Challenge Scoring History</h2><p>Completed challenges will appear here when challenge tracking is connected.</p><div class="matrix-scroll" id="challengeHistory"><p class="empty-copy">Loading challenge records…</p></div></section><section class="card"><h2>Module Progress</h2><p>Modules appear here as their opened and completed tracking is connected.</p><div class="history-list" id="moduleHistory"><p class="empty-copy">Loading module progress…</p></div></section></section><div class="notice" id="notice" role="status"></div></main><script type="module">import { getSession, requireUser, request } from "./auth.js";
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard | ACCTNG 1 Learning Hub</title><link rel="stylesheet" href="auth.css"><style>.score-matrix{width:100%;margin-top:15px;border-collapse:collapse;font-size:.86rem}.score-matrix td,.score-matrix th{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left}.score-matrix th{color:#516b70;background:#f5f9f9;font-size:.68rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase}.score-matrix td:nth-child(n+2),.score-matrix th:nth-child(n+2){text-align:right}.score-matrix td{color:var(--muted)}.score-matrix td:first-child{color:var(--ink);font-weight:850}.matrix-scroll{overflow-x:auto}.dashboard-actions{margin:18px 0}.process-matrix{min-width:900px}.process-matrix td,.process-matrix th{vertical-align:top;text-align:left}.process-step{display:grid;gap:3px}.process-step strong{color:var(--ink)}.process-step span{color:var(--muted);font-size:.78rem}.process-step a{color:var(--accent-dark);font-size:.8rem;font-weight:850;text-decoration:underline}.process-step .unavailable{color:var(--muted);font-size:.8rem;font-weight:850}
+.cycle-summary-card{margin-bottom:18px;border:1px solid #c4d8db;border-radius:16px;background:linear-gradient(180deg,#fff,#f6fafb);padding:20px 24px;box-shadow:var(--shadow)}
+.cycle-summary-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px}
+.cycle-metric-box{text-align:right}
+.cycle-metric-box .val{font-size:clamp(1.9rem,3.8vw,2.5rem);font-weight:900;color:var(--accent-dark);line-height:1}
+.cycle-metric-box .lbl{font-size:.72rem;font-weight:850;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:4px}
+.cycle-status-pill{display:inline-block;padding:3px 9px;border-radius:999px;font-size:.74rem;font-weight:850}
+.cycle-status-pill.completed{background:var(--accent-soft);color:var(--accent-dark)}
+.cycle-status-pill.pending{background:#edf2f3;color:var(--muted)}
+.cycle-status-pill.ended{background:var(--gold-soft);color:#7c5513}
+.coming-soon-card{margin-top:20px;border:1px dashed #b9cdd0;border-radius:15px;background:#fbfdfd;padding:18px 22px}
+.coming-soon-card h3{margin:0 0 6px;font-size:.82rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.coming-soon-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}
+.coming-soon-item{border:1px solid var(--line);border-radius:10px;background:#fff;padding:12px 14px;color:var(--muted);opacity:.75}
+.coming-soon-item strong{display:block;color:var(--ink);font-size:.88rem;margin-bottom:3px}
+.coming-soon-item span{font-size:.74rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}@media (max-width:720px){.process-matrix,.score-matrix{min-width:690px}}@media print{body{background:#fff}.dashboard-actions,.notice,.topbar{display:none!important}main{max-width:none;margin:0;padding:0}.dashboard-sections{display:block}.card{break-inside:avoid;box-shadow:none}}</style></head><body><header class="topbar"><div class="nav"><a class="brand" href="index.html"><span class="brand-mark">AG</span><span><span class="brand-title">AVE GUZMAN</span><span class="brand-sub">ACCTNG 1 LEARNING HUB</span></span></a><nav class="navlinks"><a href="index.html">HOME</a><a href="modules.html">MODULES</a><a href="activities.html">ACTIVITIES</a><a class="active" href="dashboard.html">DASHBOARD</a><a href="profile.html">PROFILE</a></nav></div></header><main><div class="eyebrow">Student learning record</div><h1 id="dashboardTitle">Your dashboard.</h1><p class="lead">Review your scores by activity or challenge, then follow your module progress.</p><div class="dashboard-actions"><button type="button" class="btn" onclick="window.print()">Print / Save Dashboard</button></div><section class="dashboard-grid" aria-label="Learning summary"><div class="dashboard-metric"><span>Completed Attempts</span><strong id="attemptTotal">—</strong></div><div class="dashboard-metric"><span>Best Score</span><strong id="bestScore">—</strong></div><div class="dashboard-metric"><span>Modules Completed</span><strong id="moduleTotal">—</strong></div></section><section class="dashboard-sections"><section class="card" id="accountingCycleProgressCard">
+<h2>Accounting Cycle Progress</h2>
+<p id="cycleProgressSubtitle">5 of 5 currently available activities in the accounting cycle.</p>
+<div class="cycle-summary-card">
+  <div class="cycle-summary-head">
+    <div>
+      <div class="eyebrow">Accounting Cycle · Power Laundry</div>
+      <h3 style="margin:4px 0 2px" id="cycleCompletedCount">—</h3>
+      <span style="font-size:.84rem;color:var(--muted)">Based on latest completed attempts</span>
+    </div>
+    <div class="cycle-metric-box">
+      <div class="val" id="cycleAccuracyVal">—</div>
+      <div class="lbl">Current Cycle Accuracy</div>
+    </div>
+  </div>
+  <div class="matrix-scroll">
+    <table class="score-matrix" id="accountingCycleTable">
+      <thead>
+        <tr>
+          <th>Activity</th>
+          <th>Latest Attempt</th>
+          <th>Status</th>
+          <th>Activity Mark</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="accountingCycleBody"></tbody>
+    </table>
+  </div>
+</div>
+<div class="coming-soon-card">
+  <div class="eyebrow" style="color:var(--muted)">Visual Placeholder · Phase 7</div>
+  <h3>Coming Soon</h3>
+  <p style="margin:0;font-size:.84rem;color:var(--muted)">The following downstream stages of the accounting cycle are currently in development. They do not affect current cycle progress or accuracy.</p>
+  <div class="coming-soon-list">
+    <div class="coming-soon-item"><strong>Financial Statements</strong><span>Coming Soon · Step 7</span></div>
+    <div class="coming-soon-item"><strong>Closing Entries</strong><span>Coming Soon · Step 8</span></div>
+    <div class="coming-soon-item"><strong>Post-Closing Trial Balance</strong><span>Coming Soon · Step 9</span></div>
+  </div>
+</div>
+</section>
+
+<section class="card"><h2>Activity Scoring History</h2><p>Attempts are grouped by activity and listed in completion order.</p><div class="matrix-scroll" id="activityHistory"><p class="empty-copy">Loading activity records…</p></div></section><section class="card"><h2>Accounting Records Flow</h2><p>Return to each connected record in the accounting process, from journalizing through the Unadjusted Trial Balance.</p><div class="matrix-scroll" id="accountingProcessHistory"><p class="empty-copy">Loading accounting records…</p></div></section><section class="card"><h2>Challenge Scoring History</h2><p>Completed challenges will appear here when challenge tracking is connected.</p><div class="matrix-scroll" id="challengeHistory"><p class="empty-copy">Loading challenge records…</p></div></section><section class="card"><h2>Module Progress</h2><p>Modules appear here as their opened and completed tracking is connected.</p><div class="history-list" id="moduleHistory"><p class="empty-copy">Loading module progress…</p></div></section></section><div class="notice" id="notice" role="status"></div></main><script type="module">import { getSession, requireUser, request } from "./auth.js";
       const session = getSession(),
         notice = document.getElementById("notice");
       const showError = (message) => {
@@ -49,6 +106,101 @@
       function moduleIdFor(item) {
         return String(item.module_id).padStart(2, "0");
       }
+            function renderAccountingCycleProgress(attempts) {
+        const available = [
+          { id: "06.1", name: "06.1 General Journal", href: "activity06-1.html" },
+          { id: "07.2", name: "07.2 Running-Balance Ledger", href: "activity07-2.html" },
+          { id: "08.1", name: "08.1 Unadjusted Trial Balance", href: "activity08-1.html" },
+          { id: "09.1", name: "09.1 Adjusting Entries", href: "activity09-1.html" },
+          { id: "10.1", name: "10.1 10-Column Worksheet", href: "activity10-1.html" }
+        ];
+
+        // Find latest completed attempt for each activity (ended attempts do not count as completed)
+        const completedMap = {};
+        attempts.forEach(item => {
+          if (item.status === "completed" || item.status == null) {
+            const cur = completedMap[item.activity_id];
+            if (!cur || new Date(item.completed_at) > new Date(cur.completed_at)) {
+              completedMap[item.activity_id] = item;
+            }
+          }
+        });
+
+        // Also check if there's an ended attempt for 08.1 if no completed
+        const latestAny = {};
+        attempts.forEach(item => {
+          const cur = latestAny[item.activity_id];
+          if (!cur || new Date(item.completed_at) > new Date(cur.completed_at)) {
+            latestAny[item.activity_id] = item;
+          }
+        });
+
+        let completedCount = 0;
+        let markSum = 0;
+        let markCount = 0;
+
+        const body = document.getElementById("accountingCycleBody");
+        body.replaceChildren();
+
+        available.forEach(act => {
+          const completedItem = completedMap[act.id];
+          const anyItem = latestAny[act.id];
+          const isCompleted = !!completedItem;
+          const isEnded = !isCompleted && (anyItem?.status === "ended");
+
+          let statusHtml = '<span class="cycle-status-pill pending">Not Started</span>';
+          let markHtml = '—';
+          let attemptText = '—';
+          let actionLink = `<a href="${act.href}">Start Activity →</a>`;
+
+          if (isCompleted) {
+            completedCount++;
+            let markAvailable = true;
+            let pct = 0;
+            if (act.id === "10.1") {
+              const stageAcc = completedItem.details?.worksheet_snapshot?.performance?.stageAccuracy || completedItem.details?.stageAccuracy;
+              if (stageAcc && typeof stageAcc.overall === "number" && Number.isFinite(stageAcc.overall)) {
+                pct = Math.round(stageAcc.overall);
+              } else if (Number(completedItem.max_score) === 100 && completedItem.score != null) {
+                pct = Math.round(Number(completedItem.score));
+              } else {
+                markAvailable = false;
+              }
+            } else {
+              pct = percentage(completedItem);
+            }
+            if (markAvailable) {
+              markSum += pct;
+              markCount++;
+              markHtml = `<strong>${pct}%</strong>`;
+            } else {
+              markHtml = '<span style="color:var(--muted);font-style:italic">Mark unavailable</span>';
+            }
+            statusHtml = '<span class="cycle-status-pill completed">Completed ✓</span>';
+            attemptText = `${attemptCode(completedItem)} (Att. ${escapeHtml(completedItem.attempt_number)})`;
+            actionLink = `<a href="${act.href}">Review / Redo →</a>`;
+          } else if (isEnded) {
+            statusHtml = '<span class="cycle-status-pill ended">Ended for Review</span>';
+            markHtml = '<span style="color:var(--muted);font-style:italic">Non-Qualifying</span>';
+            attemptText = `${attemptCode(anyItem)} (Att. ${escapeHtml(anyItem.attempt_number)})`;
+            actionLink = `<a href="${act.href}">Try Again →</a>`;
+          }
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `<td><strong>${escapeHtml(act.name)}</strong></td><td>${attemptText}</td><td>${statusHtml}</td><td>${markHtml}</td><td>${actionLink}</td>`;
+          body.append(tr);
+        });
+
+        document.getElementById("cycleCompletedCount").textContent = `${completedCount} of ${available.length} currently available activities completed`;
+        document.getElementById("cycleProgressSubtitle").textContent = `${completedCount} of ${available.length} completed on latest verified attempts.`;
+        if (markCount > 0) {
+          const avg = Math.round((markSum / markCount) * 10) / 10;
+          document.getElementById("cycleAccuracyVal").textContent = `${Number(avg.toFixed(1))}%`;
+        } else {
+          document.getElementById("cycleAccuracyVal").textContent = '—';
+        }
+      }
+
       function renderScoreMatrix(host, records, label) {
         host.replaceChildren();
         if (!records.length) {
@@ -152,6 +304,7 @@
             "Activity",
           );
           renderAccountingProcess(attempts);
+          renderAccountingCycleProgress(attempts);
           renderScoreMatrix(
             document.getElementById("challengeHistory"),
             challenges,
