@@ -36,7 +36,6 @@
         "05": "module05.html",
         "06": "module06.html",
         "07": "module07.html",
-        "08": "module08.html",
       };
       function localModuleProgress(moduleId) {
         try {
@@ -71,7 +70,7 @@
             host.append(heading);
             const table = document.createElement("table");
             table.className = "score-matrix";
-            table.innerHTML = `<thead><tr><th>Attempt</th>${label === "Activity" ? "<th>Code</th>" : ""}<th>Score</th><th>Rate</th><th>Duration</th><th>Completed</th></tr></thead>`;
+            table.innerHTML = `<thead><tr><th>Attempt</th>${label === "Activity" ? "<th>Code</th><th>Status</th>" : ""}<th>Score</th><th>Rate</th><th>Duration</th><th>Completed</th></tr></thead>`;
             const body = document.createElement("tbody");
             items
               .sort(
@@ -80,7 +79,7 @@
               )
               .forEach((item) => {
                 const row = document.createElement("tr");
-                row.innerHTML = `<td>Attempt ${escapeHtml(item.attempt_number)}</td>${label === "Activity" ? `<td>${escapeHtml(attemptCode(item))}</td>` : ""}<td>${escapeHtml(item.score)} / ${escapeHtml(item.max_score)}</td><td>${escapeHtml(percentage(item))}%</td><td>${escapeHtml(minutes(item.duration_minutes))}</td><td>${escapeHtml(formatDate(item.completed_at))}</td>`;
+                row.innerHTML = `<td>Attempt ${escapeHtml(item.attempt_number)}</td>${label === "Activity" ? `<td>${escapeHtml(attemptCode(item))}</td><td>${escapeHtml(item.status || "Legacy")}</td>` : ""}<td>${escapeHtml(item.score)} / ${escapeHtml(item.max_score)}</td><td>${escapeHtml(percentage(item))}%</td><td>${escapeHtml(minutes(item.duration_minutes))}</td><td>${escapeHtml(formatDate(item.completed_at))}</td>`;
                 body.append(row);
               });
             table.append(body);
@@ -90,66 +89,23 @@
       function renderAccountingProcess(records) {
         const host = document.getElementById("accountingProcessHistory");
         host.replaceChildren();
-        const journals = new Map();
-        records
-          .filter((item) => item.activity_id === "06.1")
-          .forEach((item) => {
-            const key = `${item.attempt_number}:${attemptCode(item)}`;
-            if (!journals.has(key)) journals.set(key, item);
-          });
-        const completedJournals = [...journals.values()].sort(
-          (left, right) => new Date(left.completed_at) - new Date(right.completed_at),
-        );
-        if (!completedJournals.length) {
-          host.innerHTML =
-            '<p class="empty-copy">No completed General Journals have been recorded yet.</p>';
-          return;
-        }
+        const progresses = (item) => item.status === "completed" || item.status == null;
+        const newest = (activityId, matches) => records.filter((item) => item.activity_id === activityId && progresses(item) && matches(item)).sort((left, right) => new Date(right.completed_at) - new Date(left.completed_at))[0];
+        const journals = records.filter((item) => item.activity_id === "06.1" && progresses(item));
+        if (!journals.length) { host.innerHTML = '<p class="empty-copy">No completed General Journals have been recorded yet.</p>'; return; }
         const table = document.createElement("table");
         table.className = "score-matrix process-matrix";
-        table.innerHTML = "<thead><tr><th>General Journal</th><th>T-Format General Ledger</th><th>Running-Balance Ledger</th><th>Unadjusted Trial Balance</th></tr></thead>";
+        table.innerHTML = "<thead><tr><th>General Journal</th><th>T-Format General Ledger</th><th>Running-Balance Ledger</th><th>Unadjusted Trial Balance</th><th>Adjusting Entries</th><th>10-Column Worksheet</th></tr></thead>";
+        const cell = (title, item, link, ready) => `<td><div class="process-step"><strong>${title}${item ? ` · Attempt ${escapeHtml(item.attempt_number)}` : ""}</strong><span>${item ? `Completed · ${escapeHtml(attemptCode(item))}` : ready}</span>${item ? `<a href="${link}">View / continue · ${escapeHtml(attemptCode(item))}</a>` : ""}</div></td>`;
         const body = document.createElement("tbody");
-        completedJournals.forEach((journal) => {
-          const journalCode = attemptCode(journal);
-          const ledgerAttempts = records
-            .filter(
-              (item) =>
-                item.activity_id === "07.1" &&
-                item.details?.source_journal_attempt_code === journalCode,
-            )
-            .sort(
-              (left, right) =>
-                new Date(right.completed_at) - new Date(left.completed_at),
-            );
-          const ledger = ledgerAttempts[0];
-          const runningLedgerAttempts = records
-            .filter(
-              (item) =>
-                item.activity_id === "07.2" &&
-                item.details?.source_journal_attempt_code === journalCode,
-            )
-            .sort(
-              (left, right) =>
-                new Date(right.completed_at) - new Date(left.completed_at),
-            );
-          const runningLedger = runningLedgerAttempts[0];
-          if (runningLedger?.details?.running_ledger_snapshot) {
-            localStorage.setItem(
-              `power_laundry_running_ledger_review_${attemptCode(runningLedger)}`,
-              JSON.stringify(runningLedger.details.running_ledger_snapshot),
-            );
-          }
-          const journalLink = `activity06-1.html?journal=${encodeURIComponent(journalCode)}`;
-          const ledgerLink = `activity07-1.html?journal=${encodeURIComponent(journalCode)}`;
-          const completedLedgerLink = `${ledgerLink}&view=ledger`;
-          const runningLedgerLink = `activity07-2.html?journal=${encodeURIComponent(journalCode)}&ledger=${encodeURIComponent(attemptCode(runningLedger))}&view=ledger`;
-          const runningLedgerRetryLink = `activity07-2.html?journal=${encodeURIComponent(journalCode)}`;
+        journals.forEach((journal) => {
+          const journalCode = attemptCode(journal),ledger = newest("07.1", item => item.details?.source_journal_attempt_code === journalCode),running = newest("07.2", item => item.details?.source_journal_attempt_code === journalCode),runningCode = running && attemptCode(running),utb = runningCode && newest("08.1", item => item.details?.source_ledger_attempt_code === runningCode),utbCode = utb && attemptCode(utb),adjustment = utbCode && newest("09.1", item => item.details?.source_utb_attempt_code === utbCode),adjustmentCode = adjustment && attemptCode(adjustment),worksheet = adjustmentCode && newest("10.1", item => item.details?.source_adjusting_attempt_code === adjustmentCode);
+          if (running?.details?.running_ledger_snapshot) localStorage.setItem(`power_laundry_running_ledger_review_${runningCode}`, JSON.stringify(running.details.running_ledger_snapshot));
           const row = document.createElement("tr");
-          row.innerHTML = `<td><div class="process-step"><strong>Activity 06.1 · Attempt ${escapeHtml(journal.attempt_number)}</strong><span>${escapeHtml(journalCode)} · Completed ${escapeHtml(formatDate(journal.completed_at))}</span><a href="${journalLink}">View Complete General Journal · ${escapeHtml(journalCode)}</a></div></td><td><div class="process-step"><strong>Activity 07.1${ledger ? ` · Attempt ${escapeHtml(ledger.attempt_number)}` : ""}</strong><span>${ledger ? `Completed · ${escapeHtml(attemptCode(ledger))}` : "Ready to post from this journal"}</span>${ledger ? `<a href="${completedLedgerLink}">View Complete General Ledger · ${escapeHtml(attemptCode(ledger))}</a><a href="${ledgerLink}">Reattempt Activity 07.1</a>` : `<a href="${ledgerLink}">Post to T-Format Ledger</a>`}</div></td><td><div class="process-step"><strong>Activity 07.2${runningLedger ? ` · Attempt ${escapeHtml(runningLedger.attempt_number)}` : ""}</strong><span>${runningLedger ? `Completed · ${escapeHtml(attemptCode(runningLedger))}` : "Ready to post from this journal"}</span>${runningLedger ? `<a href="${runningLedgerLink}">View Running General Ledger · ${escapeHtml(attemptCode(runningLedger))}</a><a href="${runningLedgerRetryLink}">Reattempt Activity 07.2</a>` : `<a href="${runningLedgerRetryLink}">Post to Running-Balance Ledger</a>`}</div></td><td><div class="process-step"><strong>Activity 08.1</strong><span>Unadjusted Trial Balance</span><span class="unavailable">Available later</span></div></td>`;
+          row.innerHTML = cell("Activity 06.1", journal, `activity06-1.html?journal=${encodeURIComponent(journalCode)}`, "") + cell("Activity 07.1", ledger, `activity07-1.html?journal=${encodeURIComponent(journalCode)}`, "Ready to post") + cell("Activity 07.2", running, `activity07-2.html?journal=${encodeURIComponent(journalCode)}`, "Ready after posting") + cell("Activity 08.1", utb, "activity08-1.html", "Ready after running ledger") + cell("Activity 09.1", adjustment, "activity09-1.html", "Ready after completed U/TB") + cell("Activity 10.1", worksheet, "activity10-1.html", "Ready after adjusting entries");
           body.append(row);
         });
-        table.append(body);
-        host.append(table);
+        table.append(body); host.append(table);
       }
       const user = await requireUser();
       if (!user) {
@@ -163,7 +119,7 @@
               session.access_token,
             ),
             request(
-              `/rest/v1/activity_attempts?select=activity_id,attempt_number,score,max_score,duration_minutes,completed_at,details&user_id=eq.${encodeURIComponent(user.id)}&order=completed_at.desc`,
+              `/rest/v1/activity_attempts?select=activity_id,attempt_number,score,max_score,duration_minutes,completed_at,attempt_code,status,details&user_id=eq.${encodeURIComponent(user.id)}&order=completed_at.desc`,
               { method: "GET" },
               session.access_token,
             ),
