@@ -1,78 +1,384 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Preparation of Financial Statements Challenge | ACCTNG 1</title>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WHERE DOES IT GO? · Account Classification Mastery Challenge</title>
 <style>
-:root{--bg:#f3f7f7;--surface:#fff;--ink:#203136;--muted:#697c81;--line:#d7e2e3;--accent:#3f6870;--accent-dark:#31535a;--accent-soft:#e8f1f2;--gold:#87683b;--gold-soft:#f7f1e5;--good:#41654f;--good-soft:#edf5ef;--bad:#7a5148;--bad-soft:#f9eeeb;--radius:16px;--max:980px}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top left,rgba(63,104,112,.08),transparent 24rem),var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.55}button,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}.topbar{background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}.topbar-inner,.screen{width:min(var(--max),calc(100% - 32px));margin:auto}.topbar-inner{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{font-size:.76rem;font-weight:900;letter-spacing:.1em;color:var(--accent-dark);text-decoration:none}.nav a{padding:8px 10px;border-radius:9px;background:var(--accent-soft);color:var(--accent-dark);font-size:.75rem;font-weight:800;text-decoration:none}.screen{padding:40px 0 58px}.card{padding:30px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:0 10px 28px rgba(33,55,60,.07)}.center{text-align:center}.eyebrow{font-size:.73rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--gold)}h1,h2,h3,p{margin-top:0}h1{margin:10px 0 12px;font-size:clamp(2.4rem,7vw,4.7rem);line-height:1;letter-spacing:-.05em}h2{font-size:clamp(1.6rem,4vw,2.45rem);line-height:1.1}.lead{max-width:700px;margin:0 auto;color:var(--muted)}.strip{margin:15px 0 17px;padding:7px 9px;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:7px;background:#fafaf7;color:var(--gold);font-size:.67rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase}.strip span{color:var(--ink);text-transform:none;letter-spacing:0}.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:24px}.btn{min-height:42px;padding:10px 15px;border:0;border-radius:10px;background:var(--accent);color:#fff;font-size:.78rem;font-weight:900}.btn.secondary{background:var(--accent-soft);color:var(--accent-dark)}.note,.context,.feedback{margin-top:20px;padding:15px 17px;border:1px solid #dccba7;border-radius:12px;background:var(--gold-soft);color:#665233;text-align:left}.context{border-left:4px solid var(--accent);border-color:var(--line);background:#fff;color:var(--ink)}.status-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.status{padding:12px;border:1px solid var(--line);border-radius:11px;background:#fff;text-align:center}.status span{display:block;color:var(--muted);font-size:.7rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase}.status strong{font-size:1.45rem;color:var(--accent-dark)}.progress{height:7px;margin:20px 0 24px;border-radius:999px;background:#e7eeee;overflow:hidden}.progress div{height:100%;width:0;background:var(--accent);transition:.2s ease}.question{padding:22px;border:1px solid var(--line);border-radius:14px;background:#fff}.question-number{font-size:.75rem;font-weight:900;letter-spacing:.1em;color:var(--accent);text-transform:uppercase}.prompt{margin:12px 0 18px;font-size:1.12rem;font-weight:700}.answers{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.answer{min-height:52px;padding:12px;border:1px solid var(--line);border-radius:9px;background:#fafcfc;color:var(--ink);font-weight:800;text-align:left}.answer:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}.answer.correct{background:var(--good-soft);border-color:#9ec4aa}.answer.wrong{background:var(--bad-soft);border-color:#d6aaa2}.feedback.good{border-color:#cfe0d3;background:var(--good-soft);color:var(--good)}.feedback.bad{border-color:#e5cfc8;background:var(--bad-soft);color:var(--bad)}.review{display:grid;gap:10px;margin-top:20px;text-align:left}.review-item{padding:14px;border:1px solid var(--line);border-radius:11px;background:#fff}.review-item strong{display:block}.review-item small{color:var(--muted)}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.summary-stat{padding:17px;border:1px solid var(--line);border-radius:12px;background:#f8fbfb}.summary-stat strong{display:block;font-size:1.8rem;color:var(--accent-dark)}.statement{margin-top:18px;padding:18px;border:1px solid var(--line);border-radius:12px;background:#fafcfc}.statement h3{margin-bottom:12px;color:var(--accent-dark)}.line-item{display:flex;justify-content:space-between;gap:20px;padding:7px 0;border-bottom:1px solid #e5edef}.line-item.total{font-weight:900;border-top:2px solid var(--ink);border-bottom:3px double var(--ink)}.line-item.indent{padding-left:18px}.footer{padding:20px;text-align:center;color:var(--muted);font-size:.75rem}@media(max-width:680px){.screen{width:min(var(--max),calc(100% - 24px));padding-top:24px}.card{padding:21px}.answers,.status-row,.summary-grid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<header class="topbar"><div class="topbar-inner"><a class="brand" href="index.html">ACCTNG 1 · LEARNING HUB</a><nav class="nav"><a href="challenges.html">← Back to Challenges</a></nav></div></header>
 
-<main id="startScreen" class="screen"><section class="card center">
-  <div class="eyebrow">Preparation of Financial Statements</div>
-  <div class="strip">Challenge 05 <span>Assemble the Financial Statements</span></div>
-  <h1>From Balances to Reports</h1>
-  <p class="lead">Classify accounts, calculate net income, and identify the amounts that belong on the income statement and balance sheet.</p>
-  <div class="note"><strong>How it works:</strong> Complete 15 randomized questions. Read each account or calculation carefully, then choose the best answer. Your review will show the rule behind every result.</div>
-  <div class="actions"><button class="btn" id="startBtn">START CHALLENGE →</button></div>
-</section></main>
+*{box-sizing:border-box}
 
-<main id="challengeScreen" class="screen hidden"><section class="card">
-  <div class="status-row"><div class="status"><span>Question</span><strong id="questionCount">1 / 15</strong></div><div class="status"><span>Score</span><strong id="score">0</strong></div><div class="status"><span>Streak</span><strong id="streak">0</strong></div></div>
-  <div class="progress"><div id="progressFill"></div></div>
-  <article class="question"><div class="question-number" id="questionNumber"></div><div class="prompt" id="prompt"></div><div class="answers" id="answers"></div><div id="feedback" class="feedback hidden"></div><div class="actions"><button class="btn hidden" id="nextBtn">NEXT QUESTION →</button></div></article>
-</section></main>
+:root{
 
-<main id="summaryScreen" class="screen hidden"><section class="card">
-  <div class="eyebrow">Session complete</div><h2>Financial statements check</h2><p id="summaryLead"></p>
-  <div class="summary-grid"><div class="summary-stat"><span>Score</span><strong id="finalScore"></strong></div><div class="summary-stat"><span>Accuracy</span><strong id="accuracy"></strong></div><div class="summary-stat"><span>Best streak</span><strong id="bestStreak"></strong></div></div>
-  <div class="statement"><h3>Illustrative income statement</h3><div class="line-item"><span>Service revenue</span><strong id="revenueValue"></strong></div><div class="line-item indent"><span>Less: operating expenses</span><strong id="expenseValue"></strong></div><div class="line-item total"><span>Net income</span><strong id="netIncomeValue"></strong></div></div>
-  <div class="statement"><h3>Illustrative balance sheet check</h3><div class="line-item"><span>Total assets</span><strong id="assetsValue"></strong></div><div class="line-item"><span>Total liabilities</span><strong id="liabilitiesValue"></strong></div><div class="line-item"><span>Owner's equity</span><strong id="equityValue"></strong></div><div class="line-item total"><span>Liabilities + equity</span><strong id="balanceValue"></strong></div></div>
-  <div class="note" id="trackingStatus" role="status" aria-live="polite">Saving your attempt to your learning record…</div>
-  <div class="review" id="review"></div><div class="actions"><button class="btn" id="againBtn">TRY ANOTHER ROUND</button><a class="btn secondary" href="challenges.html">BACK TO CHALLENGES</a></div>
+  --bg:#f3f6f5;--surface:#fff;--soft:#f8faf9;--text:#18312d;--muted:#667772;
+
+  --border:#d7e0dd;--teal:#2f6f64;--teal-dark:#24584f;--blue:#4d6f8c;
+
+  --amber:#b9852e;--violet:#76659b;--green:#4c7b63;--red:#9a6767;
+
+  --good-bg:#eaf5ef;--good-border:#78a28b;--bad-bg:#f8eeee;--bad-border:#bd8a8a;
+
+}
+
+html{scroll-behavior:smooth}
+
+body{margin:0;min-height:100vh;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+
+button,input,select{font:inherit}
+
+button{cursor:pointer}
+
+.hidden{display:none!important}
+
+.app{min-height:100vh;display:flex;flex-direction:column}
+
+.topbar{padding:20px 28px 10px;display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+
+.course{font-size:12px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+
+.course-title{margin-top:4px;color:var(--muted);font-size:13px}
+
+.challenge-summary{margin-top:11px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+
+.challenge-summary-label{color:var(--amber);font-size:11px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}
+
+.challenge-summary-title{color:var(--text);font-size:13px;font-weight:800}
+
+.signature{font-size:12px;color:var(--muted);white-space:nowrap}
+
+.screen{width:min(940px,calc(100% - 32px));margin:20px auto 42px}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:38px;box-shadow:0 12px 30px rgba(22,48,43,.05)}
+
+.center{text-align:center}
+
+.eyebrow{color:var(--teal);font-size:12px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+
+h1{font-size:clamp(34px,6vw,58px);letter-spacing:-.04em;margin:0 0 14px}
+
+h2{font-size:30px;margin:0 0 10px}
+
+h3{font-size:20px;margin:0 0 12px}
+
+p{line-height:1.6}
+
+.lead{max-width:680px;margin:0 auto 26px;color:var(--muted)}
+
+.notice{margin:22px auto 0;max-width:720px;padding:14px 16px;background:#eef4f2;border:1px solid #cfe0da;border-radius:12px;color:#405a53;font-size:14px}
+
+.auth{margin-top:18px;color:#7c8884;font-size:11px}
+
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left;margin-top:28px}
+
+.form-grid .full{grid-column:1/-1}
+
+label{display:block;margin-bottom:7px;color:var(--muted);font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+
+input,select{width:100%;min-height:48px;padding:11px 12px;border:1px solid #cdd8d4;border-radius:10px;background:#fff;color:var(--text);outline:none}
+
+input:focus,select:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(47,111,100,.1)}
+
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px}
+
+.status-box{padding:15px;background:var(--soft);border:1px solid var(--border);border-radius:12px;text-align:left}
+
+.status-box span{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+
+.status-box strong{display:block;margin-top:4px;font-size:21px}
+
+.primary,.secondary{padding:13px 20px;border-radius:10px;font-weight:800}
+
+.primary{background:var(--teal);color:#fff;border:1px solid var(--teal)}
+
+.primary:hover{background:var(--teal-dark)}
+
+.secondary{background:#fff;color:var(--text);border:1px solid #cbd5d2}
+
+.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:28px 0;text-align:left}
+
+.guide-card{padding:22px;background:var(--soft);border:1px solid var(--border);border-radius:14px}
+
+.guide-card h3{color:var(--teal)}
+
+.guide-card p{margin:7px 0}
+
+.rule-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+
+.rule-strip div{padding:14px;background:#f5f8f7;border:1px solid var(--border);border-radius:10px;font-weight:750}
+
+.progress-row{display:flex;justify-content:space-between;gap:16px;color:var(--muted);font-size:12px;font-weight:750;margin-bottom:8px}
+
+.track{height:6px;background:#dfe7e4;border-radius:999px;overflow:hidden;margin-bottom:22px}
+
+.fill{height:100%;width:0;background:var(--teal);transition:width .2s ease}
+
+.question-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:34px;box-shadow:0 10px 28px rgba(22,48,43,.045)}
+
+.stage-tag{font-size:12px;font-weight:850;letter-spacing:.1em;color:var(--teal);text-transform:uppercase}
+
+.transaction{margin:18px 0 22px;padding:18px 20px;background:#edf4f2;border-left:4px solid var(--teal);border-radius:10px;font-size:18px;line-height:1.6}
+
+.target{display:inline-block;margin:2px 0 18px;padding:8px 12px;border-radius:8px;background:#f3f6f5;border:1px solid var(--border);font-weight:800}
+
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.answer{min-height:70px;padding:15px;border:1px solid #cdd8d4;border-radius:12px;background:#fbfcfc;font-weight:800}
+
+.answer:hover:not(:disabled){border-color:var(--teal);background:#f1f6f4}
+
+.answer.correct{background:var(--good-bg);border-color:var(--good-border)}
+
+.answer.wrong{background:var(--bad-bg);border-color:var(--bad-border)}
+
+.feedback{margin-top:24px;padding-top:20px;border-top:1px solid var(--border)}
+
+.feedback-title{font-size:19px;font-weight:850;margin-bottom:6px}
+
+.logic{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0 20px}
+
+.logic span{padding:8px 11px;background:#f8faf9;border:1px solid var(--border);border-radius:8px;font-size:14px;font-weight:750}
+
+.logic b{color:#8a9793}
+
+.entry-builder{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+.side{padding:18px;background:var(--soft);border:1px solid var(--border);border-radius:14px}
+
+.side-title{margin-bottom:14px;font-size:13px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+
+.entry-row-form{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr) auto;gap:8px;align-items:end;margin-bottom:10px}
+
+.amount-wrap{position:relative}
+
+.peso{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-weight:800;color:var(--muted)}
+
+.amount-wrap input{padding-left:28px}
+
+.remove-row{width:42px;min-height:48px;border:1px solid #d8c8c8;background:#fff;border-radius:10px;color:#8b6666;font-weight:900}
+
+.side-actions{margin-top:8px}
+
+.add-row{border:none;background:transparent;color:var(--teal);font-weight:800;padding:6px 0}
+
+.totals{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+
+.total-box{padding:13px 15px;background:#f7f9f8;border:1px solid var(--border);border-radius:10px}
+
+.total-box span{display:block;color:var(--muted);font-size:12px}
+
+.total-box strong{display:block;margin-top:3px;font-size:18px}
+
+.balance-note{margin-top:10px;font-size:13px;font-weight:750;color:var(--muted)}
+
+.streak-pop{position:fixed;left:50%;top:22px;transform:translateX(-50%) translateY(-14px);z-index:999;width:min(520px,calc(100% - 32px));padding:14px 18px;border-radius:14px;box-shadow:0 14px 38px rgba(25,45,40,.15);font-weight:800;opacity:0;pointer-events:none;transition:.25s ease}
+
+.streak-pop.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.streak-3{background:#edf5fb;border:1px solid #b9d1e3;color:#345d7b}
+
+.streak-5{background:#f2eef9;border:1px solid #cbbfe3;color:#5e4e84}
+
+.streak-8{background:#fff7e9;border:1px solid #e6ca95;color:#76551d}
+
+.streak-10,.streak-15,.streak-20{background:#edf6ef;border:1px solid #b5d1bd;color:#426d51}
+
+.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0;text-align:left}
+
+.summary-box{padding:15px;background:var(--soft);border:1px solid var(--border);border-radius:12px}
+
+.summary-box span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+
+.summary-box strong{display:block;margin-top:4px;font-size:17px;word-break:break-word}
+
+.result-challenge-summary{margin:0 auto 12px;color:var(--text);font-size:14px;font-weight:800}
+
+.result-challenge-summary span{color:var(--amber);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+
+.score-hero{width:175px;height:175px;margin:24px auto;border:8px solid #dfe8e4;border-radius:50%;display:grid;place-content:center}
+
+.score-hero strong{font-size:44px}.score-hero span{color:var(--muted)}
+
+.breakdown{margin-top:24px;border:1px solid var(--border);border-radius:12px;overflow:hidden;text-align:left}
+
+.break-row{display:grid;grid-template-columns:1fr auto;gap:12px;padding:13px 15px;border-top:1px solid var(--border)}
+
+.break-row:first-child{border-top:0}
+
+.attempt-progress{margin-top:24px;text-align:left}
+
+.attempt-progress-title{margin:0 0 10px;color:var(--amber);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+
+.attempt-progress-list{display:grid;gap:8px}
+
+.attempt-progress-row{display:grid;grid-template-columns:minmax(90px,1fr) auto minmax(110px,auto);gap:12px;align-items:center;padding:11px 15px;border:1px solid var(--border);border-radius:10px;background:var(--soft);font-size:14px}
+
+.attempt-progress-score{font-weight:800;white-space:nowrap}
+
+.attempt-progress-date{color:var(--muted);font-size:12px;text-align:right}
+
+.encourage{margin:24px auto 0;max-width:680px;padding:18px;background:#fff7e9;border:1px solid #e5c892;border-radius:12px;color:#6f501d;font-weight:750;line-height:1.6}
+
+.hub-nav{display:flex;gap:8px;position:fixed;top:14px;left:16px;z-index:300}
+
+.hub-return-link{display:inline-block;margin-bottom:20px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:var(--soft);text-decoration:none;color:var(--teal);font-weight:800;font-size:12px}
+
+.hub-return-link:hover{background:#f4f7f5}
+
+footer{margin-top:auto;padding:16px 28px 24px;display:flex;justify-content:space-between;gap:16px;color:#7d8985;font-size:11px}
+
+@media(max-width:720px){
+
+  .topbar{padding:18px 18px 6px}.screen{width:min(100% - 20px,940px);margin-top:12px}.card,.question-card{padding:24px 18px}
+
+  .form-grid,.guide-grid,.rule-strip,.answers,.entry-builder,.totals,.summary-grid{grid-template-columns:1fr}
+
+  .attempt-progress-row{grid-template-columns:1fr auto}.attempt-progress-date{grid-column:1 / -1;text-align:left}
+
+  .status-grid{grid-template-columns:1fr 1fr}.entry-row-form{grid-template-columns:1fr 1fr auto}.transaction{font-size:16px}
+
+  .challenge-summary{gap:5px}.challenge-summary-title{font-size:12px}.hub-nav{position:static;margin:12px 0 0 12px}.hub-return-link{margin-bottom:0}footer{padding:14px 18px 20px;flex-direction:column}
+
+}
+
+@media print{
+
+  body{background:#fff}.topbar,.no-print,footer{display:none!important}.screen{width:100%;margin:0}.card{box-shadow:none;border:0;padding:0}.summary-grid{grid-template-columns:1fr 1fr}
+
+}
+
+
+/* Account classification game additions */
+.account-display{margin:12px 0 24px;padding:30px 18px;text-align:center;background:#edf4f2;border:1px solid #cfe0da;border-radius:16px}
+.account-display .hint{font-size:11px;font-weight:850;letter-spacing:.11em;text-transform:uppercase;color:var(--teal)}
+.account-display h2{margin:12px 0 0;font-size:clamp(25px,5vw,39px);letter-spacing:-.02em}
+.choice-title{font-weight:850;margin:22px 0 10px;font-size:16px}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.choice{min-height:80px;padding:13px;border:1px solid #cdd8d4;background:#fbfcfc;color:var(--text);border-radius:12px;font-weight:800;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.choice small{font-size:12px;color:var(--muted);font-weight:600}
+.choice:hover:not(:disabled){border-color:var(--teal);background:#f1f6f4}
+.choice.selected{border:2px solid var(--teal);background:#edf6f2}
+.choice.correct{border-color:var(--good-border);background:var(--good-bg)}
+.choice.wrong{border-color:var(--bad-border);background:var(--bad-bg)}
+.choice:disabled{cursor:default}
+.round-points{font-weight:850;color:var(--teal);font-size:13px;margin-top:8px}
+.key-table{width:100%;border-collapse:collapse;font-size:14px}
+.key-table th,.key-table td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--border)}
+.key-table th{color:var(--teal)}
+@media(max-width:480px){.choice{min-height:76px;padding:10px}.choice-grid{gap:8px}.account-display{padding:22px 12px}}
+</style></head>
+<body><div class="app">
+<header class="topbar"><div><div class="course">ACCTNG 1</div><div class="course-title">Fundamentals of Accountancy, Business, and Management 1</div><div class="challenge-summary"><span class="challenge-summary-label">Challenge 05</span><span class="challenge-summary-title">WHERE DOES IT GO? · Account Classification</span></div></div><div class="signature">ave.guz · 2026</div></header>
+<nav class="hub-nav no-print" aria-label="Hub navigation"><a class="hub-return-link" href="index.html">Home</a><a class="hub-return-link" href="challenges.html">← Back to Challenges</a></nav>
+<div id="streakPop" class="streak-pop" role="status" aria-live="polite"></div>
+<main id="infoScreen" class="screen"><section class="card center"><div class="eyebrow">Account Recognition Game</div><h1>WHERE DOES IT GO?</h1><h2>Mastery Challenge</h2>
+<p class="lead">Recognize an account, decide whether it is <strong>Real (Permanent)</strong> or <strong>Nominal (Temporary)</strong>, then place it in the correct financial statement.</p>
+<div class="form-grid"><div class="full"><label for="studentName">Student Name</label><input id="studentName" autocomplete="name" required></div><div class="full"><label for="studentEmail">Institutional Email</label><input id="studentEmail" type="email" autocomplete="email" required></div><div><label for="studentSection">Section</label><input id="studentSection" required></div><div><label for="studentDate">Date</label><input id="studentDate" type="date" required></div></div>
+<div class="status-grid"><div class="status-box"><span>Completed Attempts</span><strong id="attemptStatus">0</strong></div><div class="status-box"><span>Best Score</span><strong id="bestStatus">—</strong></div></div>
+<div class="notice"><strong>20 rounds · 40 points.</strong> Each round has two quick decisions: account nature (1 point) and financial statement placement (1 point). Questions change each attempt. A wrong answer does not end the game.</div>
+<div class="actions"><button class="primary" id="reviewBtn">REVIEW THE RULES</button></div>
+<div class="auth">For educational use within the ACCTNG 1 Learning Hub.</div></section></main>
+<main id="reviewScreen" class="screen hidden"><section class="card"><div class="eyebrow">Quick Review</div><h2>Before You Begin</h2><p>Tap one option in each grid, then check your answers. Once you begin, the guide is no longer shown during the challenge.</p>
+<div class="guide-grid"><div class="guide-card"><h3>Real / Permanent</h3><p>Assets, contra-assets, liabilities, and owner's capital.</p><p>Balances carry forward to the next accounting period.</p></div><div class="guide-card"><h3>Nominal / Temporary</h3><p>Revenues, expenses, and owner's drawing.</p><p>Balances are closed at the end of the accounting period.</p></div></div>
+<h3>Where does it go?</h3><table class="key-table"><thead><tr><th>Financial statement</th><th>Accounts to recognize</th></tr></thead><tbody><tr><td>Income Statement</td><td>Revenues and expenses</td></tr><tr><td>Statement of Financial Position (Balance Sheet)</td><td>Assets, contra-assets, liabilities, and owner's capital</td></tr><tr><td>Statement of Changes in Owner's Equity</td><td>Owner's drawing</td></tr></tbody></table>
+<div class="notice"><strong>Game convention:</strong> Choose the account's <em>primary placement</em>. Owner's Capital is classified under the Statement of Financial Position, although it is also reflected in the Statement of Changes in Owner's Equity. Owner's Drawing is placed in the Statement of Changes in Owner's Equity. Contra-assets reduce related assets and are permanent accounts. A name such as “Unearned Service Revenue” is a <strong>liability</strong>, not earned revenue.</div>
+<div class="actions no-print"><button class="secondary" id="backInfoBtn">BACK</button><button class="primary" id="beginBtn">BEGIN CHALLENGE</button></div></section></main>
+<main id="gameScreen" class="screen hidden"><div class="progress-row"><span>ACCOUNT CLASSIFICATION · MASTERY CHALLENGE</span><span id="questionCount">Round 1 of 20</span></div><div class="track"><div class="fill" id="progressFill"></div></div>
+<section class="question-card"><div class="stage-tag" id="questionStage">CLASSIFY THE ACCOUNT</div><div class="account-display"><div class="hint">Where does this go?</div><h2 id="accountTitle"></h2></div>
+<div class="choice-title">1. What is the nature of this account?</div><div id="natureChoices" class="choice-grid"><button class="choice" data-value="real" type="button">REAL<small>Permanent</small></button><button class="choice" data-value="nominal" type="button">NOMINAL<small>Temporary</small></button></div>
+<div class="choice-title">2. Where is this account primarily reported?</div><div id="statementChoices" class="choice-grid"><button class="choice" data-value="IS" type="button">Income Statement</button><button class="choice" data-value="SFP" type="button">Statement of Financial Position<small>Balance Sheet</small></button><button class="choice" data-value="SCE" type="button">Statement of Changes in Owner's Equity</button></div>
+<div class="actions no-print" id="checkActions"><button class="primary" id="checkBtn" disabled>CHECK ANSWERS</button></div>
+<div id="feedback" class="feedback hidden" aria-live="polite"><div id="feedbackTitle" class="feedback-title"></div><div id="feedbackText"></div><div id="roundPoints" class="round-points"></div><div class="actions" style="justify-content:flex-start"><button class="primary" id="continueBtn">NEXT ACCOUNT →</button></div></div>
 </section></main>
-<footer class="footer">For educational use only. © 2026 ave.guz</footer>
+<main id="resultScreen" class="screen hidden"><section class="card center"><div class="eyebrow">Assessment Summary</div><div class="result-challenge-summary"><span>ACCTNG 1 · Challenge 05</span> · WHERE DOES IT GO? · Account Classification</div><h2 id="resultHeading"></h2><div class="score-hero"><strong id="resultPercent"></strong><span id="resultRaw"></span></div>
+<div class="summary-grid"><div class="summary-box"><span>Student</span><strong id="sumName"></strong></div><div class="summary-box"><span>Institutional Email</span><strong id="sumEmail"></strong></div><div class="summary-box"><span>Section</span><strong id="sumSection"></strong></div><div class="summary-box"><span>Date</span><strong id="sumDate"></strong></div><div class="summary-box"><span>Attempt No.</span><strong id="sumAttempt"></strong></div><div class="summary-box"><span>Attempt Code</span><strong id="sumCode"></strong></div><div class="summary-box"><span>Time Spent</span><strong id="sumTime"></strong></div><div class="summary-box"><span>Completed</span><strong id="sumCompleted"></strong></div></div>
+<div class="breakdown"><div class="break-row"><span>Account Nature · Real vs Nominal</span><strong id="natureScore"></strong></div><div class="break-row"><span>Financial Statement Placement</span><strong id="statementScore"></strong></div><div class="break-row"><span>Perfect Rounds · Both Decisions Correct</span><strong id="perfectRounds"></strong></div><div class="break-row"><span>Best Score</span><strong id="sumBest"></strong></div></div>
+<div class="attempt-progress"><div class="attempt-progress-title">Score Progress by Attempt</div><div id="attemptProgressList" class="attempt-progress-list"></div></div>
+<div id="trackingStatus" class="notice hidden" role="status" aria-live="polite"></div><div id="encourage" class="encourage"></div>
+<div class="actions no-print"><button class="primary" id="printBtn">PRINT / SAVE RESULT</button><button class="secondary" id="newAttemptBtn">NEW ATTEMPT</button></div></section></main>
+<footer><span>For educational use only. Please do not reproduce, redistribute, or share these materials without permission. © 2026 ave.guz</span></footer>
+</div>
+<script>
+"use strict";
+// nature: real = permanent; nominal = temporary. statement: primary report location under game convention.
+const BANK=[
+["Cash","real","SFP","Cash is an asset whose balance carries forward."],
+["Accounts Receivable","real","SFP","Accounts Receivable is an asset reported in the Statement of Financial Position."],
+["Supplies","real","SFP","Unused supplies are assets; supplies used may be recorded as expense."],
+["Prepaid Insurance","real","SFP","Prepaid Insurance is an asset until the insurance coverage expires."],
+["Prepaid Rent","real","SFP","Prepaid Rent is an asset representing future rental benefits."],
+["Equipment","real","SFP","Equipment is a noncurrent asset."],
+["Furniture","real","SFP","Furniture is a noncurrent asset."],
+["Office Equipment","real","SFP","Office Equipment is an asset."],
+["Service Vehicle","real","SFP","A service vehicle owned by the business is an asset."],
+["Accumulated Depreciation—Equipment","real","SFP","Accumulated Depreciation is a permanent contra-asset deducted from related equipment."],
+["Accumulated Depreciation—Furniture","real","SFP","Accumulated Depreciation is a permanent contra-asset, not an expense."],
+["Allowance for Doubtful Accounts","real","SFP","This is a permanent contra-asset reducing Accounts Receivable."],
+["Accounts Payable","real","SFP","Accounts Payable is a liability."],
+["Notes Payable","real","SFP","Notes Payable is a liability."],
+["Unearned Service Revenue","real","SFP","Unearned Service Revenue is a liability until the service is performed."],
+["Salaries Payable","real","SFP","Salaries Payable is an accrued liability."],
+["Utilities Payable","real","SFP","Utilities Payable is a liability for unpaid bills."],
+["Interest Payable","real","SFP","Interest Payable is a liability for accrued unpaid interest."],
+["Owner's Capital","real","SFP","Owner's Capital is a permanent equity account; in this game its primary placement is the Statement of Financial Position."],
+["Owner's Drawing","nominal","SCE","Drawing is a temporary contra-equity account shown as a reduction in the Statement of Changes in Owner's Equity. It is not an expense."],
+["Service Revenue","nominal","IS","Service Revenue is earned income reported in the Income Statement and closed at period-end."],
+["Rent Revenue","nominal","IS","Earned Rent Revenue is income, not a liability."],
+["Interest Revenue","nominal","IS","Interest Revenue is reported in the Income Statement."],
+["Commission Revenue","nominal","IS","Commission Revenue is income earned from commissions."],
+["Salaries Expense","nominal","IS","Salaries Expense is an operating expense closed at period-end."],
+["Rent Expense","nominal","IS","Rent Expense is a temporary expense account."],
+["Utilities Expense","nominal","IS","Utilities Expense is a temporary expense account."],
+["Cleaning and Maintenance Expense","nominal","IS","Cleaning and Maintenance Expense belongs in the Income Statement."],
+["Internet and Communication Expense","nominal","IS","Internet and Communication Expense belongs in the Income Statement."],
+["Advertising Expense","nominal","IS","Advertising Expense is a temporary expense account."],
+["Repairs Expense","nominal","IS","Repairs Expense is a temporary expense account."],
+["Depreciation Expense","nominal","IS","Depreciation Expense appears in the Income Statement, unlike Accumulated Depreciation."],
+["Insurance Expense","nominal","IS","Insurance Expense is the expired portion of insurance protection."],
+["Supplies Expense","nominal","IS","Supplies Expense measures supplies consumed during the period."],
+["Bad Debts Expense","nominal","IS","Bad Debts Expense is an expense, unlike the contra-asset Allowance for Doubtful Accounts."],
+["Interest Expense","nominal","IS","Interest Expense is a temporary expense account."],
+["Transportation Expense","nominal","IS","Transportation Expense is reported in the Income Statement."]
+].map(([name,nature,statement,why])=>({name,nature,statement,why}));
+const ROUND_COUNT=20,MAX_SCORE=40,$=id=>document.getElementById(id),screens=["infoScreen","reviewScreen","gameScreen","resultScreen"];
+let questions=[],index=0,naturePoints=0,statementPoints=0,perfect=0,streak=0,started=0,attemptCode="",locked=false,choice={nature:null,statement:null};
+function show(id){screens.forEach(x=>$(x).classList.toggle("hidden",x!==id));window.scrollTo(0,0)}
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+function historyKey(){return "acctng_ch05_where_go_history_v1"}
+function profileKey(){return "preti_dvc_profile"} // reuse profile from the preceding challenge
+function history(){try{const h=JSON.parse(localStorage.getItem(historyKey())||"[]");return Array.isArray(h)?h:[]}catch{return []}}
+function safeStore(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch{return false}}
+function loadProfile(){try{const p=JSON.parse(localStorage.getItem(profileKey())||"{}");$("studentName").value=p.name||"";$("studentEmail").value=p.email||"";$("studentSection").value=p.section||""}catch{}}
+function saveProfile(){safeStore(profileKey(),{name:$("studentName").value.trim(),email:$("studentEmail").value.trim(),section:$("studentSection").value.trim()})}
+function today(){const d=new Date();$("studentDate").value=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)}
+function refreshStatus(){const h=history();$("attemptStatus").textContent=h.length;$("bestStatus").textContent=h.length?Math.max(...h.map(x=>x.score))+"/40":"—"}
+function validateInfo(){if(!$("studentName").value.trim()||!$("studentEmail").value.trim()||!$("studentSection").value.trim()||!$("studentDate").value){alert("Please complete all student information fields.");return false}if(!$("studentEmail").checkValidity()){alert("Please enter a valid institutional email address.");return false}saveProfile();return true}
+function buildQuestions(){const pools={asset:BANK.filter(x=>x.statement==="SFP"&&x.name!=="Owner's Capital"&&!x.name.includes("Payable")&&!x.name.startsWith("Unearned")&&!x.name.startsWith("Allowance")&&!x.name.startsWith("Accumulated")),contra:BANK.filter(x=>x.name.startsWith("Accumulated")||x.name.startsWith("Allowance")),liability:BANK.filter(x=>x.name.includes("Payable")||x.name.startsWith("Unearned")),equity:BANK.filter(x=>x.name==="Owner's Capital"||x.name==="Owner's Drawing"),revenue:BANK.filter(x=>x.statement==="IS"&&x.name.includes("Revenue")),expense:BANK.filter(x=>x.statement==="IS"&&x.name.includes("Expense"))};
+// 5 regular assets, 1 contra-asset, 3 liabilities, 2 equity/drawing, 3 revenues, 6 expenses.
+return shuffle([...shuffle(pools.asset).slice(0,5),...shuffle(pools.contra).slice(0,1),...shuffle(pools.liability).slice(0,3),...pools.equity,...shuffle(pools.revenue).slice(0,3),...shuffle(pools.expense).slice(0,6)])}
+function makeCode(){return "WDG05-"+Math.random().toString(36).slice(2,6).toUpperCase()+"-"+Math.floor(100+Math.random()*900)}
+function start(){questions=buildQuestions();index=0;naturePoints=statementPoints=perfect=streak=0;locked=false;started=Date.now();attemptCode=makeCode();show("gameScreen");render()}
+function choose(group,value){if(locked)return;choice[group]=value;$(group+"Choices").querySelectorAll(".choice").forEach(b=>{b.classList.toggle("selected",b.dataset.value===value);b.setAttribute("aria-pressed",b.dataset.value===value?"true":"false")});$("checkBtn").disabled=!(choice.nature&&choice.statement)}
+function render(){locked=false;choice={nature:null,statement:null};const q=questions[index];$("accountTitle").textContent=q.name;$("questionCount").textContent=`Round ${index+1} of ${ROUND_COUNT}`;$("progressFill").style.width=`${index/ROUND_COUNT*100}%`;$("feedback").classList.add("hidden");$("checkActions").classList.remove("hidden");$("checkBtn").disabled=true;["nature","statement"].forEach(group=>$(group+"Choices").querySelectorAll(".choice").forEach(b=>{b.disabled=false;b.classList.remove("selected","correct","wrong");b.setAttribute("aria-pressed","false")}))}
+function popStreak(){const messages={3:"3 perfect rounds in a row!",5:"5 perfect rounds! Keep the momentum.",8:"8 perfect rounds! Excellent recognition.",10:"10 perfect rounds! Superb consistency.",15:"15 perfect rounds! Almost there.",20:"Perfect streak — all 20 rounds!"};if(!messages[streak])return;const p=$("streakPop");p.textContent=messages[streak];p.className="streak-pop streak-"+streak;requestAnimationFrame(()=>p.classList.add("show"));setTimeout(()=>p.classList.remove("show"),2600)}
+const statementNames={IS:"Income Statement",SFP:"Statement of Financial Position",SCE:"Statement of Changes in Owner's Equity"};
+function check(){if(locked||!choice.nature||!choice.statement)return;locked=true;const q=questions[index],a=choice.nature===q.nature,b=choice.statement===q.statement;if(a)naturePoints++;if(b)statementPoints++;if(a&&b){perfect++;streak++;popStreak()}else streak=0;
+["nature","statement"].forEach(group=>$(group+"Choices").querySelectorAll(".choice").forEach(button=>{button.disabled=true;const right=q[group];button.classList.toggle("correct",button.dataset.value===right);button.classList.toggle("wrong",button.dataset.value===choice[group]&&button.dataset.value!==right)}));
+$("feedbackTitle").textContent=a&&b?"Excellent! Both correct.":a||b?"Almost! One correct.":"Review this account.";$("feedbackTitle").style.color=a&&b?"var(--teal)":"var(--red)";
+$("feedbackText").textContent=`${q.name}: ${q.nature==="real"?"Real / Permanent":"Nominal / Temporary"} · ${statementNames[q.statement]}. ${q.why}`;$("roundPoints").textContent=`+${Number(a)+Number(b)} / 2 points this round`;$("feedback").classList.remove("hidden");$("checkActions").classList.add("hidden");$("continueBtn").textContent=index===ROUND_COUNT-1?"VIEW RESULTS →":"NEXT ACCOUNT →"}
+function next(){if(!locked)return;index++;if(index===ROUND_COUNT){finish();return}render()}
+function fmtTime(ms){const s=Math.floor(ms/1000);return `${Math.floor(s/60)} min ${String(s%60).padStart(2,"0")} sec`}
+function finish(){const elapsed=Date.now()-started,score=naturePoints+statementPoints,pct=Math.round(100*score/MAX_SCORE),now=new Date(),h=history(),attemptNumber=h.length+1;h.push({score,percentage:pct,when:now.toISOString(),elapsed,code:attemptCode,naturePoints,statementPoints});safeStore(historyKey(),h);const best=Math.max(...h.map(x=>x.score));
+const progress=$("attemptProgressList");progress.replaceChildren();h.forEach((item,i)=>{const row=document.createElement("div");row.className="attempt-progress-row";const a=document.createElement("span"),b=document.createElement("span"),c=document.createElement("span");a.textContent=`Attempt ${i+1}`;b.className="attempt-progress-score";b.textContent=`${item.score}/40 · ${item.percentage??Math.round(item.score/40*100)}%`;c.className="attempt-progress-date";c.textContent=new Date(item.when).toLocaleDateString()+" · "+(item.elapsed==null?"Time unavailable":fmtTime(item.elapsed));row.append(a,b,c);progress.appendChild(row)});
+$("resultPercent").textContent=pct+"%";$("resultRaw").textContent=score+"/40";$("sumName").textContent=$("studentName").value.trim();$("sumEmail").textContent=$("studentEmail").value.trim();$("sumSection").textContent=$("studentSection").value.trim();$("sumDate").textContent=$("studentDate").value;$("sumAttempt").textContent=attemptNumber;$("sumCode").textContent=attemptCode;$("sumTime").textContent=fmtTime(elapsed);$("sumCompleted").textContent=now.toLocaleString();$("natureScore").textContent=naturePoints+"/20";$("statementScore").textContent=statementPoints+"/20";$("perfectRounds").textContent=perfect+"/20";$("sumBest").textContent=best+"/40";
+let title,msg;if(score===40){title="Outstanding mastery!";msg="Every classification was correct. You can recognize both account nature and financial statement placement with confidence."}else if(score>=36){title="Strong performance!";msg="You recognized nearly every account correctly. Review the explanations for the few classifications you missed."}else if(score>=30){title="Good progress!";msg="You are developing solid account-recognition skills. Review the distinction between temporary accounts and permanent balances."}else if(score>=22){title="You're getting there!";msg="Review account categories and where they appear in the financial statements. Remember that Drawing is temporary but not an expense."}else{title="Keep practicing!";msg="Start with the basics: assets, liabilities, and capital carry forward; revenues, expenses, and drawing are closed at period-end."}
+$("resultHeading").textContent=title;$("encourage").textContent=msg;refreshStatus();show("resultScreen");window.recordChallengeAttempt?.({challengeId:"05",attemptNumber,score,maxScore:MAX_SCORE,durationMinutes:Math.max(1,Math.ceil(elapsed/60000)),attemptCode})}
+$("reviewBtn").onclick=()=>{if(validateInfo())show("reviewScreen")};$("backInfoBtn").onclick=()=>show("infoScreen");$("beginBtn").onclick=start;$("checkBtn").onclick=check;$("continueBtn").onclick=next;$("newAttemptBtn").onclick=()=>{refreshStatus();show("infoScreen")};$("printBtn").onclick=()=>window.print();document.querySelectorAll("#natureChoices .choice").forEach(b=>b.onclick=()=>choose("nature",b.dataset.value));document.querySelectorAll("#statementChoices .choice").forEach(b=>b.onclick=()=>choose("statement",b.dataset.value));loadProfile();today();refreshStatus();
+</script>
 <script type="module">
 import { getSession, requireUser, request } from './auth.js';
-
-const baseQuestions=[
- {prompt:"Where is Service Revenue reported?",answers:["Income statement","Balance sheet","Statement of owner's equity","It is not reported"],correct:"Income statement",explain:"Revenue is reported on the income statement to determine net income."},
- {prompt:"Where is Accounts Receivable reported?",answers:["Income statement","Balance sheet","Only in the journal","It is closed at period-end"],correct:"Balance sheet",explain:"Accounts Receivable is an asset and appears on the balance sheet."},
- {prompt:"Which account is shown as an operating expense?",answers:["Accounts Payable","Supplies Expense","Owner, Capital","Service Revenue"],correct:"Supplies Expense",explain:"Supplies Expense reduces income and is reported on the income statement."},
- {prompt:"Which sequence correctly prepares the statements?",answers:["Income statement, statement of owner's equity, balance sheet","Balance sheet, income statement, statement of owner's equity","Statement of owner's equity, balance sheet, income statement","Income statement, balance sheet, statement of owner's equity"],correct:"Income statement, statement of owner's equity, balance sheet",explain:"Net income flows to owner's equity, and ending capital then flows to the balance sheet."},
- {prompt:"Revenue is ₱84,000 and total expenses are ₱51,500. What is net income?",answers:["₱32,500","₱135,500","₱51,500","₱84,000"],correct:"₱32,500",explain:"Net income = revenue − expenses = ₱84,000 − ₱51,500 = ₱32,500."},
- {prompt:"Beginning capital is ₱120,000, net income is ₱32,500, and withdrawals are ₱12,000. What is ending capital?",answers:["₱140,500","₱164,500","₱99,500","₱152,000"],correct:"₱140,500",explain:"Ending capital = beginning capital + net income − withdrawals = ₱140,500."},
- {prompt:"Which account normally appears on the balance sheet?",answers:["Rent Expense","Utilities Expense","Equipment","Service Revenue"],correct:"Equipment",explain:"Equipment is a long-term asset reported on the balance sheet."},
- {prompt:"Total assets are ₱286,000 and total liabilities are ₱104,000. What is owner's equity?",answers:["₱390,000","₱182,000","₱104,000","₱286,000"],correct:"₱182,000",explain:"Owner's equity = assets − liabilities = ₱286,000 − ₱104,000 = ₱182,000."},
- {prompt:"Which item is deducted from owner's capital in the statement of owner's equity?",answers:["Additional investment","Net income","Withdrawals","Accounts Payable"],correct:"Withdrawals",explain:"Withdrawals reduce the owner's claim on the business."},
- {prompt:"Which total proves that a balance sheet is in balance?",answers:["Revenue = expenses","Assets = liabilities + owner's equity","Assets = revenue + expenses","Capital = withdrawals"],correct:"Assets = liabilities + owner's equity",explain:"The accounting equation must remain Assets = Liabilities + Owner's Equity."},
- {prompt:"Rent Expense is ₱18,000, Salaries Expense is ₱24,000, and Utilities Expense is ₱6,000. What are total expenses?",answers:["₱30,000","₱42,000","₱48,000","₱12,000"],correct:"₱48,000",explain:"Add all expenses: ₱18,000 + ₱24,000 + ₱6,000 = ₱48,000."},
- {prompt:"Which statement reports the owner's withdrawals and ending capital?",answers:["Income statement","Balance sheet","Statement of owner's equity","Trial balance"],correct:"Statement of owner's equity",explain:"The statement of owner's equity explains changes in the owner's capital account."},
- {prompt:"Cash, Accounts Receivable, and Equipment are classified as:",answers:["Liabilities","Assets","Expenses","Revenue"],correct:"Assets",explain:"These resources are controlled by the business and provide future benefit."},
- {prompt:"If revenue is greater than expenses, the result is:",answers:["Net loss","Net income","A liability","A withdrawal"],correct:"Net income",explain:"A business earns net income when revenues exceed expenses."},
- {prompt:"A balance sheet is prepared as of:",answers:["A period of time","A specific date","The date of every transaction","Only the first day of the year"],correct:"A specific date",explain:"The balance sheet reports financial position at a particular date."}
-];
-const attemptHistoryKey="financial_statements_challenge_history";
-const pendingAttemptKey="financial_statements_pending_challenge_attempts";
-let questions=[],index=0,score=0,streak=0,bestStreak=0,results=[],startedAt=0;
-const $=id=>document.getElementById(id);
-function shuffle(items){return [...items].sort(()=>Math.random()-.5)}
-function start(){questions=shuffle(baseQuestions);index=0;score=0;streak=0;bestStreak=0;results=[];startedAt=Date.now();$("startScreen").classList.add("hidden");$("summaryScreen").classList.add("hidden");$("challengeScreen").classList.remove("hidden");render()}
-function render(){const q=questions[index];$("questionCount").textContent=`${index+1} / ${questions.length}`;$("score").textContent=score;$("streak").textContent=streak;$("progressFill").style.width=`${index/questions.length*100}%`;$("questionNumber").textContent=`Question ${String(index+1).padStart(2,"0")}`;$("prompt").textContent=q.prompt;$("feedback").className="feedback hidden";$("nextBtn").classList.add("hidden");$("answers").innerHTML="";shuffle(q.answers).forEach(answer=>{const button=document.createElement("button");button.className="answer";button.textContent=answer;button.addEventListener("click",()=>choose(button,answer));$("answers").append(button)})}
-function choose(button,answer){const q=questions[index];const correct=answer===q.correct;document.querySelectorAll(".answer").forEach(item=>{item.disabled=true;if(item.textContent===q.correct)item.classList.add("correct")});if(!correct)button.classList.add("wrong");if(correct){score++;streak++;bestStreak=Math.max(bestStreak,streak)}else streak=0;results.push({question:q.prompt,answer,correctAnswer:q.correct,correct});$("score").textContent=score;$("streak").textContent=streak;const feedback=$("feedback");feedback.className=`feedback ${correct?"good":"bad"}`;feedback.innerHTML=`<strong>${correct?"Correct":"Review this one"}</strong><br>${q.explain}`;$("nextBtn").textContent=index===questions.length-1?"SEE RESULTS →":"NEXT QUESTION →";$("nextBtn").classList.remove("hidden")}
-function next(){if(index<questions.length-1){index++;render()}else finish()}
-function money(value){return `₱${value.toLocaleString("en-US")}`}
-function readStoredAttempts(key){const stored=localStorage.getItem(key);if(!stored)return[];const attempts=JSON.parse(stored);if(!Array.isArray(attempts))throw new Error("Saved challenge history has an invalid format.");return attempts}
-function setTrackingStatus(message,isError=false){const status=$("trackingStatus");status.textContent=message;status.className=isError?"note feedback bad":"note"}
-async function syncPendingAttempts(){const pending=readStoredAttempts(pendingAttemptKey);if(!pending.length)return;const user=await requireUser(),session=getSession();if(!user||!session?.access_token){setTrackingStatus("Your attempt is saved on this device and is waiting for sign-in.");return}while(pending.length){const attempt=pending[0];await request("/rest/v1/challenge_attempts",{method:"POST",headers:{Prefer:"return=minimal"},body:JSON.stringify({user_id:user.id,challenge_id:"05",attempt_number:attempt.attemptNumber,score:attempt.score,max_score:attempt.maxScore,duration_minutes:attempt.durationMinutes,details:{attempt_code:attempt.attemptCode,accuracy:attempt.accuracy,best_streak:attempt.bestStreak}})},session.access_token);pending.shift();localStorage.setItem(pendingAttemptKey,JSON.stringify(pending))}setTrackingStatus("Your completed attempt was saved to your learning record and dashboard.")}
-async function saveAttempt(){try{const history=readStoredAttempts(attemptHistoryKey),pending=readStoredAttempts(pendingAttemptKey),accuracy=Math.round(score/questions.length*100),attemptNumber=history.length+1;const attempt={attemptNumber,attemptCode:`FS-${String(attemptNumber).padStart(3,"0")}`,score,maxScore:questions.length,durationMinutes:Math.max(1,Math.ceil((Date.now()-startedAt)/60000)),accuracy,bestStreak};history.push(attempt);pending.push(attempt);localStorage.setItem(attemptHistoryKey,JSON.stringify(history));localStorage.setItem(pendingAttemptKey,JSON.stringify(pending));setTrackingStatus("Saving your attempt to your learning record…");await syncPendingAttempts()}catch(error){setTrackingStatus(`Attempt tracking could not be saved: ${error.message}`,true);console.warn("Financial-statements challenge attempt tracking could not be saved.",error)}}
-async function finish(){ $("challengeScreen").classList.add("hidden");$("summaryScreen").classList.remove("hidden");const accuracy=Math.round(score/questions.length*100);$("finalScore").textContent=`${score} / ${questions.length}`;$("accuracy").textContent=`${accuracy}%`;$("bestStreak").textContent=bestStreak;$("summaryLead").textContent=accuracy>=80?"Strong work—you are ready to prepare the statements from an adjusted trial balance.":"Use the review below, then try another round to reinforce the statement-preparation sequence.";const revenue=84000,expenses=51500,net=revenue-expenses,assets=286000,liabilities=104000,equity=assets-liabilities;$("revenueValue").textContent=money(revenue);$("expenseValue").textContent=money(expenses);$("netIncomeValue").textContent=money(net);$("assetsValue").textContent=money(assets);$("liabilitiesValue").textContent=money(liabilities);$("equityValue").textContent=money(equity);$("balanceValue").textContent=money(liabilities+equity);$("review").innerHTML=results.map((item,n)=>`<div class="review-item"><strong>${n+1}. ${item.correct?"Correct":"Needs review"}: ${item.question}</strong><small>Your answer: ${item.answer} · Correct answer: ${item.correctAnswer}</small></div>`).join("");await saveAttempt()}
-$("startBtn").addEventListener("click",start);$("nextBtn").addEventListener("click",next);$("againBtn").addEventListener("click",start);
-syncPendingAttempts().catch(error=>{setTrackingStatus(`A saved attempt could not be synced: ${error.message}`,true);console.warn("Financial-statements challenge attempt sync failed.",error)});
+const pendingKey='acctng_ch05_where_go_pending_challenge_attempt';
+function tracking(message){const el=document.getElementById('trackingStatus');if(el){el.classList.remove('hidden');el.textContent=message}}
+let syncing=false;
+async function syncAttempt(){if(syncing)return;syncing=true;try{let pending;try{pending=JSON.parse(localStorage.getItem(pendingKey)||'null')}catch{pending=null}if(!pending)return;const user=await requireUser(),session=getSession();if(!user||!session?.access_token){tracking('Attempt tracking is waiting for you to sign in.');return}await request('/rest/v1/challenge_attempts',{method:'POST',headers:{Prefer:'return=minimal'},body:JSON.stringify({user_id:user.id,challenge_id:pending.challengeId,attempt_number:pending.attemptNumber,score:pending.score,max_score:pending.maxScore,duration_minutes:pending.durationMinutes,details:{attempt_code:pending.attemptCode}})},session.access_token);localStorage.removeItem(pendingKey);tracking('This completed challenge was saved to your learning record.')}catch(error){tracking('Attempt tracking could not be saved: '+error.message);console.warn('Challenge attempt tracking could not be saved.',error)}finally{syncing=false}}
+window.recordChallengeAttempt=payload=>{try{localStorage.setItem(pendingKey,JSON.stringify(payload))}catch(error){tracking('This attempt could not be queued for online tracking.')}syncAttempt()};syncAttempt();
 </script>
-</body>
-</html>
+</body></html>
